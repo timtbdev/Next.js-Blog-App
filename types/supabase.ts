@@ -34,7 +34,7 @@ export interface Database {
   }
   public: {
     Tables: {
-      author: {
+      authors: {
         Row: {
           created_at: string | null
           id: string
@@ -58,7 +58,7 @@ export interface Database {
         }
         Relationships: []
       }
-      category: {
+      categories: {
         Row: {
           created_at: string | null
           id: string
@@ -79,7 +79,7 @@ export interface Database {
         }
         Relationships: []
       }
-      post: {
+      posts: {
         Row: {
           audio: string | null
           author_id: string | null
@@ -127,15 +127,15 @@ export interface Database {
         }
         Relationships: [
           {
-            foreignKeyName: "post_author_id_fkey"
+            foreignKeyName: "posts_author_id_fkey"
             columns: ["author_id"]
-            referencedRelation: "author"
+            referencedRelation: "authors"
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "post_category_id_fkey"
+            foreignKeyName: "posts_category_id_fkey"
             columns: ["category_id"]
-            referencedRelation: "category"
+            referencedRelation: "categories"
             referencedColumns: ["id"]
           }
         ]

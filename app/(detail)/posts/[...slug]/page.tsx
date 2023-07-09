@@ -19,8 +19,8 @@ async function getPost(params: { slug: string[] }) {
   const slug = params?.slug?.join("/");
 
   const response = await supabase
-    .from("post")
-    .select(`*, category(*), author(*)`)
+    .from("posts")
+    .select(`*, categories(*), authors(*)`)
     .eq("slug", slug)
     .single<PostWithCategoryWithAuthor>();
 
@@ -58,9 +58,9 @@ export async function generateMetadata({
             post.title as string,
             post.year as string,
             post.image as string,
-            post.author?.name as string,
-            post.author?.image as string,
-            post.author?.title as string
+            post.authors?.name as string,
+            post.authors?.image as string,
+            post.authors?.title as string
           ),
           width: 1200,
           height: 630,
@@ -77,9 +77,9 @@ export async function generateMetadata({
           post.title as string,
           post.year as string,
           post.image as string,
-          post.author?.name as string,
-          post.author?.image as string,
-          post.author?.title as string
+          post.authors?.name as string,
+          post.authors?.image as string,
+          post.authors?.title as string
         ),
       ],
     },
@@ -141,21 +141,21 @@ export default async function PostPage({ params }: PostPageProps) {
                       <figcaption className="text-base lg:col-start-1 lg:row-start-3">
                         <div className="flex flex-row items-center">
                           <BlurImage
-                            src={post.author?.image as string}
+                            src={post.authors?.image as string}
                             height={35}
                             width={35}
-                            alt={(post.author?.name as string) || "Avatar"}
+                            alt={(post.authors?.name as string) || "Avatar"}
                             className="flex h-[35px] w-[35px] object-cover rounded-full shadow-sm"
                             priority
                             placeholder="blur"
                             blurDataURL={placeholderBlurhash}
                           />
                           <span className="flex ml-2 font-semibold text-gray-900">
-                            {post.author?.name}
+                            {post.authors?.name}
                           </span>
                         </div>
                         <div className="mt-1 text-gray-500">
-                          {post.author?.title}
+                          {post.authors?.title}
                         </div>
                       </figcaption>
                     </figure>

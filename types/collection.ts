@@ -1,18 +1,18 @@
 import { Database } from "./supabase";
 
-export type CategoryType = Database["public"]["Tables"]["category"]["Row"];
-export type AuthorType = Database["public"]["Tables"]["author"]["Row"];
-export type PostType = Database["public"]["Tables"]["post"]["Row"];
+export type Category = Database["public"]["Tables"]["categories"]["Row"];
+export type Author = Database["public"]["Tables"]["authors"]["Row"];
+export type Post = Database["public"]["Tables"]["posts"]["Row"];
 
-export interface PostWithCategory extends Omit<PostType, "category"> {
-  category: CategoryType;
+export interface PostWithCategory extends Omit<Post, "categories"> {
+  categories: Category;
 }
 
 export interface PostWithCategoryWithAuthor
-  extends Omit<PostWithCategory, "author"> {
-  author: AuthorType;
+  extends Omit<PostWithCategory, "authors"> {
+  authors: Author;
 }
 
-export interface CategoryWithPost extends Omit<CategoryType, "post"> {
-  post: PostType;
+export interface CategoryWithPost extends Omit<Category, "posts"> {
+  posts: Post;
 }

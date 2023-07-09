@@ -14,7 +14,6 @@ import { supabase } from "@/utils/supabase-client";
 import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 import LoginIcon from "@/components/icons/login";
-import IconWrapperRounded from "@/components/icons/icon-wrapper-rounded";
 import BlurImage from "@/components/shared/blur-image";
 import { placeholderBlurhash } from "@/lib/utils";
 import { loginData } from "@/config/login";

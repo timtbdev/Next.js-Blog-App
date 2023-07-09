@@ -3,12 +3,11 @@
 import { useEffect } from "react";
 
 export const ReportView: React.FC<{ slug: string }> = ({ slug }) => {
-  const slugSingle = slug.split("/")[2];
   useEffect(() => {
-    const response = fetch(`/api/counter/${slugSingle}`, {
+    const response = fetch(`/api/counter/${slug}`, {
       method: "POST",
     });
-  }, [slugSingle]);
+  }, [slug]);
 
   return null;
 };

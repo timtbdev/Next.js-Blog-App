@@ -20,9 +20,7 @@ interface PostItemProps {
 const PostItem: React.FC<PostItemProps> = async ({ post }) => {
   const readTime = readingTime(post.content as string);
   const views =
-    (await redis.get<number>(
-      ["pageviews", "posts", post.slug?.split("/")[2]].join(":")
-    )) ?? 0;
+    (await redis.get<number>(["pageviews", "posts", post.slug].join(":"))) ?? 0;
   return (
     <>
       <div className="group relative w-full rounded-2xl bg-white/20 p-2.5 shadow-sm shadow-black/5 ring-[0.8px] ring-black/5 transition duration-200 hover:-translate-y-1">
@@ -46,7 +44,7 @@ const PostItem: React.FC<PostItemProps> = async ({ post }) => {
               <div>
                 <div className="flex items-center gap-x-3 text-xs">
                   <span className="relative z-10 rounded-full bg-gray-100 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-200">
-                    {post.category?.title}
+                    {post.categories?.title}
                   </span>
                   <p className="text-gray-500">
                     {format(parseISO(post.updated_at!), "yyyy-MM-dd")}
@@ -76,8 +74,8 @@ const PostItem: React.FC<PostItemProps> = async ({ post }) => {
                 <div className="mt-6 flex border-t border-gray-900/5 pt-6">
                   <div className="relative flex items-center gap-x-4">
                     <BlurImage
-                      src={post.author?.image as string}
-                      alt={post.author?.name ?? "Avatar"}
+                      src={(post.authors.image as string) || ""}
+                      alt={post.authors?.name ?? "Avatar"}
                       height={40}
                       width={40}
                       priority
@@ -88,9 +86,9 @@ const PostItem: React.FC<PostItemProps> = async ({ post }) => {
                     <div className="text-sm leading-6">
                       <p className="font-semibold text-gray-900">
                         <span className="absolute inset-0" />
-                        {post.author?.name}
+                        {post.authors?.name}
                       </p>
-                      <p className="text-gray-600">{post.author?.title}</p>
+                      <p className="text-gray-600">{post.authors?.title}</p>
                     </div>
                   </div>
                 </div>

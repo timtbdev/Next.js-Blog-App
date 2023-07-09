@@ -76,3 +76,59 @@
     @apply bg-background text-foreground;
   }
 }
+
+:root {
+  --accents-1: #fafafa;
+  --accents-2: #eaeaea;
+  --accents-dark-1: #555;
+  --accents-dark-2: #777;
+}
+
+@layer components {
+  .focus-ring-input {
+    @apply focus:outline-none focus:ring-indigo-500 focus:border-indigo-500;
+  }
+
+  .btn {
+    @apply focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500;
+  }
+
+  .focus-ring {
+    @apply focus:border-transparent focus:outline-none focus:ring-indigo-500 focus:ring-2 focus:ring-opacity-75 focus:ring-offset-2 transition duration-75 ease-in-out rounded-sm;
+  }
+
+  .focus-within-ring {
+    @apply focus-within:outline-none focus-within:ring-indigo-500 focus-within:ring-2 focus-within:ring-opacity-75 focus-within:ring-offset-2 transition duration-75 ease-in-out rounded-sm;
+  }
+}
+@layer utilities {
+  .skeleton {
+    background-image: linear-gradient(
+      270deg,
+      var(--accents-1),
+      var(--accents-2),
+      var(--accents-2),
+      var(--accents-1)
+    );
+    background-size: 400% 100%;
+    animation: loading 8s ease-in-out infinite;
+  }
+
+  .comment-grid {
+    grid-template-columns: fit-content(1.75rem) minmax(0, 1fr);
+  }
+
+  @variants dark {
+    .skeleton-dark {
+      background-image: linear-gradient(
+        270deg,
+        var(--accents-dark-1),
+        var(--accents-dark-2),
+        var(--accents-dark-2),
+        var(--accents-dark-1)
+      );
+      background-size: 400% 100%;
+      animation: loading 8s ease-in-out infinite;
+    }
+  }
+}

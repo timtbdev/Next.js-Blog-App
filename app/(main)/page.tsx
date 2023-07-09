@@ -6,8 +6,8 @@ import { notFound } from "next/navigation";
 
 export default async function HomePage() {
   const response = await supabase
-    .from("post")
-    .select(`*, category(*), author(*)`)
+    .from("posts")
+    .select(`*, categories(*), authors(*)`)
     .returns<PostWithCategoryWithAuthor[]>();
 
   if (!response.data) {

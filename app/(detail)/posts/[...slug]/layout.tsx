@@ -12,13 +12,13 @@ async function getPost(params: { slug: string[] }) {
   }
 
   const response = await supabase
-    .from("post")
-    .select(`*, category(*), author(*)`)
+    .from("posts")
+    .select(`*, categories(*), authors(*)`)
     .eq("slug", slug)
     .single<PostWithCategoryWithAuthor>();
 
   if (!response.data) {
-    null;
+    notFound;
   }
 
   return response.data;
@@ -42,7 +42,7 @@ export default async function MainLayout({
     <>
       <PostDetailHeader
         title={post.title as string}
-        author={post.author?.name as string}
+        author={post.authors?.name as string}
         year={post.year as string}
         description={post.description as string}
         slug={post.slug as string}

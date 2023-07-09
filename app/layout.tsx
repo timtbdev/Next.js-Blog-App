@@ -1,5 +1,4 @@
 import "@/styles/tailwind.css";
-import "@/styles/claps.css";
 import TwIndicator from "@/components/shared/tw-indicator";
 import { metaData } from "@/config/meta";
 import { cn, getOgImageUrl } from "@/lib/utils";

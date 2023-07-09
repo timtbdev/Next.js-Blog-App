@@ -25,8 +25,8 @@ async function getPosts(params: { slug: string[] }) {
   }
 
   const response = await supabase
-    .from("post")
-    .select(`*, category(*), author(*)`)
+    .from("posts")
+    .select(`*, categories(*), authors(*)`)
     .eq("category_id", category?.id)
     .returns<PostWithCategoryWithAuthor[]>();
 
