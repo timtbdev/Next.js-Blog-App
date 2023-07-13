@@ -62,7 +62,7 @@ const ShareButton: React.FC<ShareButtonProps> = ({
       text: text,
       url: url,
     };
-    if (window.navigator.share && window.navigator.canShare(data)) {
+    if (window.navigator.share) {
       await window.navigator.share(data);
     } else {
       setIsOpen(true);
