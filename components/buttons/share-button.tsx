@@ -63,48 +63,34 @@ const ShareButton: React.FC<ShareButtonProps> = ({
   const onMouseEnter = () => setIsHovered(true);
   const onMouseLeave = () => setIsHovered(false);
 
-  const shareData = useMemo(
-    () => ({
+  const isWebShareSupported = (data: ShareData) => {
+    // @ts-ignore we prefer to check if the api is really available
+    return (
+      window.navigator.canShare &&
+      // @ts-ignore
+      window.navigator.share &&
+      window.navigator.canShare(data)
+    );
+  };
+
+  const onClick = async () => {
+    const data: ShareData = {
       title: title,
       text: text,
-      url: url || (typeof window !== "undefined" && window.location.href) || "",
-    }),
-    [title, text, url]
-  );
-
-  const handleOnClick = useCallback(async () => {
-    if (window.navigator.share) {
-      try {
-        await window.navigator.share(shareData);
-      } catch (e) {
-        console.warn(e);
-      }
+      url: url,
+    };
+    if (isWebShareSupported(data)) {
+      await window.navigator.share(data);
     } else {
       setIsOpen(true);
     }
-  }, [shareData]);
-
-  // const onClick = async () => {
-  //   if (window.navigator.share) {
-  //     try {
-  //       await window.navigator.share({
-  //         title: title,
-  //         text: text,
-  //         url: url,
-  //       });
-  //     } catch (e) {
-  //       console.warn(e);
-  //     }
-  //   } else {
-  //     setIsOpen(true);
-  //   }
-  // };
+  };
 
   return (
     <>
       <button
         type="button"
-        onClick={handleOnClick}
+        onClick={onClick}
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
         className="relative inline-flex items-center gap-x-1.5 px-3 py-2 border-[1.5px] border-gray-300 focus:z-10 bg-gradient-to-t from-gray-200 via-gray-100 to-gray-50 shadow-md shadow-black/5 transition duration-200 hover:bg-gradient-to-tr hover:from-gray-200 hover:via-gray-100 hover:to-gray-50 active:scale-[96%]"
