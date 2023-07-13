@@ -5,6 +5,7 @@ import React, {
   useEffect,
   useState,
   useCallback,
+  useMemo,
 } from "react";
 import ShareSolid from "@/components/icons/share-solid";
 import ShareOutline from "@/components/icons/share-outline";
@@ -62,21 +63,26 @@ const ShareButton: React.FC<ShareButtonProps> = ({
   const onMouseEnter = () => setIsHovered(true);
   const onMouseLeave = () => setIsHovered(false);
 
+  const shareData = useMemo(
+    () => ({
+      title: title,
+      text: text,
+      url: url || (typeof window !== "undefined" && window.location.href) || "",
+    }),
+    [title, text, url]
+  );
+
   const handleOnClick = useCallback(async () => {
     if (window.navigator.share) {
       try {
-        await window.navigator.share({
-          title: title,
-          text: text,
-          url: url,
-        });
+        await window.navigator.share(shareData);
       } catch (e) {
         console.warn(e);
       }
     } else {
       setIsOpen(true);
     }
-  }, [title, text, url]);
+  }, [shareData]);
 
   // const onClick = async () => {
   //   if (window.navigator.share) {
