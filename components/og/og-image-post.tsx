@@ -27,7 +27,7 @@ export const OgImage: FC<OgImageProps> = ({
       <OgWrapper>
         <div tw="flex flex-col w-full h-full items-center justify-center bg-gray-100">
           <div
-            tw="px-10 items-baseline bg-gray-50 rounded-md"
+            tw="px-10 items-baseline rounded-md"
             style={{
               left: 28,
               top: 42,
@@ -85,7 +85,7 @@ export const OgImage: FC<OgImageProps> = ({
             </span>
           </div>
 
-          <div tw="bg-gray-50 flex w-full mt-10">
+          <div tw="flex w-full mt-10">
             <div tw="flex flex-row w-full items-center px-16">
               <div tw="flex flex-col ml-">
                 <img
@@ -102,13 +102,13 @@ export const OgImage: FC<OgImageProps> = ({
                   </span>
                 </div>
                 <div tw="flex">
-                  <span tw="flex items-center max-w-md w-justify-start px-5 py-3 font-semibold text-3xl text-gray-900 ">
+                  <span tw="flex items-center max-w-md w-justify-start px-5 py-3 font-semibold text-3xl text-gray-600 ">
                     {year} он
                   </span>
                 </div>
                 <div tw="flex flex-row px-5 py-2 items-cener">
                   <img src={avatar} height={40} width={40} tw="rounded-full" />
-                  <span tw="flex tracking-tight items-center px-4 text-2xl font-semibold text-gray-600">
+                  <span tw="flex tracking-tight items-center px-4 text-2xl font-semibold text-gray-900">
                     {name}
                   </span>
                 </div>

@@ -41,9 +41,9 @@ export function getOgImagePostUrl(
   const uri = [
     `?title=${encodeURIComponent(title)}`,
     `&year=${encodeURIComponent(year)}`,
-    `&image=${encodeURIComponent(`${getUrl()}${image}`)}`,
+    `&image=${encodeURIComponent(image)}`,
     `&name=${encodeURIComponent(name)}`,
-    `&avatar=${encodeURIComponent(`${getUrl()}${avatar}`)}`,
+    `&avatar=${encodeURIComponent(avatar)}`,
     `&job=${encodeURIComponent(job)}`,
     // Joining a multiline string for readability.
   ].join("");
