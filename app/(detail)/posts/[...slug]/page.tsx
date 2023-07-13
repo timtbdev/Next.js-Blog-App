@@ -1,7 +1,6 @@
 import { ReportView } from "@/components/post/post-view";
 import PostAudioPlayer from "@/components/post/post-audio-player";
 import BlurImage from "@/components/shared/blur-image";
-import ScrollUpButton from "@/components/buttons/scroll-up-button";
 import { getOgImagePostUrl, getUrl, placeholderBlurhash } from "@/lib/utils";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
@@ -186,7 +185,6 @@ export default async function PostPage({ params }: PostPageProps) {
           </div>
         </div>
 
-        <ScrollUpButton />
         <PostFloatingBar
           title={post.title as string}
           text={post.description as string}

@@ -6,6 +6,7 @@ import EyeButton from "@/components/buttons/eye-button";
 import BoomarkButton from "@/components/buttons/bookmark-button";
 import CommentButton from "@/components/buttons/comment-button";
 import ShareButton from "@/components/buttons/share-button";
+import ScrollUpButton from "@/components/buttons/scroll-up-button";
 import { useReadingProgress } from "@/hooks/use-reading-progress";
 import { cn } from "@/lib/utils";
 
@@ -23,6 +24,7 @@ const PostFloatingBar: React.FC<PostFloatingBarProps> = ({
   views = 0,
 }) => {
   const completion = useReadingProgress();
+  const goToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
   return (
     <div
       className={cn(
@@ -38,6 +40,7 @@ const PostFloatingBar: React.FC<PostFloatingBarProps> = ({
       <CommentButton />
       <BoomarkButton />
       <ShareButton title={title} text={text} url={url} />
+      <ScrollUpButton goToTop={goToTop} />
     </div>
   );
 };
