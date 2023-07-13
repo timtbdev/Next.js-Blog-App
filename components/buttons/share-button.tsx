@@ -57,13 +57,12 @@ const ShareButton: React.FC<ShareButtonProps> = ({
   const onMouseLeave = () => setIsHovered(false);
 
   const onClick = async () => {
-    const data: ShareData = {
-      title: title,
-      text: text,
-      url: url,
-    };
-    if (window.navigator.share) {
-      await window.navigator.share(data);
+    if (navigator.share) {
+      await navigator.share({
+        title: title,
+        text: text,
+        url: url,
+      });
     } else {
       setIsOpen(true);
     }
