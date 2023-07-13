@@ -76,27 +76,16 @@ const ShareButton: React.FC<ShareButtonProps> = ({
   };
 
   const onClick = async () => {
-    const data: ShareData = {
-      title: title,
-      text: text,
-      url: url,
-    };
-    if (navigator.share === undefined) {
-      toast.error("Navigator share is undefined");
-    }
-    try {
-      if (navigator.canShare && navigator.canShare(data)) {
-        navigator
-          .share(data)
-          .then(() => console.info("Shared successful."))
-          .catch((error) => {
-            console.error("Sharing failed ..", error);
-          });
-      } else {
-        setIsOpen(true);
+    if (isWebShareSupported({ title, text, url })) {
+      toast.success("Хуваалцлаа");
+      try {
+        await window.navigator.share({ title, text, url });
+      } catch (err) {
+        console.error(err);
+        toast.error(JSON.stringify(err));
       }
-    } catch (error) {
-      console.error("error: ", error);
+    } else {
+      setIsOpen(true);
     }
   };
 
