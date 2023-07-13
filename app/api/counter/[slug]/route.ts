@@ -1,14 +1,14 @@
-import { postSchema } from "@/lib/validations";
-import { Redis } from "@upstash/redis";
+import { postViewSchema } from "@/lib/validations";
 import * as z from "zod";
+import { kv } from "@vercel/kv";
 
-const redis = Redis.fromEnv();
-export const runtime = "edge";
-
-export async function POST(req: Request, context: z.infer<typeof postSchema>) {
+export async function POST(
+  req: Request,
+  context: z.infer<typeof postViewSchema>
+) {
   try {
     // Validate the route params.
-    const { params } = postSchema.parse(context);
+    const { params } = postViewSchema.parse(context);
     const ip =
       req.headers.get("x-forwarded-for") || req.headers.get("x-real-ip");
     //ßconst ip = req.ip;
@@ -24,7 +24,7 @@ export async function POST(req: Request, context: z.infer<typeof postSchema>) {
         .join("");
 
       // deduplicate the ip for each slug
-      const isNew = await redis.set(
+      const isNew = await kv.set(
         ["deduplicate", hash, params.slug].join(":"),
         true,
         {
@@ -32,11 +32,13 @@ export async function POST(req: Request, context: z.infer<typeof postSchema>) {
           ex: 24 * 60 * 60,
         }
       );
+
       if (!isNew) {
-        new Response(null, { status: 202 });
+        return new Response(null, { status: 202 });
       }
     }
-    await redis.incr(["pageviews", "posts", params.slug].join(":"));
+    await kv.incr(["pageviews", "posts", params.slug].join(":"));
+    console.log("counted");
     return new Response(null, { status: 202 });
   } catch (error) {
     if (error instanceof z.ZodError) {
@@ -47,15 +49,17 @@ export async function POST(req: Request, context: z.infer<typeof postSchema>) {
   }
 }
 
-export async function GET(req: Request, context: z.infer<typeof postSchema>) {
+export async function GET(
+  req: Request,
+  context: z.infer<typeof postViewSchema>
+) {
   try {
     // Validate the route params.
-    const { params } = postSchema.parse(context);
+    const { params } = postViewSchema.parse(context);
 
     const views =
-      (await redis.get<number>(
-        ["pageviews", "posts", params.slug].join(":")
-      )) ?? 0;
+      (await kv.get<number>(["pageviews", "posts", params.slug].join(":"))) ??
+      0;
 
     return new Response(JSON.stringify(views));
   } catch (error) {

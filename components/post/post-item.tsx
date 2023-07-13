@@ -6,10 +6,7 @@ import Link from "next/link";
 import React from "react";
 import { PostWithCategoryWithAuthor } from "@/types/collection";
 import readingTime from "reading-time";
-import { Redis } from "@upstash/redis";
-
-const redis = Redis.fromEnv();
-export const revalidate = 60;
+import { kv } from "@vercel/kv";
 
 export const dynamic = "force-dynamic";
 
@@ -20,7 +17,7 @@ interface PostItemProps {
 const PostItem: React.FC<PostItemProps> = async ({ post }) => {
   const readTime = readingTime(post.content as string);
   const views =
-    (await redis.get<number>(["pageviews", "posts", post.slug].join(":"))) ?? 0;
+    (await kv.get<number>(["pageviews", "posts", post.slug].join(":"))) ?? 0;
   return (
     <>
       <div className="group relative w-full rounded-2xl bg-white/20 p-2.5 shadow-sm shadow-black/5 ring-[0.8px] ring-black/5 transition duration-200 hover:-translate-y-1">

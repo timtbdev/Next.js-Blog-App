@@ -1,4 +1,10 @@
-export default function Github({ className }: { className: string }) {
+import React from "react";
+
+interface GithubProps {
+  className: string;
+}
+
+const Github: React.FC<GithubProps> = ({ className = "" }) => {
   return (
     <>
       <svg
@@ -19,4 +25,6 @@ export default function Github({ className }: { className: string }) {
       </svg>
     </>
   );
-}
+};
+
+export default Github;

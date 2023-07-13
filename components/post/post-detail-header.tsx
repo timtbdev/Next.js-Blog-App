@@ -1,4 +1,4 @@
-import BackIcon from "@/components/icons/back";
+import BackButton from "@/components/buttons/back-button";
 import LoginIcon from "@/components/icons/login";
 import Balancer from "react-wrap-balancer";
 import LoginMenu from "@/components/site/navigations/login-menu";
@@ -25,7 +25,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = ({
         aria-label="Global"
       >
         <div className="flex flex-1 justify-start">
-          <BackIcon />
+          <BackButton />
         </div>
         <div className="flex max-w-3xl w-full">
           <h1 className="font-semibold justify-start text-md sm:text-xl px-10 sm:px-8 tracking-tight text-slate-900">

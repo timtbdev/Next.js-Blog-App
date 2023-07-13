@@ -1,13 +1,20 @@
 import { ReportView } from "@/components/post/post-view";
-import AudioPlayer from "@/components/post/utils/audio-player";
+import PostAudioPlayer from "@/components/post/post-audio-player";
 import BlurImage from "@/components/shared/blur-image";
-import ScrollUpButton from "@/components/post/utils/scroll-up-button";
+import ScrollUpButton from "@/components/buttons/scroll-up-button";
 import { getOgImagePostUrl, placeholderBlurhash } from "@/lib/utils";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import supabase from "@/utils/supabase-server";
 import { PostWithCategoryWithAuthor } from "@/types/collection";
 import { metaData } from "@/config/meta";
+import PostFloatingBar from "@/components/post/post-floating-bar";
+import { Redis } from "@upstash/redis";
+
+const redis = Redis.fromEnv();
+export const revalidate = 60;
+
+export const dynamic = "force-dynamic";
 
 interface PostPageProps {
   params: {
@@ -88,6 +95,9 @@ export async function generateMetadata({
 
 export default async function PostPage({ params }: PostPageProps) {
   const post = await getPost(params);
+  const views =
+    (await redis.get<number>(["pageviews", "posts", params.slug].join(":"))) ??
+    0;
 
   if (!post) {
     notFound();
@@ -162,7 +172,7 @@ export default async function PostPage({ params }: PostPageProps) {
                   </div>
                 </section>
                 <div className="mx-auto">
-                  <AudioPlayer audio={post.audio as string} />
+                  <PostAudioPlayer audio={post.audio as string} />
                 </div>
               </div>
 
@@ -175,7 +185,16 @@ export default async function PostPage({ params }: PostPageProps) {
             </div>
           </div>
         </div>
+
         <ScrollUpButton />
+        <PostFloatingBar
+          title={post.title as string}
+          text={post.description as string}
+          url={`${process.env.NEXT_PUBLIC_APP_URL}${encodeURIComponent(
+            `/posts/${post.slug}`
+          )}`}
+          views={views}
+        />
       </div>
     </>
   );

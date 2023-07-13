@@ -1,4 +1,10 @@
-export default function Facebook({ className }: { className: string }) {
+import React from "react";
+
+interface FacebookProps {
+  className: string;
+}
+
+const Facebook: React.FC<FacebookProps> = ({ className = "" }) => {
   return (
     <>
       <svg
@@ -17,4 +23,6 @@ export default function Facebook({ className }: { className: string }) {
       </svg>
     </>
   );
-}
+};
+
+export default Facebook;

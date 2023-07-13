@@ -7,11 +7,11 @@ import React from "react";
 
 const ReactPlayer = dynamic(() => import("react-player/lazy"), { ssr: false });
 
-interface AudioPlayerProps {
+interface PostAudioPlayerProps {
   audio: string;
 }
 
-const AudioPlayer: React.FC<AudioPlayerProps> = ({ audio }) => {
+const PostAudioPlayer: React.FC<PostAudioPlayerProps> = ({ audio }) => {
   return (
     <>
       <div className="relative mt-10 mb-5 flex p-5 items-center justify-center gap-6 rounded-xl border border-dashed border-slate-500/50 sm:flex-row">
@@ -42,4 +42,4 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ audio }) => {
   );
 };
 
-export default AudioPlayer;
+export default PostAudioPlayer;
