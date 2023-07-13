@@ -18,6 +18,8 @@ import LinkedIn from "@/components/icons/linkedin";
 import Email from "@/components/icons/email";
 import CopyIcon from "@/components/icons/copy";
 import CheckIcon from "@/components/icons/check";
+import { set } from "lodash";
+import toast from "react-hot-toast";
 
 interface ShareButtonProps {
   title?: string;
@@ -79,10 +81,22 @@ const ShareButton: React.FC<ShareButtonProps> = ({
       text: text,
       url: url,
     };
-    if (isWebShareSupported(data)) {
-      await window.navigator.share(data);
-    } else {
-      setIsOpen(true);
+    if (navigator.share === undefined) {
+      toast.error("Navigator share is undefined");
+    }
+    try {
+      if (navigator.canShare && navigator.canShare(data)) {
+        navigator
+          .share(data)
+          .then(() => console.info("Shared successful."))
+          .catch((error) => {
+            console.error("Sharing failed ..", error);
+          });
+      } else {
+        setIsOpen(true);
+      }
+    } catch (error) {
+      console.error("error: ", error);
     }
   };
 
