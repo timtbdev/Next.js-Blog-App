@@ -75,7 +75,7 @@ const LoginButton = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <div className="mt-3 flex sm:ml-4 sm:mt-0">
+        <div className="flex sm:ml-4 sm:mt-0">
           <button type="button">
             <LoginIcon className="h-10 w-10" />
           </button>

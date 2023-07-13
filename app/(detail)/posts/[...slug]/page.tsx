@@ -2,7 +2,7 @@ import { ReportView } from "@/components/post/post-view";
 import PostAudioPlayer from "@/components/post/post-audio-player";
 import BlurImage from "@/components/shared/blur-image";
 import ScrollUpButton from "@/components/buttons/scroll-up-button";
-import { getOgImagePostUrl, placeholderBlurhash } from "@/lib/utils";
+import { getOgImagePostUrl, getUrl, placeholderBlurhash } from "@/lib/utils";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import supabase from "@/utils/supabase-server";
@@ -58,7 +58,7 @@ export async function generateMetadata({
       title: post.title as string,
       description: post.description as string,
       type: "article",
-      url: `${process.env.NEXT_PUBLIC_APP_URL}${post.slug}`,
+      url: `${getUrl()}${post.slug}`,
       images: [
         {
           url: getOgImagePostUrl(
@@ -136,7 +136,7 @@ export default async function PostPage({ params }: PostPageProps) {
                           <p>{post.quote}</p>
                         </blockquote>
                       </div>
-                      <div className="col-end-1 w-16 lg:row-span-4 lg:w-72">
+                      <div className="col-end-1 w-28 lg:row-span-4 lg:w-72">
                         <BlurImage
                           src={post.image as string}
                           height={288}
@@ -190,9 +190,7 @@ export default async function PostPage({ params }: PostPageProps) {
         <PostFloatingBar
           title={post.title as string}
           text={post.description as string}
-          url={`${process.env.NEXT_PUBLIC_APP_URL}${encodeURIComponent(
-            `/posts/${post.slug}`
-          )}`}
+          url={`${getUrl()}${encodeURIComponent(`/posts/${post.slug}`)}`}
           views={views}
         />
       </div>

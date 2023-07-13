@@ -6,6 +6,7 @@ import { Analytics as VercelAnalytics } from "@vercel/analytics/react";
 import { Metadata } from "next";
 import { JetBrains_Mono, Manrope } from "next/font/google";
 import { Toaster } from "react-hot-toast";
+import { getUrl } from "@/lib/utils";
 
 const fontSans = JetBrains_Mono({
   subsets: ["latin"],
@@ -43,7 +44,7 @@ export const metadata: Metadata = {
     address: false,
     telephone: false,
   },
-  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || ""),
+  metadataBase: new URL(getUrl()),
   alternates: {
     canonical: "/",
   },
@@ -91,12 +92,12 @@ export const metadata: Metadata = {
     ],
   },
 
-  manifest: `${process.env.NEXT_PUBLIC_APP_URL}/favicons/manifest.json`,
+  manifest: `${getUrl()}/favicons/manifest.json`,
 
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: process.env.NEXT_PUBLIC_APP_URL,
+    url: getUrl(),
     title: metaData.title,
     description: metaData.description,
     siteName: metaData.title,

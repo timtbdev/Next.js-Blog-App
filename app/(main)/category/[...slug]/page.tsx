@@ -5,7 +5,7 @@ import supabase from "@/utils/supabase-server";
 import { PostWithCategoryWithAuthor } from "@/types/collection";
 import { Metadata } from "next";
 import { metaData } from "@/config/meta";
-import { getOgImageUrl } from "@/lib/utils";
+import { getOgImageUrl, getUrl } from "@/lib/utils";
 import { SiteEmpty } from "@/components/site/site-empty";
 import PostItem from "@/components/post/post-item";
 import { v4 } from "uuid";
@@ -58,7 +58,7 @@ export async function generateMetadata({
       title: category?.title,
       description: metaData.absoluteTitle,
       type: "article",
-      url: `${process.env.NEXT_PUBLIC_APP_URL}${category?.slug}`,
+      url: `${getUrl()}${category?.slug}`,
       images: [
         {
           url: getOgImageUrl(

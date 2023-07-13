@@ -27,7 +27,7 @@ export function getOgImageUrl(
     // Joining a multiline string for readability.
   ].join("");
 
-  return `${process.env.NEXT_PUBLIC_APP_URL}/api/og${uri}`;
+  return `${getUrl()}/api/og${uri}`;
 }
 
 export function getOgImagePostUrl(
@@ -41,18 +41,14 @@ export function getOgImagePostUrl(
   const uri = [
     `?title=${encodeURIComponent(title)}`,
     `&year=${encodeURIComponent(year)}`,
-    `&image=${encodeURIComponent(
-      `${process.env.NEXT_PUBLIC_APP_URL}${image}`
-    )}`,
+    `&image=${encodeURIComponent(`${getUrl()}${image}`)}`,
     `&name=${encodeURIComponent(name)}`,
-    `&avatar=${encodeURIComponent(
-      `${process.env.NEXT_PUBLIC_APP_URL}${avatar}`
-    )}`,
+    `&avatar=${encodeURIComponent(`${getUrl()}${avatar}`)}`,
     `&job=${encodeURIComponent(job)}`,
     // Joining a multiline string for readability.
   ].join("");
 
-  return `${process.env.NEXT_PUBLIC_APP_URL}/api/og-post${uri}`;
+  return `${getUrl()}/api/og-post${uri}`;
 }
 
 // Blurhash for Next.js Image Component
@@ -90,4 +86,12 @@ export function countLines(el: HTMLElement): number {
   );
   const lines = divHeight / lineHeight;
   return lines;
+}
+
+export function getUrl() {
+  if (process.env.NODE_ENV === "development") {
+    return process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
+  } else {
+    return process.env.NEXT_PUBLIC_WEB_URL || "https://ub.cafe";
+  }
 }
