@@ -1,5 +1,11 @@
 "use client";
-import React, { Fragment, ReactNode, useEffect, useState } from "react";
+import React, {
+  Fragment,
+  ReactNode,
+  useEffect,
+  useState,
+  useCallback,
+} from "react";
 import ShareSolid from "@/components/icons/share-solid";
 import ShareOutline from "@/components/icons/share-outline";
 import { Dialog, Transition } from "@headlessui/react";
@@ -56,7 +62,7 @@ const ShareButton: React.FC<ShareButtonProps> = ({
   const onMouseEnter = () => setIsHovered(true);
   const onMouseLeave = () => setIsHovered(false);
 
-  const onClick = async () => {
+  const handleOnClick = useCallback(async () => {
     if (window.navigator.share) {
       try {
         await window.navigator.share({
@@ -70,13 +76,29 @@ const ShareButton: React.FC<ShareButtonProps> = ({
     } else {
       setIsOpen(true);
     }
-  };
+  }, [title, text, url]);
+
+  // const onClick = async () => {
+  //   if (window.navigator.share) {
+  //     try {
+  //       await window.navigator.share({
+  //         title: title,
+  //         text: text,
+  //         url: url,
+  //       });
+  //     } catch (e) {
+  //       console.warn(e);
+  //     }
+  //   } else {
+  //     setIsOpen(true);
+  //   }
+  // };
 
   return (
     <>
       <button
         type="button"
-        onClick={onClick}
+        onClick={handleOnClick}
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
         className="relative inline-flex items-center gap-x-1.5 px-3 py-2 border-[1.5px] border-gray-300 focus:z-10 bg-gradient-to-t from-gray-200 via-gray-100 to-gray-50 shadow-md shadow-black/5 transition duration-200 hover:bg-gradient-to-tr hover:from-gray-200 hover:via-gray-100 hover:to-gray-50 active:scale-[96%]"
