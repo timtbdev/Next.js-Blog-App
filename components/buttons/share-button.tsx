@@ -76,8 +76,8 @@ const ShareButton: React.FC<ShareButtonProps> = ({
   };
 
   const onClick = async () => {
-    if (isWebShareSupported({ title, text, url })) {
-      toast.success("Хуваалцлаа");
+    if (window.navigator.share) {
+      toast.success("Supported");
       try {
         await window.navigator.share({ title, text, url });
       } catch (err) {
@@ -85,6 +85,7 @@ const ShareButton: React.FC<ShareButtonProps> = ({
         toast.error(JSON.stringify(err));
       }
     } else {
+      toast.error("Not supported");
       setIsOpen(true);
     }
   };
