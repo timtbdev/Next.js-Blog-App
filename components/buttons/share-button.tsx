@@ -79,10 +79,11 @@ const ShareButton: React.FC<ShareButtonProps> = ({
     if (window.navigator.share) {
       toast.success("Supported");
       try {
+        toast.success("Sharing");
         await window.navigator.share({ title, text, url });
-      } catch (err) {
-        console.error(err);
-        toast.error(JSON.stringify(err));
+      } catch (error) {
+        console.error(error);
+        toast.error(JSON.stringify(error));
       }
     } else {
       toast.error("Not supported");
