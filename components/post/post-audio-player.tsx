@@ -2,7 +2,6 @@
 
 import { HeadphonesIcon } from "lucide-react";
 import dynamic from "next/dynamic";
-import Head from "next/head";
 import React from "react";
 
 const ReactPlayer = dynamic(() => import("react-player/lazy"), { ssr: false });

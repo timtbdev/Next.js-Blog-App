@@ -9,6 +9,8 @@ import { PostWithCategoryWithAuthor } from "@/types/collection";
 import { metaData } from "@/config/meta";
 import PostFloatingBar from "@/components/post/post-floating-bar";
 import { Redis } from "@upstash/redis";
+import { Scroll } from "lucide-react";
+import ScrollUpButton from "@/components/buttons/scroll-up-button";
 
 const redis = Redis.fromEnv();
 export const revalidate = 60;
@@ -171,6 +173,16 @@ export default async function PostPage({ params }: PostPageProps) {
                   </div>
                 </section>
                 <div className="mx-auto">
+                  <PostFloatingBar
+                    title={post.title as string}
+                    text={post.description as string}
+                    url={`${getUrl()}${encodeURIComponent(
+                      `/posts/${post.slug}`
+                    )}`}
+                    views={views}
+                  />
+                </div>
+                <div className="mx-auto">
                   <PostAudioPlayer audio={post.audio as string} />
                 </div>
               </div>
@@ -181,16 +193,20 @@ export default async function PostPage({ params }: PostPageProps) {
                   dangerouslySetInnerHTML={{ __html: post.content || "" }}
                 />
               </div>
+              <div className="mx-auto mt-5">
+                <PostFloatingBar
+                  title={post.title as string}
+                  text={post.description as string}
+                  url={`${getUrl()}${encodeURIComponent(
+                    `/posts/${post.slug}`
+                  )}`}
+                  views={views}
+                />
+              </div>
             </div>
           </div>
         </div>
-
-        <PostFloatingBar
-          title={post.title as string}
-          text={post.description as string}
-          url={`${getUrl()}${encodeURIComponent(`/posts/${post.slug}`)}`}
-          views={views}
-        />
+        <ScrollUpButton />
       </div>
     </>
   );

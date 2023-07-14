@@ -1,17 +1,10 @@
 "use client";
-import React, {
-  Fragment,
-  ReactNode,
-  useEffect,
-  useState,
-  useCallback,
-  useMemo,
-} from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import ShareSolid from "@/components/icons/share-solid";
 import ShareOutline from "@/components/icons/share-outline";
 import { Dialog, Transition } from "@headlessui/react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Check, Copy, Mail, XCircle } from "lucide-react";
+import { XCircle } from "lucide-react";
 import Facebook from "@/components/icons/facebook";
 import Twitter from "@/components/icons/twitter";
 import LinkedIn from "@/components/icons/linkedin";
@@ -96,13 +89,14 @@ const ShareButton: React.FC<ShareButtonProps> = ({
         onClick={onClick}
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
-        className="relative inline-flex items-center gap-x-1.5 px-3 py-2 border-[1.5px] border-gray-300 focus:z-10 bg-gradient-to-t from-gray-200 via-gray-100 to-gray-50 shadow-md shadow-black/5 transition duration-200 hover:bg-gradient-to-tr hover:from-gray-200 hover:via-gray-100 hover:to-gray-50 active:scale-[96%]"
+        className="relative inline-flex items-center gap-x-1.5 rounded-r-md px-3 py-2 text-sm border-y-[1.5px] border-r-[1.5px] border-gray-300 focus:z-10 bg-gradient-to-t from-gray-200 via-gray-100 to-gray-50 shadow-md shadow-black/5 transition duration-200 hover:bg-gradient-to-tr hover:from-gray-200 hover:via-gray-100 hover:to-gray-50 active:scale-[96%]"
       >
         {isHovering ? (
           <ShareSolid className="-ml-0.5 h-5 w-5 text-gray-900" />
         ) : (
           <ShareOutline className="-ml-0.5 h-5 w-5 text-gray-400" />
         )}
+        Хуваалцах
       </button>
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog
