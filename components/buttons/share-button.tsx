@@ -65,6 +65,16 @@ const ShareButton: React.FC<ShareButtonProps> = ({
   const onMouseEnter = () => setIsHovered(true);
   const onMouseLeave = () => setIsHovered(false);
 
+  const isWebShareSupported = (data: ShareData) => {
+    // @ts-ignore we prefer to check if the api is really available
+    return (
+      window.navigator.canShare &&
+      // @ts-ignore we prefer to check if the api is really available
+      window.navigator.share &&
+      window.navigator.canShare(data)
+    );
+  };
+
   const shareData = useMemo(
     () => ({
       title: title,
@@ -75,7 +85,7 @@ const ShareButton: React.FC<ShareButtonProps> = ({
   );
 
   const handleOnClick = useCallback(async () => {
-    if (window.navigator.share) {
+    if (isWebShareSupported(shareData) && typeof window !== "undefined") {
       try {
         await window.navigator.share(shareData);
       } catch (e) {
