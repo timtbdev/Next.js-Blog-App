@@ -65,37 +65,35 @@ const ShareButton: React.FC<ShareButtonProps> = ({
   const onMouseEnter = () => setIsHovered(true);
   const onMouseLeave = () => setIsHovered(false);
 
-  const isWebShareSupported = (data: ShareData) => {
-    // @ts-ignore we prefer to check if the api is really available
-    return (
-      window.navigator.canShare &&
-      // @ts-ignore
-      window.navigator.share &&
-      window.navigator.canShare(data)
-    );
-  };
+  const shareData = useMemo(
+    () => ({
+      title: title,
+      text: text,
+      url: url || (typeof window !== "undefined" && window.location.href) || "",
+    }),
+    [title, text, url]
+  );
 
-  const onClick = async () => {
+  const handleOnClick = useCallback(async () => {
     if (window.navigator.share) {
-      toast.success("Supported");
       try {
-        toast.success("Sharing");
-        await window.navigator.share({ title, text, url });
-      } catch (error) {
-        console.error(error);
-        toast.error(JSON.stringify(error));
+        await window.navigator.share(shareData);
+      } catch (e) {
+        console.warn(e);
+        if (e instanceof Error) {
+          toast.error(e.message);
+        }
       }
     } else {
-      toast.error("Not supported");
       setIsOpen(true);
     }
-  };
+  }, [shareData]);
 
   return (
     <>
       <button
         type="button"
-        onClick={onClick}
+        onClick={handleOnClick}
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
         className="relative inline-flex items-center gap-x-1.5 px-3 py-2 border-[1.5px] border-gray-300 focus:z-10 bg-gradient-to-t from-gray-200 via-gray-100 to-gray-50 shadow-md shadow-black/5 transition duration-200 hover:bg-gradient-to-tr hover:from-gray-200 hover:via-gray-100 hover:to-gray-50 active:scale-[96%]"
