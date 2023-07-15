@@ -11,6 +11,7 @@ import LinkedIn from "@/components/icons/linkedin";
 import Email from "@/components/icons/email";
 import CopyIcon from "@/components/icons/copy";
 import CheckIcon from "@/components/icons/check";
+import { is } from "date-fns/locale";
 
 interface ShareButtonProps {
   title?: string;
@@ -56,8 +57,17 @@ const ShareButton: React.FC<ShareButtonProps> = ({
   const onMouseEnter = () => setIsHovered(true);
   const onMouseLeave = () => setIsHovered(false);
 
+  const isWebShareSupported = (data: ShareData) => {
+    return (
+      window.navigator.canShare &&
+      // @ts-ignore
+      window.navigator.share &&
+      window.navigator.canShare(data)
+    );
+  };
+
   const onClick = async () => {
-    if (window.navigator.share) {
+    if (isWebShareSupported({ title, text, url })) {
       try {
         await window.navigator.share({
           title: title,
