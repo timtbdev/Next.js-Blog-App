@@ -5,10 +5,11 @@ import EyeSolid from "@/components/icons/eye-solid";
 import { toast } from "react-hot-toast";
 
 interface EyeButtonProps {
+  slug?: string;
   views?: number;
 }
 
-const EyeButton: React.FC<EyeButtonProps> = ({ views = 0 }) => {
+const EyeButton: React.FC<EyeButtonProps> = ({ slug = "", views = 0 }) => {
   const [isHovering, setIsHovered] = React.useState(false);
   const onMouseEnter = () => setIsHovered(true);
   const onMouseLeave = () => setIsHovered(false);

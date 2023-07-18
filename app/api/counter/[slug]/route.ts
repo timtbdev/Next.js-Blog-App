@@ -38,7 +38,6 @@ export async function POST(
       }
     }
     await kv.incr(["pageviews", "posts", params.slug].join(":"));
-    console.log("counted");
     return new Response(null, { status: 202 });
   } catch (error) {
     if (error instanceof z.ZodError) {

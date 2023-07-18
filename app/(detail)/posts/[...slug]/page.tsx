@@ -1,21 +1,23 @@
-import { ReportView } from "@/components/post/post-view";
 import PostAudioPlayer from "@/components/post/post-audio-player";
 import BlurImage from "@/components/shared/blur-image";
-import { getOgImagePostUrl, getUrl, placeholderBlurhash } from "@/lib/utils";
+import {
+  getHash,
+  getOgImagePostUrl,
+  getUrl,
+  placeholderBlurhash,
+} from "@/lib/utils";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import supabase from "@/utils/supabase-server";
 import { PostWithCategoryWithAuthor } from "@/types/collection";
 import { metaData } from "@/config/meta";
 import PostFloatingBar from "@/components/post/post-floating-bar";
-import { Redis } from "@upstash/redis";
-import { Scroll } from "lucide-react";
 import ScrollUpButton from "@/components/buttons/scroll-up-button";
+import { setPostViews } from "@/actions/set-post-views";
+import { kv } from "@vercel/kv";
+import { cookies } from "next/headers";
 
-const redis = Redis.fromEnv();
-export const revalidate = 60;
-
-export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 interface PostPageProps {
   params: {
@@ -96,9 +98,16 @@ export async function generateMetadata({
 
 export default async function PostPage({ params }: PostPageProps) {
   const post = await getPost(params);
-  const views =
-    (await redis.get<number>(["pageviews", "posts", params.slug].join(":"))) ??
-    0;
+  const slug = params?.slug?.join("/");
+  await setPostViews(slug);
+  const views = (await kv.get<number>(["views", "post", slug].join(":"))) ?? 0;
+
+  const likes = (await kv.get<number>(["likes", "post", slug].join(":"))) ?? 0;
+
+  // Check if the user has already liked the post.
+  const raw = cookies().get("user-ip")?.value ?? "";
+  const hashed = getHash(raw);
+  const ip = await kv.get(["likedIp", hashed, slug].join(":"));
 
   if (!post) {
     notFound();
@@ -110,7 +119,6 @@ export default async function PostPage({ params }: PostPageProps) {
         <div className="mx-auto max-w-7xl px-0 sm:px-8">
           <div className="mx-auto max-w-4xl">
             <div className="mx-auto max-w-4xl bg-white shadow-sm shadow-gray-300 ring-1 ring-black/5 rounded-lg px-6 sm:px-14 py-4 sm:py-10">
-              <ReportView slug={post.slug as string} />
               <div className="relative mx-auto max-w-4xl py-2">
                 <section className="isolate overflow-hidden bg-gray-100 mb-5 sm:mb-8 rounded-lg px-6 lg:px-8 shadow-sm shadow-gray-300 ring-1 ring-black/5">
                   <div className="relative mx-auto max-w-2xl py-4 sm:py-8 lg:max-w-4xl">
@@ -172,6 +180,7 @@ export default async function PostPage({ params }: PostPageProps) {
                     </figure>
                   </div>
                 </section>
+                {/* Top Floatingbar */}
                 <div className="mx-auto">
                   <PostFloatingBar
                     title={post.title as string}
@@ -179,7 +188,10 @@ export default async function PostPage({ params }: PostPageProps) {
                     url={`${getUrl()}${encodeURIComponent(
                       `/posts/${post.slug}`
                     )}`}
+                    slug={post.slug as string}
                     views={views}
+                    likes={likes}
+                    ip={ip as string}
                   />
                 </div>
                 <div className="mx-auto">
@@ -194,13 +206,17 @@ export default async function PostPage({ params }: PostPageProps) {
                 />
               </div>
               <div className="mx-auto mt-5">
+                {/* Bottom Floatingbar */}
                 <PostFloatingBar
                   title={post.title as string}
                   text={post.description as string}
                   url={`${getUrl()}${encodeURIComponent(
                     `/posts/${post.slug}`
                   )}`}
+                  slug={post.slug as string}
                   views={views}
+                  likes={likes}
+                  ip={ip as string}
                 />
               </div>
             </div>

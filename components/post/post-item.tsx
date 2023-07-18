@@ -17,7 +17,7 @@ interface PostItemProps {
 const PostItem: React.FC<PostItemProps> = async ({ post }) => {
   const readTime = readingTime(post.content as string);
   const views =
-    (await kv.get<number>(["pageviews", "posts", post.slug].join(":"))) ?? 0;
+    (await kv.get<number>(["views", "post", post.slug].join(":"))) ?? 0;
   return (
     <>
       <div className="group relative w-full rounded-2xl bg-white/20 p-2.5 shadow-sm shadow-black/5 ring-[0.8px] ring-black/5 transition duration-200 hover:-translate-y-1">

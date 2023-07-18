@@ -1,4 +1,6 @@
 import { ClassValue, clsx } from "clsx";
+import { createHash } from "crypto";
+import { NextRequest } from "next/server";
 import { twMerge } from "tailwind-merge";
 
 // Shadcn UI and for Tailwind CSS
@@ -94,4 +96,8 @@ export function getUrl() {
   } else {
     return process.env.NEXT_PUBLIC_WEB_URL || "https://ub.cafe";
   }
+}
+
+export function getHash(ip: string) {
+  return createHash("sha256").update(ip).digest("base64");
 }
