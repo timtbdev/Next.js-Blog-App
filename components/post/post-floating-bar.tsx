@@ -29,7 +29,7 @@ const PostFloatingBar: React.FC<PostFloatingBarProps> = ({
 }) => {
   return (
     <>
-      <div className="flex w-full justify-center mx-auto rounded-md">
+      <div className="grid grid-cols-2 lg:grid-cols-5 md:grid-cols-3 gap-4 w-full justify-start rounded-md">
         {ip ? (
           <UnlikeButton slug={slug} likes={likes} />
         ) : (

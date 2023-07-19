@@ -28,3 +28,8 @@ export const postClapsSchema = z.object({
     score: z.number().optional(),
   }),
 });
+
+export const commentSchema = z.object({
+  name: z.string().optional(),
+  comment: z.string(),
+});

@@ -16,6 +16,8 @@ import ScrollUpButton from "@/components/buttons/scroll-up-button";
 import { setPostViews } from "@/actions/set-post-views";
 import { kv } from "@vercel/kv";
 import { cookies } from "next/headers";
+import PostComment from "@/components/post/post-comment";
+import { Separator } from "@radix-ui/react-dropdown-menu";
 
 export const revalidate = 0;
 
@@ -205,7 +207,7 @@ export default async function PostPage({ params }: PostPageProps) {
                   dangerouslySetInnerHTML={{ __html: post.content || "" }}
                 />
               </div>
-              <div className="mx-auto mt-5">
+              <div className="mx-auto mt-10">
                 {/* Bottom Floatingbar */}
                 <PostFloatingBar
                   title={post.title as string}
@@ -221,6 +223,7 @@ export default async function PostPage({ params }: PostPageProps) {
               </div>
             </div>
           </div>
+          <PostComment />
         </div>
         <ScrollUpButton />
       </div>
