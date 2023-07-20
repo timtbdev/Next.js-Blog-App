@@ -39,17 +39,17 @@ const UnlikeButton: React.FC<UnlikeButtonProps> = ({
       }}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
-      className="relative inline-flex items-center mx-auto justify-center py-2 rounded-md border border-dashed border-slate-500/50 w-full"
+      className="group relative inline-flex items-center mx-auto py-2 justify-center rounded-md border border-black/5 w-full bg-white hover:bg-gray-50 hover:shadow-sm"
     >
       {isHovering ? (
         <HeartOutline className="-ml-0.5 h-5 w-5 text-gray-400" />
       ) : (
         <HeartSolid className="-ml-0.5 h-5 w-5 text-red-600" />
       )}
-      <span className="absolute -top-[10px] -right-[5px] font-semibold text-xs text-gray-600 bg-gray-300 rounded-full px-[4px]">
+      <span className="absolute -top-[10px] -right-[5px] font-semibold text-xs text-gray-500 bg-white rounded-full ring-1 ring-black/5 shadow-sm px-[4px]">
         {likes}
       </span>
-      <span className="ml-2 text-sm text-gray-400 hover:text-gray-900">
+      <span className="ml-2 text-sm text-gray-400 group-hover:text-gray-900">
         Unlike
       </span>
     </button>

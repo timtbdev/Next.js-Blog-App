@@ -85,6 +85,15 @@
 }
 
 @layer components {
+  .progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 10px;
+    background: var(--red);
+    transform-origin: 0%;
+  }
   .focus-ring-input {
     @apply focus:outline-none focus:ring-indigo-500 focus:border-indigo-500;
   }

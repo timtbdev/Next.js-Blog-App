@@ -18,6 +18,8 @@ import { kv } from "@vercel/kv";
 import { cookies } from "next/headers";
 import PostComment from "@/components/post/post-comment";
 import { Separator } from "@radix-ui/react-dropdown-menu";
+import { Comment } from "@/types/collection";
+import PostDetailProgressBar from "@/components/post/post-detail-progressbar";
 
 export const revalidate = 0;
 
@@ -98,12 +100,30 @@ export async function generateMetadata({
   };
 }
 
+async function getComments(slug: string) {
+  const { data: comments, error } = await supabase
+    .from("comments")
+    .select()
+    .eq("post_slug", slug)
+    .returns<Comment[]>();
+
+  if (error) {
+    console.error(error.message);
+  }
+  return comments;
+}
+
 export default async function PostPage({ params }: PostPageProps) {
+  // Get post data
   const post = await getPost(params);
+  if (!post) {
+    notFound();
+  }
+  // Set post views
   const slug = params?.slug?.join("/");
   await setPostViews(slug);
   const views = (await kv.get<number>(["views", "post", slug].join(":"))) ?? 0;
-
+  // Get likes from KV
   const likes = (await kv.get<number>(["likes", "post", slug].join(":"))) ?? 0;
 
   // Check if the user has already liked the post.
@@ -111,12 +131,26 @@ export default async function PostPage({ params }: PostPageProps) {
   const hashed = getHash(raw);
   const ip = await kv.get(["likedIp", hashed, slug].join(":"));
 
-  if (!post) {
-    notFound();
+  // Check user logged in or not
+  let username = null;
+  let profileImage = null;
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+
+  if (session) {
+    username = session.user?.user_metadata.full_name;
+    profileImage =
+      session?.user?.user_metadata.picture ||
+      session?.user?.user_metadata.avatar_url;
   }
+
+  // Get comments
+  const comments = await getComments(slug);
 
   return (
     <>
+      <PostDetailProgressBar />
       <div className="bg-gray-100 py-3 min-h-full">
         <div className="mx-auto max-w-7xl px-0 sm:px-8">
           <div className="mx-auto max-w-4xl">
@@ -163,20 +197,22 @@ export default async function PostPage({ params }: PostPageProps) {
                         <div className="flex flex-row items-center">
                           <BlurImage
                             src={post.authors?.image as string}
-                            height={35}
-                            width={35}
+                            height={40}
+                            width={40}
                             alt={(post.authors?.name as string) || "Avatar"}
-                            className="flex h-[35px] w-[35px] object-cover rounded-full shadow-sm"
+                            className="flex h-[40px] w-[40px] object-cover rounded-full shadow-sm"
                             priority
                             placeholder="blur"
                             blurDataURL={placeholderBlurhash}
                           />
-                          <span className="flex ml-2 font-semibold text-gray-900">
-                            {post.authors?.name}
-                          </span>
-                        </div>
-                        <div className="mt-1 text-gray-500">
-                          {post.authors?.title}
+                          <div className="flex flex-col ml-2">
+                            <span className="flex font-semibold text-sm tracking-tight [word-spacing:-2px] text-gray-900">
+                              {post.authors?.name}
+                            </span>
+                            <span className="flex text-gray-500 text-sm tracking-tight [word-spacing:-3px]">
+                              {post.authors?.title}
+                            </span>
+                          </div>
                         </div>
                       </figcaption>
                     </figure>
@@ -223,7 +259,12 @@ export default async function PostPage({ params }: PostPageProps) {
               </div>
             </div>
           </div>
-          <PostComment />
+          <PostComment
+            slug={post.slug as string}
+            username={username}
+            profileImage={profileImage}
+            comments={comments as Comment[]}
+          />
         </div>
         <ScrollUpButton />
       </div>

@@ -1,6 +1,10 @@
 import React from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
+import { format, parseISO } from "date-fns";
+import { CalendarDaysIcon, ThumbsDownIcon, ThumbsUpIcon } from "lucide-react";
+import CommentLikeButton from "@/components/buttons/comment-like-button";
+import CommentUnLikeButton from "@/components/buttons/comment-unlike-button";
 
 interface CommentItemProps {
   id: string;
@@ -20,7 +24,7 @@ const CommentItem: React.FC<CommentItemProps> = ({
     <div className="flex flex-col my-6 text-sm bg-white ring-1 ring-black/5 shadow-sm rounded-md p-4 text-gray-500">
       <div className="flex-1 inline-flex py-2 gap-x-2">
         <Avatar>
-          <AvatarImage src="" alt="@shadcn" />
+          <AvatarImage src="" alt="Avatar" />
           <AvatarFallback>
             <span className="inline-block h-full w-full overflow-hidden rounded-full bg-gray-100">
               <svg
@@ -35,7 +39,13 @@ const CommentItem: React.FC<CommentItemProps> = ({
         </Avatar>
         <div className="flex-1">
           <h3 className="font-medium text-gray-900">{name}</h3>
-          <p>{date}</p>
+
+          <p className="inline-flex items-center">
+            <CalendarDaysIcon className="h-[14px] w-[14px] mr-1" />
+            <span className="text-sm tex-gray-400">
+              {format(parseISO(date), "yyyy-MM-dd")}
+            </span>
+          </p>
         </div>
       </div>
       <Separator className="mt-2 mb-4" />
@@ -43,6 +53,18 @@ const CommentItem: React.FC<CommentItemProps> = ({
         className="prose prose-sm max-w-none text-gray-500"
         dangerouslySetInnerHTML={{ __html: comment }}
       />
+      <div className="flex infline-flex justify-start mt-5">
+        <CommentLikeButton />
+        <CommentUnLikeButton />
+        {/* <button className="flex justify-center rounded-full px-2 py-1 bg-white hover:bg-gray-50">
+          <ThumbsUpIcon className="h-4 w-4 text-gray-400" />
+          <span className="ml-1 text-gray-400 text-xs justify-center">0</span>
+        </button> */}
+        {/* <button className="ml-2 flex justify-center rounded-full px-2 py-1 bg-white hover:bg-gray-50">
+          <ThumbsDownIcon className="h-4 w-4 text-gray-400" />
+          <span className="ml-1 text-gray-400 text-xs">0</span>
+        </button> */}
+      </div>
     </div>
   );
 };

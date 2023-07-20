@@ -79,6 +79,40 @@ export interface Database {
         }
         Relationships: []
       }
+      comments: {
+        Row: {
+          comment: string | null
+          created_at: string | null
+          id: string
+          image: string | null
+          post_slug: string | null
+          username: string | null
+        }
+        Insert: {
+          comment?: string | null
+          created_at?: string | null
+          id?: string
+          image?: string | null
+          post_slug?: string | null
+          username?: string | null
+        }
+        Update: {
+          comment?: string | null
+          created_at?: string | null
+          id?: string
+          image?: string | null
+          post_slug?: string | null
+          username?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "comments_post_slug_fkey"
+            columns: ["post_slug"]
+            referencedRelation: "posts"
+            referencedColumns: ["slug"]
+          }
+        ]
+      }
       posts: {
         Row: {
           audio: string | null
@@ -136,6 +170,40 @@ export interface Database {
             foreignKeyName: "posts_category_id_fkey"
             columns: ["category_id"]
             referencedRelation: "categories"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          full_name: string | null
+          id: string
+          updated_at: string | null
+          username: string | null
+          website: string | null
+        }
+        Insert: {
+          avatar_url?: string | null
+          full_name?: string | null
+          id: string
+          updated_at?: string | null
+          username?: string | null
+          website?: string | null
+        }
+        Update: {
+          avatar_url?: string | null
+          full_name?: string | null
+          id?: string
+          updated_at?: string | null
+          username?: string | null
+          website?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "profiles_id_fkey"
+            columns: ["id"]
+            referencedRelation: "users"
             referencedColumns: ["id"]
           }
         ]

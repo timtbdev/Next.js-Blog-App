@@ -9,11 +9,11 @@ const ScrollUpButton = () => {
     <>
       <ScrollToTop
         style={{
-          height: "45px",
-          width: "45px",
-          borderRadius: "10%",
+          height: "40px",
+          width: "40px",
+          borderRadius: "50%",
         }}
-        className="items-center justify-center !ring-[1.5px] !ring-gray-300 shadow-sm bg-gradient-to-t from-gray-200 via-gray-100 to-gray-50 text-gray-400 transition duration-200 hover:bg-gradient-to-tr hover:from-gray-200 hover:via-gray-100 hover:to-gray-50 active:scale-[96%] active:ring-black/20"
+        className="items-center justify-center !ring-[1.5px] !ring-black/5 !shadow-sm bg-gradient-to-t from-gray-200 via-gray-100 to-gray-50 text-gray-400 transition duration-200 hover:bg-gradient-to-tr hover:from-gray-200 hover:via-gray-100 hover:to-gray-50 active:scale-[96%] active:ring-black/20"
         smooth
         component={
           <ArrowUpIcon className="h-5 w-5 text-gray-500/70 items-center justify-center mx-auto" />
