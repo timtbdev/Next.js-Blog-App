@@ -50,7 +50,7 @@ const PostItem: React.FC<PostItemProps> = async ({ post }) => {
                 <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-gray-900/10" />
               </div>
               <div>
-                {/* Desktop view */}
+                {/* Desktop category view */}
                 <div className="hidden sm:flex items-center gap-x-3 text-xs">
                   <span className="relative z-10 rounded-full bg-gray-100 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-200">
                     {post.categories?.title}
@@ -62,18 +62,21 @@ const PostItem: React.FC<PostItemProps> = async ({ post }) => {
                     <span className="absolute inset-0" />
                     {post.title}
                   </h3>
-                  {/* Mobile view */}
+                  {/* Mobile toobar view*/}
                   <div className="flex sm:hidden mt-2 items-center gap-x-3 text-xs">
+                    <div className="inline-flex items-center text-gray-500">
+                      <span className="relative z-10 rounded-full bg-gray-100 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-200">
+                        {post.categories?.title}
+                      </span>
+                    </div>
                     <div className="inline-flex items-center text-gray-500">
                       <CalendarIcon className="h-4 w-4" />
                       <span className="ml-1">
                         {format(parseISO(post.updated_at!), "yyyy-MM-dd")}
                       </span>
                     </div>
-                    <div className="inline-flex items-center text-gray-500">
-                      <EyeIcon className="h-4 w-4" />
-                      <span className="ml-1">{views}</span>
-                    </div>
+                  </div>
+                  <div className="flex sm:hidden mt-2 items-center gap-x-3 text-xs">
                     <div className="inline-flex items-center text-gray-500">
                       <Clock10Icon className="h-4 w-4" />
                       <span className="ml-1">
@@ -83,6 +86,10 @@ const PostItem: React.FC<PostItemProps> = async ({ post }) => {
                     <div className="inline-flex items-center text-gray-500">
                       <HeadphonesIcon className="h-4 w-4" />
                       <span className="ml-1">9м</span>
+                    </div>
+                    <div className="inline-flex items-center text-gray-500">
+                      <EyeIcon className="h-4 w-4" />
+                      <span className="ml-1">{views}</span>
                     </div>
                     <div className="inline-flex items-center text-gray-500">
                       <MessageCircleIcon className="h-4 w-4" />
@@ -96,7 +103,7 @@ const PostItem: React.FC<PostItemProps> = async ({ post }) => {
                   <p className="mt-3 text-sm leading-6 text-gray-600">
                     {post.description}
                   </p>
-                  {/* Desktop view */}
+                  {/* Desktop toolbar view */}
                   <div className="hidden sm:flex items-center mt-3 gap-x-3 text-xs">
                     <div className="inline-flex items-center text-gray-500">
                       <CalendarIcon className="h-4 w-4" />

@@ -36,7 +36,7 @@ const MobileNav: FC<MobileNavProps> = ({ fragment }) => {
                 )
               }
             >
-              <div className="group flex items-center gap-x-6 border-b border-dashed border-black/30 bg-gray-50 p-3 text-base font-semibold leading-7 text-gray-600 transition-colors hover:bg-gray-200">
+              <div className="group flex items-center gap-x-6 border-b border-dashed border-black/30 bg-gray-50 px-8 py-3 text-base font-semibold leading-7 text-gray-600 transition-colors hover:bg-gray-200">
                 <div className="flex h-11 w-11 flex-none items-center justify-center rounded-lg border border-black/10 bg-gray-100 shadow-md shadow-black/5 transition duration-200 group-hover:bg-gray-50">
                   <menu.icon
                     className="h-6 w-6 text-gray-600"

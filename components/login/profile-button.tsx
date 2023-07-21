@@ -42,7 +42,7 @@ const ProfileButton: FC<ProfileButtonProps> = ({ email, profileImageUrl }) => {
             <AvatarFallback>MN</AvatarFallback>
           </Avatar>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="w-56 font-mono">
+        <DropdownMenuContent className="w-56 font-sans">
           <DropdownMenuLabel>
             <div className="flex flex-col space-y-1">
               <p className="text-sm font-medium leading-none">{email}</p>
@@ -58,7 +58,6 @@ const ProfileButton: FC<ProfileButtonProps> = ({ email, profileImageUrl }) => {
           <DropdownMenuItem onClick={signOut}>
             <LogOut className="mr-2 h-4 w-4" />
             <span>{loginData.logOut}</span>
-            <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
