@@ -61,11 +61,11 @@ const SiteForm = () => {
 
   return (
     <div className="mx-auto max-w-3xl mt-10 flex-col justify-center">
-      <div className="relative mx-auto p-5 items-center justify-center rounded-xl border border-dashed border-slate-500/50 sm:flex-row">
+      <div className="relative mx-auto p-5 items-center justify-center rounded-xl border border-black/5 sm:flex-row">
         <div className="text-normal absolute left-2.5 top-0 -translate-y-1/2 bg-white px-2 font-normal text-slate-500">
-          <div className="inline-flex">
-            <MailIcon className="h-6 w-6 mr-2 text-gray-400" />
-            <span className="text-gray-400 tracking-tight [word-spacing:-5px] text-md">
+          <div className="inline-flex items-center">
+            <MailIcon className="h-4 w-4 mr-2 text-gray-400" />
+            <span className="text-gray-400 tracking-tight [word-spacing:-5px] text-sm">
               {siteForm.title}
             </span>
           </div>
@@ -107,9 +107,11 @@ const SiteForm = () => {
             </form>
           </Form>
         </div>
-        <div className="text-xs px-2 text-gray-400 inline-flex w-full mx-auto justify-center">
+        <div className="px-2 text-gray-400 items-center inline-flex w-full mx-auto justify-center">
           <AlertCircleIcon className="h-4 w-4 mr-1" />
-          {siteForm.warning}
+          <span className="text-sm tracking-tight [word-spacing:-3px]">
+            {siteForm.warning}
+          </span>
         </div>
       </div>
     </div>

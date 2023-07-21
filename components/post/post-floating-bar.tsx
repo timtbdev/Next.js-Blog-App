@@ -16,6 +16,7 @@ interface PostFloatingBarProps {
   views?: number;
   likes?: number;
   ip?: string;
+  totalComments?: number;
 }
 
 const PostFloatingBar: React.FC<PostFloatingBarProps> = ({
@@ -26,6 +27,7 @@ const PostFloatingBar: React.FC<PostFloatingBarProps> = ({
   views = 0,
   likes = 0,
   ip,
+  totalComments = 0,
 }) => {
   return (
     <>
@@ -36,7 +38,7 @@ const PostFloatingBar: React.FC<PostFloatingBarProps> = ({
           <LikeButton slug={slug} likes={likes} />
         )}
         <EyeButton slug={slug} views={views} />
-        <CommentButton />
+        <CommentButton totalComments={totalComments} />
         <BoomarkButton />
         <ShareButton title={title} text={text} url={url} />
       </div>

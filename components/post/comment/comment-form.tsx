@@ -43,6 +43,12 @@ interface CommentFormProps {
   profileImage?: string;
 }
 
+// This can come from your database or API.
+const defaultValues: Partial<FormValues> = {
+  username: "Зочин",
+  comment: "Таны сэтгэгдэл",
+};
+
 const CommentForm: React.FC<CommentFormProps> = ({
   slug,
   username,
@@ -53,6 +59,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
+    defaultValues,
     mode: "onChange",
   });
 

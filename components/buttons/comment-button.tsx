@@ -4,7 +4,11 @@ import MessageOutline from "@/components/icons/message-outline";
 import MessageSolid from "@/components/icons/message-solid";
 import ScrollIntoView from "react-scroll-into-view";
 
-const CommentButton = () => {
+interface CommentButtonProps {
+  totalComments?: number;
+}
+
+const CommentButton: React.FC<CommentButtonProps> = ({ totalComments = 0 }) => {
   const [isHovering, setIsHovered] = React.useState(false);
   const onMouseEnter = () => setIsHovered(true);
   const onMouseLeave = () => setIsHovered(false);
@@ -23,7 +27,7 @@ const CommentButton = () => {
           <MessageOutline className="-ml-0.5 h-5 w-5 text-gray-400" />
         )}
         <span className="absolute -top-[10px] -right-[5px] font-semibold text-xs text-gray-500 bg-white rounded-full ring-1 ring-black/5 shadow-sm px-[4px]">
-          66
+          {totalComments}
         </span>
         <span className="ml-2 text-sm text-gray-400 group-hover:text-gray-900 overflow-hidden">
           Сэтгэгдэл

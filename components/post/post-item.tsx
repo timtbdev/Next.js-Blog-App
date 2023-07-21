@@ -1,7 +1,14 @@
 import BlurImage from "@/components/shared/blur-image";
 import { getMinutes, placeholderBlurhash } from "@/lib/utils";
 import { format, parseISO } from "date-fns";
-import { Clock10Icon, HeadphonesIcon, EyeIcon } from "lucide-react";
+import {
+  Clock10Icon,
+  HeadphonesIcon,
+  EyeIcon,
+  CalendarIcon,
+  MessageCircleIcon,
+  HeartIcon,
+} from "lucide-react";
 import Link from "next/link";
 import React from "react";
 import { PostWithCategoryWithAuthor } from "@/types/collection";
@@ -18,6 +25,10 @@ const PostItem: React.FC<PostItemProps> = async ({ post }) => {
   const readTime = readingTime(post.content as string);
   const views =
     (await kv.get<number>(["views", "post", post.slug].join(":"))) ?? 0;
+  const comments =
+    (await kv.get<number>(["comments", "post", post.slug].join(":"))) ?? 0;
+  const likes =
+    (await kv.get<number>(["likes", "post", post.slug].join(":"))) ?? 0;
   return (
     <>
       <div className="group relative w-full rounded-2xl bg-white/20 p-2.5 shadow-sm shadow-black/5 ring-[0.8px] ring-black/5 transition duration-200 hover:-translate-y-1">
@@ -44,21 +55,6 @@ const PostItem: React.FC<PostItemProps> = async ({ post }) => {
                   <span className="relative z-10 rounded-full bg-gray-100 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-200">
                     {post.categories?.title}
                   </span>
-                  <p className="text-gray-500">
-                    {format(parseISO(post.updated_at!), "yyyy-MM-dd")}
-                  </p>
-                  <div className="inline-flex items-center text-gray-500">
-                    <EyeIcon className="h-4 w-4" />
-                    <span className="ml-1">{views}</span>
-                  </div>
-                  <div className="inline-flex items-center text-gray-500">
-                    <Clock10Icon className="h-3 w-3" />
-                    <span className="ml-1">{getMinutes(readTime.minutes)}</span>
-                  </div>
-                  <div className="inline-flex items-center text-gray-500">
-                    <HeadphonesIcon className="h-3 w-3" />
-                    <span className="ml-1">9м</span>
-                  </div>
                 </div>
 
                 <div className="group relative max-w-xl">
@@ -68,47 +64,91 @@ const PostItem: React.FC<PostItemProps> = async ({ post }) => {
                   </h3>
                   {/* Mobile view */}
                   <div className="flex sm:hidden mt-2 items-center gap-x-3 text-xs">
-                    <p className="text-gray-500">
-                      {format(parseISO(post.updated_at!), "yyyy-MM-dd")}
-                    </p>
+                    <div className="inline-flex items-center text-gray-500">
+                      <CalendarIcon className="h-4 w-4" />
+                      <span className="ml-1">
+                        {format(parseISO(post.updated_at!), "yyyy-MM-dd")}
+                      </span>
+                    </div>
                     <div className="inline-flex items-center text-gray-500">
                       <EyeIcon className="h-4 w-4" />
                       <span className="ml-1">{views}</span>
                     </div>
                     <div className="inline-flex items-center text-gray-500">
-                      <Clock10Icon className="h-3 w-3" />
+                      <Clock10Icon className="h-4 w-4" />
                       <span className="ml-1">
                         {getMinutes(readTime.minutes)}
                       </span>
                     </div>
                     <div className="inline-flex items-center text-gray-500">
-                      <HeadphonesIcon className="h-3 w-3" />
+                      <HeadphonesIcon className="h-4 w-4" />
                       <span className="ml-1">9м</span>
                     </div>
+                    <div className="inline-flex items-center text-gray-500">
+                      <MessageCircleIcon className="h-4 w-4" />
+                      <span className="ml-1">{comments}</span>
+                    </div>
+                    <div className="inline-flex items-center text-gray-500">
+                      <HeartIcon className="h-4 w-4" />
+                      <span className="ml-1 text-sm">{likes}</span>
+                    </div>
                   </div>
-                  <p className="mt-5 text-sm leading-6 text-gray-600">
+                  <p className="mt-3 text-sm leading-6 text-gray-600">
                     {post.description}
                   </p>
+                  {/* Desktop view */}
+                  <div className="hidden sm:flex items-center mt-3 gap-x-3 text-xs">
+                    <div className="inline-flex items-center text-gray-500">
+                      <CalendarIcon className="h-4 w-4" />
+                      <span className="ml-1">
+                        {format(parseISO(post.updated_at!), "yyyy-MM-dd")}
+                      </span>
+                    </div>
+                    <div className="inline-flex items-center text-gray-500">
+                      <EyeIcon className="h-4 w-4" />
+                      <span className="ml-1">{views}</span>
+                    </div>
+                    <div className="inline-flex items-center text-gray-500">
+                      <Clock10Icon className="h-4 w-4" />
+                      <span className="ml-1">
+                        {getMinutes(readTime.minutes)}
+                      </span>
+                    </div>
+                    <div className="inline-flex items-center text-gray-500">
+                      <HeadphonesIcon className="h-4 w-4" />
+                      <span className="ml-1">9м</span>
+                    </div>
+                    <div className="inline-flex items-center text-gray-500">
+                      <MessageCircleIcon className="h-4 w-4" />
+                      <span className="ml-1">{comments}</span>
+                    </div>
+                    <div className="inline-flex items-center text-gray-500">
+                      <HeartIcon className="h-4 w-4" />
+                      <span className="ml-1">{likes}</span>
+                    </div>
+                  </div>
                 </div>
 
-                <div className="mt-6 flex border-t border-gray-900/5 pt-6">
+                <div className="mt-3 flex border-t border-gray-900/5 pt-2">
                   <div className="relative flex items-center gap-x-4">
                     <BlurImage
                       src={(post.authors.image as string) || ""}
                       alt={post.authors?.name ?? "Avatar"}
-                      height={40}
-                      width={40}
+                      height={45}
+                      width={45}
                       priority
-                      className="h-10 w-10 object-cover rounded-full bg-gray-50"
+                      className="h-[45px] w-[45px] object-cover rounded-full bg-gray-50"
                       placeholder="blur"
                       blurDataURL={placeholderBlurhash}
                     />
                     <div className="text-sm leading-6">
                       <p className="font-semibold text-gray-900">
-                        <span className="absolute inset-0" />
+                        <span className="absolute inset-0 tracking-tight [word-spacing:-2px]" />
                         {post.authors?.name}
                       </p>
-                      <p className="text-gray-600">{post.authors?.title}</p>
+                      <p className="text-gray-600 tracking-tight [word-spacing:-3px]">
+                        {post.authors?.title}
+                      </p>
                     </div>
                   </div>
                 </div>

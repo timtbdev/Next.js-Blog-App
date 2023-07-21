@@ -3,11 +3,10 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 import { format, parseISO } from "date-fns";
 import { CalendarDaysIcon, ThumbsDownIcon, ThumbsUpIcon } from "lucide-react";
-import CommentLikeButton from "@/components/buttons/comment-like-button";
-import CommentUnLikeButton from "@/components/buttons/comment-unlike-button";
 
 interface CommentItemProps {
   id: string;
+  slug?: string;
   name: string;
   image?: string;
   comment: string;
@@ -15,7 +14,9 @@ interface CommentItemProps {
 }
 
 const CommentItem: React.FC<CommentItemProps> = ({
+  id,
   name,
+  slug = "",
   image,
   comment,
   date,
@@ -53,18 +54,6 @@ const CommentItem: React.FC<CommentItemProps> = ({
         className="prose prose-sm max-w-none text-gray-500"
         dangerouslySetInnerHTML={{ __html: comment }}
       />
-      <div className="flex infline-flex justify-start mt-5">
-        <CommentLikeButton />
-        <CommentUnLikeButton />
-        {/* <button className="flex justify-center rounded-full px-2 py-1 bg-white hover:bg-gray-50">
-          <ThumbsUpIcon className="h-4 w-4 text-gray-400" />
-          <span className="ml-1 text-gray-400 text-xs justify-center">0</span>
-        </button> */}
-        {/* <button className="ml-2 flex justify-center rounded-full px-2 py-1 bg-white hover:bg-gray-50">
-          <ThumbsDownIcon className="h-4 w-4 text-gray-400" />
-          <span className="ml-1 text-gray-400 text-xs">0</span>
-        </button> */}
-      </div>
     </div>
   );
 };

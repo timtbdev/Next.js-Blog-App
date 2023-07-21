@@ -2,7 +2,6 @@
 import React from "react";
 import CommentItem from "@/components/post/comment/comment-item";
 import { v4 } from "uuid";
-import { Post } from "@/types/collection";
 import CommentForm from "@/components/post/comment/comment-form";
 import { Comment } from "@/types/collection";
 
@@ -35,6 +34,7 @@ const PostComment: React.FC<PostCommentProps> = ({
             <CommentItem
               key={v4()}
               id={comment.id.toString()}
+              slug={slug}
               name={comment.username as string}
               image={comment.image as string}
               comment={comment.comment as string}

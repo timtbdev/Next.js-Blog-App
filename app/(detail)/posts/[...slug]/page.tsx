@@ -105,6 +105,7 @@ async function getComments(slug: string) {
     .from("comments")
     .select()
     .eq("post_slug", slug)
+    .order("created_at", { ascending: true })
     .returns<Comment[]>();
 
   if (error) {
@@ -147,6 +148,8 @@ export default async function PostPage({ params }: PostPageProps) {
 
   // Get comments
   const comments = await getComments(slug);
+  const totalComments =
+    (await kv.get<number>(["comments", "post", slug].join(":"))) ?? 0;
 
   return (
     <>
@@ -230,6 +233,7 @@ export default async function PostPage({ params }: PostPageProps) {
                     views={views}
                     likes={likes}
                     ip={ip as string}
+                    totalComments={totalComments}
                   />
                 </div>
                 <div className="mx-auto">
@@ -255,6 +259,7 @@ export default async function PostPage({ params }: PostPageProps) {
                   views={views}
                   likes={likes}
                   ip={ip as string}
+                  totalComments={totalComments}
                 />
               </div>
             </div>
