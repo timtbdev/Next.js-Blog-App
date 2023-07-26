@@ -1,17 +1,18 @@
 "use client";
-import React, { Fragment, useEffect, useState } from "react";
-import ShareSolid from "@/components/icons/share-solid";
+
+import CheckIcon from "@/components/icons/check";
+import CopyIcon from "@/components/icons/copy";
+import Email from "@/components/icons/email";
+import Facebook from "@/components/icons/facebook";
+import LinkedIn from "@/components/icons/linkedin";
 import ShareOutline from "@/components/icons/share-outline";
+import ShareSolid from "@/components/icons/share-solid";
+import Twitter from "@/components/icons/twitter";
+import { buttonConfig } from "@/config/buttons";
 import { Dialog, Transition } from "@headlessui/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { XCircle } from "lucide-react";
-import Facebook from "@/components/icons/facebook";
-import Twitter from "@/components/icons/twitter";
-import LinkedIn from "@/components/icons/linkedin";
-import Email from "@/components/icons/email";
-import CopyIcon from "@/components/icons/copy";
-import CheckIcon from "@/components/icons/check";
-import { is } from "date-fns/locale";
+import React, { Fragment, useEffect, useState } from "react";
 
 interface ShareButtonProps {
   title?: string;
@@ -89,7 +90,7 @@ const ShareButton: React.FC<ShareButtonProps> = ({
         onClick={onClick}
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
-        className="group relative inline-flex items-center mx-auto py-2 justify-center rounded-md border border-black/5 w-full bg-white hover:bg-gray-50 hover:shadow-sm"
+        className="group relative mx-auto inline-flex w-full items-center justify-center rounded-md border border-black/5 bg-white py-2 hover:bg-gray-50 hover:shadow-sm"
       >
         {isHovering ? (
           <ShareSolid className="-ml-0.5 h-5 w-5 text-gray-900" />
@@ -97,7 +98,7 @@ const ShareButton: React.FC<ShareButtonProps> = ({
           <ShareOutline className="-ml-0.5 h-5 w-5 text-gray-400" />
         )}
         <span className="ml-2 text-sm text-gray-400 group-hover:text-gray-900">
-          Хуваалцах
+          {buttonConfig.share}
         </span>
       </button>
       <Transition appear show={isOpen} as={Fragment}>
@@ -115,7 +116,7 @@ const ShareButton: React.FC<ShareButtonProps> = ({
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <div className="fixed inset-0 bg-base-900/80" />
+            <div className="bg-base-900/80 fixed inset-0" />
           </Transition.Child>
           <AnimatePresence>
             <motion.div
@@ -134,23 +135,23 @@ const ShareButton: React.FC<ShareButtonProps> = ({
                   leaveFrom="opacity-100 scale-100"
                   leaveTo="opacity-0 scale-95"
                 >
-                  <Dialog.Panel className="relative w-full font-sans max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all dark:bg-base-700">
+                  <Dialog.Panel className="dark:bg-base-700 relative w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle font-sans shadow-xl transition-all">
                     <Dialog.Title
                       as="h3"
-                      className="text-xl font-bold text-base-900 dark:text-base-50"
+                      className="text-base-900 dark:text-base-50 text-xl font-bold"
                     >
-                      Хуваалцах
+                      {buttonConfig.share}
                     </Dialog.Title>
-                    <Dialog.Description className="mt-2 text-base-700 dark:text-base-300">
+                    <Dialog.Description className="text-base-700 dark:text-base-300 mt-2">
                       {title}
                     </Dialog.Description>
 
-                    <ul className="mt-6 flex justify-around gap-2 text-base-500 dark:text-base-400">
+                    <ul className="text-base-500 dark:text-base-400 mt-6 flex justify-around gap-2">
                       <a
                         title={title}
                         target="_blank"
                         href={`https://twitter.com/intent/tweet?url=${url}&text=${encodeURIComponent(
-                          title
+                          title,
                         )}`}
                         rel="noopener noreferrer"
                         className="text-gray-400"
@@ -179,7 +180,7 @@ const ShareButton: React.FC<ShareButtonProps> = ({
                         title={title}
                         target="_blank"
                         href={`mailto:?subject=${encodeURIComponent(
-                          title
+                          title,
                         )}&body=${encodeURIComponent(text + "\n\n")}${url}`}
                         rel="noopener noreferrer"
                         className="text-gray-400"
@@ -190,7 +191,7 @@ const ShareButton: React.FC<ShareButtonProps> = ({
                       <CopyButton url={url} />
                     </ul>
                     <button
-                      className="group absolute top-4 right-4"
+                      className="group absolute right-4 top-4"
                       aria-label="Close"
                       onClick={() => setIsOpen(false)}
                     >

@@ -1,12 +1,20 @@
-import React from "react";
-import supabase from "@/utils/supabase-server";
+"use server";
+
 import LoginButton from "@/components/login/login-button";
 import ProfileButton from "@/components/login/profile-button";
+import supabase from "@/utils/supabase-server";
+import React from "react";
 
-const LoginMenu = async () => {
+async function getData() {
   const {
     data: { session },
   } = await supabase.auth.getSession();
+
+  return session;
+}
+
+const LoginMenu = async () => {
+  const session = await getData();
 
   const profileImageUrl =
     session?.user?.user_metadata.picture ||

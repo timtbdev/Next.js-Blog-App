@@ -10,11 +10,11 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { loginConfig } from "@/config/login";
 import { supabase } from "@/utils/supabase-client";
 import { LogOut, ShoppingBag, User } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React, { FC } from "react";
-import { loginData } from "@/config/login";
 
 interface ProfileButtonProps {
   email?: string;
@@ -52,12 +52,12 @@ const ProfileButton: FC<ProfileButtonProps> = ({ email, profileImageUrl }) => {
 
           <DropdownMenuItem onClick={() => router.push("/saved")}>
             <ShoppingBag className="mr-2 h-4 w-4" />
-            <span>{loginData.saved}</span>
+            <span>{loginConfig.saved}</span>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={signOut}>
             <LogOut className="mr-2 h-4 w-4" />
-            <span>{loginData.logOut}</span>
+            <span>{loginConfig.logOut}</span>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

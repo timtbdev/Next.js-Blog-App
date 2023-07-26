@@ -1,12 +1,11 @@
 import "@/styles/tailwind.css";
 import TwIndicator from "@/components/shared/tw-indicator";
 import { metaData } from "@/config/meta";
-import { cn, getOgImageUrl } from "@/lib/utils";
+import { cn, getOgImageUrl, getUrl } from "@/lib/utils";
 import { Analytics as VercelAnalytics } from "@vercel/analytics/react";
 import { Metadata } from "next";
 import { JetBrains_Mono, Manrope } from "next/font/google";
 import { Toaster } from "react-hot-toast";
-import { getUrl } from "@/lib/utils";
 
 const fontSans = JetBrains_Mono({
   subsets: ["latin"],
@@ -107,7 +106,7 @@ export const metadata: Metadata = {
           metaData.title,
           metaData.subTitle,
           metaData.tags,
-          "/"
+          "/",
         ),
         width: 1200,
         height: 630,
