@@ -26,6 +26,9 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import z from "zod";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 const FormSchema = z.object({
   email: z
     .string({
@@ -68,7 +71,7 @@ const LoginSection = () => {
         redirectTo: `${location.origin}/auth/callback`,
       },
     });
-    revalidatePath("/");
+    router.refresh();
   }
 
   async function signInWithGitHub() {
@@ -79,7 +82,7 @@ const LoginSection = () => {
         redirectTo: `${location.origin}/auth/callback`,
       },
     });
-    revalidatePath("/");
+    router.refresh();
   }
 
   async function signInWithFacebook() {
@@ -90,7 +93,7 @@ const LoginSection = () => {
         redirectTo: `${location.origin}/auth/callback`,
       },
     });
-    revalidatePath("/");
+    router.refresh();
   }
 
   async function signInWithEmail(formData: z.infer<typeof FormSchema>) {
@@ -104,7 +107,6 @@ const LoginSection = () => {
       console.error(error);
     } else {
       toast.success(loginConfig.emailSent);
-      revalidatePath("/");
     }
   }
 
