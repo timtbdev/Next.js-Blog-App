@@ -6,27 +6,25 @@ import React from "react";
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
-async function getData() {
-  "use server";
+async function getUser() {
   const {
-    data: { session },
-  } = await supabase.auth.getSession();
+    data: { user },
+  } = await supabase.auth.getUser();
 
-  return session;
+  return user;
 }
 
 const LoginMenu = async () => {
-  const session = await getData();
+  const user = await getUser();
 
   const profileImageUrl =
-    session?.user?.user_metadata.picture ||
-    session?.user?.user_metadata.avatar_url;
+    user?.user_metadata.picture || user?.user_metadata.avatar_url;
 
   return (
     <>
-      {session ? (
+      {user ? (
         <ProfileButton
-          email={session?.user?.user_metadata.email}
+          email={user?.user_metadata.email}
           profileImageUrl={profileImageUrl}
         />
       ) : (

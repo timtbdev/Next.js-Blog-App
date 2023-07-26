@@ -19,15 +19,11 @@ import { loginConfig } from "@/config/login";
 import { placeholderBlurhash } from "@/lib/utils";
 import { supabase } from "@/utils/supabase-client";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { revalidatePath } from "next/cache";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import z from "zod";
-
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
 
 const FormSchema = z.object({
   email: z
@@ -71,6 +67,7 @@ const LoginSection = () => {
         redirectTo: `${location.origin}/auth/callback`,
       },
     });
+    router.push("/");
     router.refresh();
   }
 
@@ -82,6 +79,7 @@ const LoginSection = () => {
         redirectTo: `${location.origin}/auth/callback`,
       },
     });
+    router.push("/");
     router.refresh();
   }
 
@@ -93,6 +91,7 @@ const LoginSection = () => {
         redirectTo: `${location.origin}/auth/callback`,
       },
     });
+    router.push("/");
     router.refresh();
   }
 
@@ -100,13 +99,15 @@ const LoginSection = () => {
     const { data, error } = await supabase.auth.signInWithOtp({
       email: formData.email,
       options: {
-        emailRedirectTo: "https://ub.cafe/auth/callback",
+        emailRedirectTo: `${location.origin}/auth/callback`,
       },
     });
     if (error) {
       console.error(error);
     } else {
       toast.success(loginConfig.emailSent);
+      router.push("/");
+      router.refresh();
     }
   }
 
