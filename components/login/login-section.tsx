@@ -19,6 +19,7 @@ import { loginConfig } from "@/config/login";
 import { placeholderBlurhash } from "@/lib/utils";
 import { supabase } from "@/utils/supabase-client";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { revalidatePath } from "next/cache";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { useForm } from "react-hook-form";
@@ -67,7 +68,7 @@ const LoginSection = () => {
         redirectTo: `${location.origin}/auth/callback`,
       },
     });
-    router.refresh();
+    revalidatePath("/");
   }
 
   async function signInWithGitHub() {
@@ -78,7 +79,7 @@ const LoginSection = () => {
         redirectTo: `${location.origin}/auth/callback`,
       },
     });
-    router.refresh();
+    revalidatePath("/");
   }
 
   async function signInWithFacebook() {
@@ -89,7 +90,7 @@ const LoginSection = () => {
         redirectTo: `${location.origin}/auth/callback`,
       },
     });
-    router.refresh();
+    revalidatePath("/");
   }
 
   async function signInWithEmail(formData: z.infer<typeof FormSchema>) {
@@ -103,6 +104,7 @@ const LoginSection = () => {
       console.error(error);
     } else {
       toast.success(loginConfig.emailSent);
+      revalidatePath("/");
     }
   }
 
