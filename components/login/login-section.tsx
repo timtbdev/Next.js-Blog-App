@@ -47,18 +47,6 @@ const LoginSection = () => {
     React.useState<boolean>(false);
   const router = useRouter();
 
-  React.useEffect(() => {
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((event, session) => {
-      router.refresh();
-    });
-
-    return () => {
-      subscription.unsubscribe();
-    };
-  });
-
   async function signInWithGoogle() {
     setSignInGoogleClicked(true);
     const { data, error } = await supabase.auth.signInWithOAuth({

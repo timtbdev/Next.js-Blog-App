@@ -1,31 +1,43 @@
+"use client";
+
 import LoginButton from "@/components/login/login-button";
 import ProfileButton from "@/components/login/profile-button";
-import supabase from "@/utils/supabase-server";
-import React from "react";
+import { supabase } from "@/utils/supabase-client";
+import { Session, User } from "@supabase/auth-helpers-nextjs";
+import { useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
-async function getUser() {
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+const LoginMenu = () => {
+  const router = useRouter();
+  const [session, setSession] = useState<Session | null>(null);
 
-  return user;
-}
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+    });
 
-const LoginMenu = async () => {
-  const user = await getUser();
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+      //router.refresh();
+    });
 
-  const profileImageUrl =
-    user?.user_metadata.picture || user?.user_metadata.avatar_url;
+    return () => subscription.unsubscribe();
+  }, []);
 
   return (
     <>
-      {user ? (
+      {session ? (
         <ProfileButton
-          email={user?.user_metadata.email}
-          profileImageUrl={profileImageUrl}
+          email={session.user.user_metadata.email}
+          profileImageUrl={
+            session.user.user_metadata.picture ||
+            session.user.user_metadata.avatar_url
+          }
         />
       ) : (
         <LoginButton />
