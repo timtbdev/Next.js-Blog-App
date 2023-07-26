@@ -55,7 +55,7 @@ const LoginSection = () => {
         redirectTo: `${location.origin}/auth/callback`,
       },
     });
-    router.push("/");
+    //router.push("/");
     router.refresh();
   }
 
@@ -67,7 +67,7 @@ const LoginSection = () => {
         redirectTo: `${location.origin}/auth/callback`,
       },
     });
-    router.push("/");
+    //router.push("/");
     router.refresh();
   }
 
@@ -79,11 +79,12 @@ const LoginSection = () => {
         redirectTo: `${location.origin}/auth/callback`,
       },
     });
-    router.push("/");
+    //router.push("/");
     router.refresh();
   }
 
   async function signInWithEmail(formData: z.infer<typeof FormSchema>) {
+    setSignInEmailClicked(true);
     const { data, error } = await supabase.auth.signInWithOtp({
       email: formData.email,
       options: {
@@ -92,9 +93,11 @@ const LoginSection = () => {
     });
     if (error) {
       console.error(error);
+      setSignInEmailClicked(false);
+      toast.error(loginConfig.error);
     } else {
       toast.success(loginConfig.emailSent);
-      router.push("/");
+      //router.push("/");
       router.refresh();
     }
   }

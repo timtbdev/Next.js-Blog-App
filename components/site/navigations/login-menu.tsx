@@ -23,7 +23,6 @@ const LoginMenu = () => {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session);
-      //router.refresh();
     });
 
     return () => subscription.unsubscribe();

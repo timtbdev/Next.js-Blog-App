@@ -11,4 +11,5 @@ export const loginConfig = {
   logOut: "Гарах",
   or: "Эсвэл",
   emailSent: "Нэвтрэх линкийг имэйлээр илгээсэн.",
+  error: "Алдаа гарлаа.",
 };
