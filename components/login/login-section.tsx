@@ -33,7 +33,11 @@ const FormSchema = z.object({
     .email(),
 });
 
-const LoginSection = () => {
+interface LoginSectionProps {
+  setOpen?: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const LoginSection: React.FC<LoginSectionProps> = ({ setOpen }) => {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
@@ -55,7 +59,6 @@ const LoginSection = () => {
         redirectTo: `${location.origin}/auth/callback`,
       },
     });
-    //router.push("/");
     router.refresh();
   }
 
@@ -67,7 +70,6 @@ const LoginSection = () => {
         redirectTo: `${location.origin}/auth/callback`,
       },
     });
-    //router.push("/");
     router.refresh();
   }
 
@@ -79,7 +81,6 @@ const LoginSection = () => {
         redirectTo: `${location.origin}/auth/callback`,
       },
     });
-    //router.push("/");
     router.refresh();
   }
 
@@ -98,7 +99,7 @@ const LoginSection = () => {
     } else {
       toast.success(loginConfig.emailSent);
       setSignInEmailClicked(false);
-      //router.push("/");
+      setOpen && setOpen(false);
       router.refresh();
     }
   }

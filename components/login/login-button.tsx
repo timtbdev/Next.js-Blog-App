@@ -6,8 +6,9 @@ import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import React from "react";
 
 const LoginButton = () => {
+  const [open, setOpen] = React.useState(false);
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <div className="flex sm:ml-4 sm:mt-0">
           <button type="button">
@@ -16,7 +17,7 @@ const LoginButton = () => {
         </div>
       </DialogTrigger>
       <DialogContent className="font-sans sm:max-w-[425px]">
-        <LoginSection />
+        <LoginSection setOpen={setOpen} />
       </DialogContent>
     </Dialog>
   );
