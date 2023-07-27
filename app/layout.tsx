@@ -143,7 +143,7 @@ export default function RootLayout({
         <div className="bg-white font-sans">
           {children}
           <VercelAnalytics />
-          <Toaster position="bottom-center" />
+          <Toaster position="top-center" />
           <TwIndicator />
         </div>
       </body>
