@@ -1,6 +1,6 @@
 import BackButton from "@/components/buttons/back-button";
-import Balancer from "react-wrap-balancer";
 import LoginMenu from "@/components/site/navigations/login-menu";
+import Balancer from "react-wrap-balancer";
 
 interface DetailHeaderProps {
   title: string;
@@ -18,20 +18,20 @@ const DetailHeader: React.FC<DetailHeaderProps> = ({
   slug,
 }) => {
   return (
-    <header className="sticky top-0 z-40 backdrop-blur-lg bg-gray-50/60 shadow-sm shadow-gray-300 border-y-1 border-black/5">
+    <header className="border-y-1 sticky top-0 z-40 border-black/5 bg-gray-50/60 shadow-sm shadow-gray-300 backdrop-blur-lg">
       <nav
         className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4"
         aria-label="Global"
       >
-        <div className="flex flex-1 justify-start items-center">
+        <div className="flex flex-1 items-center justify-start">
           <BackButton />
         </div>
-        <div className="flex max-w-3xl w-full">
-          <h1 className="font-semibold justify-start text-md sm:text-xl px-10 sm:px-8 tracking-tight text-slate-900">
+        <div className="flex w-full max-w-3xl">
+          <h1 className="text-md justify-start px-4 font-semibold tracking-tight text-slate-900 sm:px-0 sm:text-xl">
             <Balancer>{`${title} - ${author} (${year})`}</Balancer>
           </h1>
         </div>
-        <div className="flex flex-1 justify-end items-center">
+        <div className="flex flex-1 items-center justify-end">
           <LoginMenu />
         </div>
       </nav>
