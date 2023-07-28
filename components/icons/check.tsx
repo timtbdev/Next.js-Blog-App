@@ -9,47 +9,17 @@ const Check: React.FC<CheckProps> = ({ className = "" }) => {
     <>
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        width="48"
-        height="48"
-        viewBox="0 0 48 48"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
         className={className}
       >
-        <g>
+        <title>c-check</title>
+        <g fill="currentColor">
           <path
-            d="M23 45C34.598 45 44 35.598 44 24C44 12.402 34.598 3 23 3C11.402 3 2 12.402 2 24C2 35.598 11.402 45 23 45Z"
-            fill="url(#nc-ui-6-0_linear_215_69)"
-          ></path>{" "}
-          <path
-            d="M44 5L24 23L15 16L12 19L24 31L47 7L44 5Z"
-            fill="url(#nc-ui-6-1_linear_215_69)"
-          ></path>{" "}
-          <defs>
-            {" "}
-            <linearGradient
-              id="nc-ui-6-0_linear_215_69"
-              x1="23"
-              y1="3"
-              x2="23"
-              y2="45"
-              gradientUnits="userSpaceOnUse"
-            >
-              {" "}
-              <stop stopColor="#D8F3E0"></stop>{" "}
-              <stop offset="1" stopColor="#9EE0B1"></stop>{" "}
-            </linearGradient>{" "}
-            <linearGradient
-              id="nc-ui-6-1_linear_215_69"
-              x1="29.5"
-              y1="5"
-              x2="29.5"
-              y2="31"
-              gradientUnits="userSpaceOnUse"
-            >
-              {" "}
-              <stop stopColor="#6AD084"></stop>{" "}
-              <stop offset="1" stopColor="#3CB34B"></stop>{" "}
-            </linearGradient>{" "}
-          </defs>
+            d="M12,0C5.373,0,0,5.373,0,12s5.373,12,12,12,12-5.373,12-12C23.981,5.381,18.619,.019,12,0Zm7.207,7.707l-9,9c-.195,.195-.451,.293-.707,.293s-.512-.098-.707-.293l-4-4c-.391-.391-.391-1.023,0-1.414s1.023-.391,1.414,0l3.293,3.293L17.793,6.293c.391-.391,1.023-.391,1.414,0s.391,1.023,0,1.414Z"
+            fill="currentColor"
+          ></path>
         </g>
       </svg>
     </>

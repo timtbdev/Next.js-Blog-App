@@ -9,10 +9,8 @@ import ShareOutline from "@/components/icons/share-outline";
 import ShareSolid from "@/components/icons/share-solid";
 import Twitter from "@/components/icons/twitter";
 import { buttonConfig } from "@/config/buttons";
-import { Dialog, Transition } from "@headlessui/react";
-import { AnimatePresence, motion } from "framer-motion";
-import { XCircle } from "lucide-react";
 import React, { Fragment, useEffect, useState } from "react";
+import { Drawer } from "vaul";
 
 interface ShareButtonProps {
   title?: string;
@@ -36,15 +34,13 @@ const CopyButton = ({ url }: { url: string }) => {
   };
 
   return (
-    <li>
-      <button type="button" title="Copy url to clipboard" onClick={copy}>
-        {copied ? (
-          <CheckIcon className="h-8 w-8" />
-        ) : (
-          <CopyIcon className="h-8 w-8" />
-        )}
-      </button>
-    </li>
+    <button type="button" title="Copy url to clipboard" onClick={copy}>
+      {copied ? (
+        <CheckIcon className="h-8 w-8 text-gray-500" />
+      ) : (
+        <CopyIcon className="h-8 w-8 text-gray-500" />
+      )}
+    </button>
   );
 };
 
@@ -54,164 +50,99 @@ const ShareButton: React.FC<ShareButtonProps> = ({
   url = window.location.href,
 }) => {
   const [isHovering, setIsHovered] = React.useState(false);
-  const [isOpen, setIsOpen] = useState(false);
   const onMouseEnter = () => setIsHovered(true);
   const onMouseLeave = () => setIsHovered(false);
 
-  const isWebShareSupported = (data: ShareData) => {
-    return (
-      window.navigator.canShare &&
-      // @ts-ignore
-      window.navigator.share &&
-      window.navigator.canShare(data)
-    );
-  };
-
-  const onClick = async () => {
-    if (isWebShareSupported({ title, text, url })) {
-      try {
-        await window.navigator.share({
-          title: title,
-          text: text,
-          url: url,
-        });
-      } catch (e) {
-        console.warn(e);
-      }
-    } else {
-      setIsOpen(true);
-    }
-  };
-
   return (
     <>
-      <button
-        type="button"
-        onClick={onClick}
-        onMouseEnter={onMouseEnter}
-        onMouseLeave={onMouseLeave}
-        className="group relative mx-auto inline-flex w-full items-center justify-center rounded-md border border-black/5 bg-white py-2 hover:bg-gray-50 hover:shadow-sm"
-      >
-        {isHovering ? (
-          <ShareSolid className="-ml-0.5 h-5 w-5 text-gray-900" />
-        ) : (
-          <ShareOutline className="-ml-0.5 h-5 w-5 text-gray-400" />
-        )}
-        <span className="ml-2 text-sm text-gray-400 group-hover:text-gray-900">
-          {buttonConfig.share}
-        </span>
-      </button>
-      <Transition appear show={isOpen} as={Fragment}>
-        <Dialog
-          as="div"
-          className="relative z-20"
-          onClose={() => setIsOpen(false)}
-        >
-          <Transition.Child
-            as={Fragment}
-            enter="ease-out duration-300"
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-            leave="ease-in duration-200"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
+      <Drawer.Root>
+        <Drawer.Trigger asChild>
+          <button
+            type="button"
+            onMouseEnter={onMouseEnter}
+            onMouseLeave={onMouseLeave}
+            className="group relative mx-auto inline-flex w-full items-center justify-center rounded-md border border-black/5 bg-white py-2 hover:bg-gray-50 hover:shadow-sm"
           >
-            <div className="bg-base-900/80 fixed inset-0" />
-          </Transition.Child>
-          <AnimatePresence>
-            <motion.div
-              className="fixed inset-0 z-10 overflow-y-auto"
-              initial={{ scale: 0.95 }}
-              animate={{ scale: 1 }}
-              exit={{ scale: 0.95 }}
-            >
-              <div className="flex min-h-full items-center justify-center p-4 text-center">
-                <Transition.Child
-                  as={Fragment}
-                  enter="ease-out duration-300"
-                  enterFrom="opacity-0 scale-95"
-                  enterTo="opacity-100 scale-100"
-                  leave="ease-in duration-200"
-                  leaveFrom="opacity-100 scale-100"
-                  leaveTo="opacity-0 scale-95"
-                >
-                  <Dialog.Panel className="dark:bg-base-700 relative w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle font-sans shadow-xl transition-all">
-                    <Dialog.Title
-                      as="h3"
-                      className="text-base-900 dark:text-base-50 text-xl font-bold"
+            {isHovering ? (
+              <ShareSolid className="-ml-0.5 h-5 w-5 text-gray-900" />
+            ) : (
+              <ShareOutline className="-ml-0.5 h-5 w-5 text-gray-400" />
+            )}
+            <span className="ml-2 text-sm text-gray-400 group-hover:text-gray-900">
+              {buttonConfig.share}
+            </span>
+          </button>
+        </Drawer.Trigger>
+        <Drawer.Overlay className="fixed inset-0 bg-black/40" />
+        <Drawer.Portal>
+          <Drawer.Content className="fixed bottom-0 left-0 right-0 mt-24 flex flex-col rounded-t-[10px] bg-zinc-100">
+            <div className="flex-1 rounded-t-[10px] bg-white p-4">
+              <div className="mx-auto mb-8 h-1.5 w-12 flex-shrink-0 rounded-full bg-zinc-300" />
+              <div className="mx-auto max-w-md">
+                <Drawer.Title className="mx-auto mb-4 text-center font-sans text-lg font-semibold text-gray-600">
+                  {buttonConfig.share}
+                </Drawer.Title>
+                <div className="mx-auto my-6 grid grid-cols-3 justify-center gap-8">
+                  <div className="mx-auto flex ">
+                    <a
+                      title={title}
+                      target="_blank"
+                      href={`https://twitter.com/intent/tweet?url=${url}&text=${encodeURIComponent(
+                        title,
+                      )}`}
+                      rel="noopener noreferrer"
+                      className="text-gray-400"
                     >
-                      {buttonConfig.share}
-                    </Dialog.Title>
-                    <Dialog.Description className="text-base-700 dark:text-base-300 mt-2">
-                      {title}
-                    </Dialog.Description>
-
-                    <ul className="text-base-500 dark:text-base-400 mt-6 flex justify-around gap-2">
-                      <a
-                        title={title}
-                        target="_blank"
-                        href={`https://twitter.com/intent/tweet?url=${url}&text=${encodeURIComponent(
-                          title,
-                        )}`}
-                        rel="noopener noreferrer"
-                        className="text-gray-400"
-                      >
-                        <Twitter className="h-8 w-8" />
-                      </a>
-                      <a
-                        title={title}
-                        target="_blank"
-                        href={`https://www.facebook.com/sharer/sharer.php?u=${url}`}
-                        rel="noopener noreferrer"
-                        className="text-gray-400"
-                      >
-                        <Facebook className="h-8 w-8 text-blue-600" />
-                      </a>
-                      <a
-                        title={title}
-                        target="_blank"
-                        href={`https://www.linkedin.com/sharing/share-offsite/?url=${url}`}
-                        rel="noopener noreferrer"
-                        className="text-gray-400"
-                      >
-                        <LinkedIn className="h-8 w-8" />
-                      </a>
-                      <a
-                        title={title}
-                        target="_blank"
-                        href={`mailto:?subject=${encodeURIComponent(
-                          title,
-                        )}&body=${encodeURIComponent(text + "\n\n")}${url}`}
-                        rel="noopener noreferrer"
-                        className="text-gray-400"
-                      >
-                        <Email className="h-8 w-8" />
-                      </a>
-
-                      <CopyButton url={url} />
-                    </ul>
-                    <button
-                      className="group absolute right-4 top-4"
-                      aria-label="Close"
-                      onClick={() => setIsOpen(false)}
+                      <Twitter className="h-8 w-8 text-gray-500" />
+                    </a>
+                  </div>
+                  <div className="mx-auto flex ">
+                    <a
+                      title={title}
+                      target="_blank"
+                      href={`https://www.facebook.com/sharer/sharer.php?u=${url}`}
+                      rel="noopener noreferrer"
+                      className="text-gray-400"
                     >
-                      <XCircle className="text-gray-400 hover:text-gray-600" />
-                    </button>
-                  </Dialog.Panel>
-                </Transition.Child>
+                      <Facebook className="h-8 w-8 text-gray-500" />
+                    </a>
+                  </div>
+                  <div className="mx-auto flex ">
+                    <a
+                      title={title}
+                      target="_blank"
+                      href={`https://www.linkedin.com/sharing/share-offsite/?url=${url}`}
+                      rel="noopener noreferrer"
+                      className="text-gray-400"
+                    >
+                      <LinkedIn className="h-8 w-8 text-gray-500" />
+                    </a>
+                  </div>
+
+                  <div className="mx-auto flex ">
+                    <a
+                      title={title}
+                      target="_blank"
+                      href={`mailto:?subject=${encodeURIComponent(
+                        title,
+                      )}&body=${encodeURIComponent(text + "\n\n")}${url}`}
+                      rel="noopener noreferrer"
+                      className="text-gray-400"
+                    >
+                      <Email className="h-8 w-8 text-gray-500" />
+                    </a>
+                  </div>
+
+                  <div className="mx-auto flex ">
+                    <CopyButton url={url} />
+                  </div>
+                </div>
               </div>
-            </motion.div>
-            <motion.div
-              key="desktop-backdrop"
-              className="fixed inset-0 bg-gray-100 bg-opacity-10 backdrop-blur"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setIsOpen(false)}
-            />
-          </AnimatePresence>
-        </Dialog>
-      </Transition>
+            </div>
+            <div className="mt-auto border-t border-gray-200 bg-gray-100 p-4"></div>
+          </Drawer.Content>
+        </Drawer.Portal>
+      </Drawer.Root>
     </>
   );
 };
