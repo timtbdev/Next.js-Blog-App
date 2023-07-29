@@ -40,7 +40,9 @@ const BoomarkButton: React.FC<BoomarkButtonProps> = ({ id }) => {
         .select()
         .match({ id: id, user_id: session?.user.id })
         .then(({ data, error }) => {
-          setIsBookmarked(true);
+          if (data) {
+            setIsBookmarked(true);
+          }
         });
     }
 
@@ -122,7 +124,7 @@ const BoomarkButton: React.FC<BoomarkButtonProps> = ({ id }) => {
               <BookMarkSolid className="-ml-0.5 h-5 w-5 text-gray-900" />
             )}
             <span className="ml-2 text-sm text-gray-400 group-hover:text-gray-900">
-              {buttonConfig.unsave}
+              {isHovering ? buttonConfig.unsave : buttonConfig.saved}
             </span>
           </button>
         ) : (
