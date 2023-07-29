@@ -9,42 +9,32 @@ import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { buttonConfig } from "@/config/buttons";
 import { supabase } from "@/utils/supabase-client";
 import { Session } from "@supabase/auth-helpers-nextjs";
-import { is } from "date-fns/locale";
 import { Loader2 as SpinnerIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React from "react";
 import toast from "react-hot-toast";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 interface BoomarkButtonProps {
   id: string;
+  bookmarked?: boolean;
 }
 
-const BoomarkButton: React.FC<BoomarkButtonProps> = ({ id }) => {
+const BoomarkButton: React.FC<BoomarkButtonProps> = ({ id, bookmarked }) => {
   const [isHovering, setIsHovered] = React.useState(false);
   const onMouseEnter = () => setIsHovered(true);
   const onMouseLeave = () => setIsHovered(false);
   const router = useRouter();
   const [session, setSession] = React.useState<Session | null>(null);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
-  const [isBookmarked, setIsBookmarked] = React.useState<boolean>(false);
 
   // Check authentitication and bookmark states
   React.useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
     });
-
-    if (id && session?.user.id) {
-      supabase
-        .from("bookmarks")
-        .select()
-        .match({ id: id, user_id: session?.user.id })
-        .then(({ data, error }) => {
-          if (data) {
-            setIsBookmarked(true);
-          }
-        });
-    }
 
     const {
       data: { subscription },
@@ -108,7 +98,7 @@ const BoomarkButton: React.FC<BoomarkButtonProps> = ({ id }) => {
   return (
     <>
       {session &&
-        (isBookmarked ? (
+        (bookmarked ? (
           <button
             type="button"
             onClick={deleteBookmark}
@@ -123,7 +113,7 @@ const BoomarkButton: React.FC<BoomarkButtonProps> = ({ id }) => {
             ) : (
               <BookMarkSolid className="-ml-0.5 h-5 w-5 text-gray-900" />
             )}
-            <span className="ml-2 text-sm text-gray-400 group-hover:text-gray-900">
+            <span className="ml-2 text-sm text-gray-400">
               {isHovering ? buttonConfig.unsave : buttonConfig.saved}
             </span>
           </button>
@@ -135,7 +125,9 @@ const BoomarkButton: React.FC<BoomarkButtonProps> = ({ id }) => {
             onMouseLeave={onMouseLeave}
             className="group relative mx-auto inline-flex w-full items-center justify-center rounded-md border border-black/5 bg-white py-2 hover:bg-gray-50 hover:shadow-sm"
           >
-            {isHovering ? (
+            {isLoading ? (
+              <SpinnerIcon className="-ml-0.5 h-5 w-5 animate-spin" />
+            ) : isHovering ? (
               <BookMarkSolid className="-ml-0.5 h-5 w-5 text-gray-900" />
             ) : (
               <BookMarkOutline className="-ml-0.5 h-5 w-5 text-gray-400" />

@@ -1,3 +1,4 @@
+import { GetBookmark } from "@/actions/get-bookmark";
 import { setPostViews } from "@/actions/set-post-views";
 import ScrollUpButton from "@/components/buttons/scroll-up-button";
 import PostAudioPlayer from "@/components/post/post-audio-player";
@@ -28,6 +29,17 @@ interface PostPageProps {
   };
 }
 
+async function getBookmark(postId: string, userId: string) {
+  if (postId && userId) {
+    const bookmarkData = {
+      id: postId,
+      user_id: userId,
+    };
+    const response = await GetBookmark(bookmarkData);
+
+    return response;
+  }
+}
 async function getPost(params: { slug: string[] }) {
   const slug = params?.slug?.join("/");
 
@@ -145,6 +157,14 @@ export default async function PostPage({ params }: PostPageProps) {
       session?.user?.user_metadata.avatar_url;
   }
 
+  // Get bookmark
+  const bookmark = await getBookmark(
+    post.id as string,
+    session?.user.id as string,
+  );
+
+  console.log("Bookmark :", bookmark);
+
   // Get comments
   const comments = await getComments(slug);
   const totalComments =
@@ -234,6 +254,7 @@ export default async function PostPage({ params }: PostPageProps) {
                     likes={likes}
                     ip={ip as string}
                     totalComments={totalComments}
+                    bookmarked={bookmark}
                   />
                 </div>
                 <div className="mx-auto">
@@ -261,6 +282,7 @@ export default async function PostPage({ params }: PostPageProps) {
                   likes={likes}
                   ip={ip as string}
                   totalComments={totalComments}
+                  bookmarked={bookmark}
                 />
               </div>
             </div>

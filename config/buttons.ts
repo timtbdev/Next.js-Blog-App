@@ -12,6 +12,6 @@ export const buttonConfig = {
   error: "Алдаа гарлаа",
   reverse: "Буцаах",
   back: "Буцах",
-  saved: "Хадгалагдлаа",
+  saved: "Хадгалсан",
   deleted: "Устгагдлаа",
 };
