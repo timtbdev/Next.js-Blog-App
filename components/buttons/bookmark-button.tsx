@@ -57,9 +57,9 @@ const BoomarkButton: React.FC<BoomarkButtonProps> = ({ id, bookmarked }) => {
 
       const response = await AddBookmark(bookmarkData);
       if (response) {
-        setIsLoading(false);
         toast.success(buttonConfig.saved);
         router.refresh();
+        setIsLoading(false);
       } else {
         setIsLoading(false);
         toast.error(buttonConfig.error);
