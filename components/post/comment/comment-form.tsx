@@ -1,11 +1,6 @@
 "use client";
 
-import React from "react";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
-import { SendIcon, Loader2 as SpinnerIcon } from "lucide-react";
-
+import { PostComment } from "@/actions/post-comment";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -16,12 +11,14 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-
 import { Textarea } from "@/components/ui/textarea";
-import { toast } from "react-hot-toast";
-import { commentSchema, commentFormSchema } from "@/lib/validations";
-import { PostComment } from "@/actions/post-comment";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { SendIcon, Loader2 as SpinnerIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
+import React from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "react-hot-toast";
+import * as z from "zod";
 
 const formSchema = z.object({
   username: z
@@ -117,7 +114,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
 
         <Button
           type="submit"
-          className="group flex p-2 items-center justify-center rounded-lg bg-gradient-to-t from-gray-200 via-gray-100 to-gray-50 text-gray-400 shadow-md shadow-black/5 ring-1 ring-black/10 transition duration-200 hover:bg-gradient-to-tr hover:from-gray-200 hover:via-gray-100 hover:to-gray-50 active:scale-[96%] active:ring-black/20"
+          className="group flex items-center justify-center rounded-lg bg-gradient-to-t from-gray-200 via-gray-100 to-gray-50 p-2 text-gray-400 shadow-md shadow-black/5 ring-1 ring-black/10 transition duration-200 hover:bg-gradient-to-tr hover:from-gray-200 hover:via-gray-100 hover:to-gray-50 active:scale-[96%] active:ring-black/20"
         >
           {isLoading ? (
             <SpinnerIcon className="mr-2 h-4 w-4 animate-spin text-gray-600" />

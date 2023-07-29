@@ -1,25 +1,24 @@
+import { setPostViews } from "@/actions/set-post-views";
+import ScrollUpButton from "@/components/buttons/scroll-up-button";
 import PostAudioPlayer from "@/components/post/post-audio-player";
+import PostComment from "@/components/post/post-comment";
+import PostDetailProgressBar from "@/components/post/post-detail-progressbar";
+import PostFloatingBar from "@/components/post/post-floating-bar";
 import BlurImage from "@/components/shared/blur-image";
+import { metaData } from "@/config/meta";
 import {
   getHash,
   getOgImagePostUrl,
   getUrl,
   placeholderBlurhash,
 } from "@/lib/utils";
-import { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { Comment, PostWithCategoryWithAuthor } from "@/types/collection";
 import supabase from "@/utils/supabase-server";
-import { PostWithCategoryWithAuthor } from "@/types/collection";
-import { metaData } from "@/config/meta";
-import PostFloatingBar from "@/components/post/post-floating-bar";
-import ScrollUpButton from "@/components/buttons/scroll-up-button";
-import { setPostViews } from "@/actions/set-post-views";
-import { kv } from "@vercel/kv";
-import { cookies } from "next/headers";
-import PostComment from "@/components/post/post-comment";
 import { Separator } from "@radix-ui/react-dropdown-menu";
-import { Comment } from "@/types/collection";
-import PostDetailProgressBar from "@/components/post/post-detail-progressbar";
+import { kv } from "@vercel/kv";
+import { Metadata } from "next";
+import { cookies } from "next/headers";
+import { notFound } from "next/navigation";
 
 export const revalidate = 0;
 
@@ -74,7 +73,7 @@ export async function generateMetadata({
             post.image as string,
             post.authors?.name as string,
             post.authors?.image as string,
-            post.authors?.title as string
+            post.authors?.title as string,
           ),
           width: 1200,
           height: 630,
@@ -93,7 +92,7 @@ export async function generateMetadata({
           post.image as string,
           post.authors?.name as string,
           post.authors?.image as string,
-          post.authors?.title as string
+          post.authors?.title as string,
         ),
       ],
     },
@@ -154,12 +153,12 @@ export default async function PostPage({ params }: PostPageProps) {
   return (
     <>
       <PostDetailProgressBar />
-      <div className="bg-gray-100 py-3 min-h-full">
+      <div className="min-h-full bg-gray-100 py-3">
         <div className="mx-auto max-w-7xl px-0 sm:px-8">
           <div className="mx-auto max-w-4xl">
-            <div className="mx-auto max-w-4xl bg-white shadow-sm shadow-gray-300 ring-1 ring-black/5 rounded-lg px-6 sm:px-14 py-4 sm:py-10">
+            <div className="mx-auto max-w-4xl rounded-lg bg-white px-6 py-4 shadow-sm shadow-gray-300 ring-1 ring-black/5 sm:px-14 sm:py-10">
               <div className="relative mx-auto max-w-4xl py-2">
-                <section className="isolate overflow-hidden bg-gray-100 mb-5 sm:mb-8 rounded-lg px-6 lg:px-8 shadow-sm shadow-gray-300 ring-1 ring-black/5">
+                <section className="isolate mb-5 overflow-hidden rounded-lg bg-gray-100 px-6 shadow-sm shadow-gray-300 ring-1 ring-black/5 sm:mb-8 lg:px-8">
                   <div className="relative mx-auto max-w-2xl py-4 sm:py-8 lg:max-w-4xl">
                     <div className="absolute left-1/2 top-0 -z-10 h-[50rem] w-[90rem] -translate-x-1/2 bg-[radial-gradient(50%_100%_at_top,theme(colors.indigo.100),white)] opacity-20 lg:left-36" />
                     <div className="absolute inset-y-0 right-1/2 -z-10 mr-12 w-[150vw] origin-bottom-left skew-x-[-30deg] bg-gray-50 shadow-xl shadow-indigo-600/10 ring-1 ring-indigo-50 sm:mr-20 md:mr-0 lg:right-full lg:-mr-36 lg:origin-center" />
@@ -203,16 +202,16 @@ export default async function PostPage({ params }: PostPageProps) {
                             height={40}
                             width={40}
                             alt={(post.authors?.name as string) || "Avatar"}
-                            className="flex h-[40px] w-[40px] object-cover rounded-full shadow-sm"
+                            className="flex h-[40px] w-[40px] rounded-full object-cover shadow-sm"
                             priority
                             placeholder="blur"
                             blurDataURL={placeholderBlurhash}
                           />
-                          <div className="flex flex-col ml-2">
-                            <span className="flex font-semibold text-sm tracking-tight [word-spacing:-2px] text-gray-900">
+                          <div className="ml-2 flex flex-col">
+                            <span className="flex text-sm font-semibold tracking-tight text-gray-900 [word-spacing:-2px]">
                               {post.authors?.name}
                             </span>
-                            <span className="flex text-gray-500 text-sm tracking-tight [word-spacing:-3px]">
+                            <span className="flex text-sm tracking-tight text-gray-500 [word-spacing:-3px]">
                               {post.authors?.title}
                             </span>
                           </div>
@@ -224,10 +223,11 @@ export default async function PostPage({ params }: PostPageProps) {
                 {/* Top Floatingbar */}
                 <div className="mx-auto">
                   <PostFloatingBar
+                    id={post.id as string}
                     title={post.title as string}
                     text={post.description as string}
                     url={`${getUrl()}${encodeURIComponent(
-                      `/posts/${post.slug}`
+                      `/posts/${post.slug}`,
                     )}`}
                     slug={post.slug as string}
                     views={views}
@@ -243,17 +243,18 @@ export default async function PostPage({ params }: PostPageProps) {
 
               <div className="relative mx-auto max-w-3xl border-slate-500/50">
                 <div
-                  className="prose lg:prose-md"
+                  className="lg:prose-md prose"
                   dangerouslySetInnerHTML={{ __html: post.content || "" }}
                 />
               </div>
               <div className="mx-auto mt-10">
                 {/* Bottom Floatingbar */}
                 <PostFloatingBar
+                  id={post.id as string}
                   title={post.title as string}
                   text={post.description as string}
                   url={`${getUrl()}${encodeURIComponent(
-                    `/posts/${post.slug}`
+                    `/posts/${post.slug}`,
                   )}`}
                   slug={post.slug as string}
                   views={views}

@@ -1,14 +1,15 @@
 "use client";
 
-import React, { useEffect } from "react";
-import LikeButton from "@/components/buttons/like-button";
-import EyeButton from "@/components/buttons/eye-button";
 import BoomarkButton from "@/components/buttons/bookmark-button";
 import CommentButton from "@/components/buttons/comment-button";
+import EyeButton from "@/components/buttons/eye-button";
+import LikeButton from "@/components/buttons/like-button";
 import ShareButton from "@/components/buttons/share-button";
+import React, { useEffect } from "react";
 import UnlikeButton from "../buttons/unlike-button";
 
 interface PostFloatingBarProps {
+  id: string;
   title?: string;
   text?: string;
   url?: string;
@@ -20,6 +21,7 @@ interface PostFloatingBarProps {
 }
 
 const PostFloatingBar: React.FC<PostFloatingBarProps> = ({
+  id,
   title = "",
   text = "",
   url = window.location.href,
@@ -31,7 +33,7 @@ const PostFloatingBar: React.FC<PostFloatingBarProps> = ({
 }) => {
   return (
     <>
-      <div className="grid grid-cols-2 lg:grid-cols-5 md:grid-cols-3 gap-4 w-full justify-start rounded-md">
+      <div className="grid w-full grid-cols-2 justify-start gap-4 rounded-md md:grid-cols-3 lg:grid-cols-5">
         {ip ? (
           <UnlikeButton slug={slug} likes={likes} />
         ) : (
@@ -39,7 +41,7 @@ const PostFloatingBar: React.FC<PostFloatingBarProps> = ({
         )}
         <EyeButton slug={slug} views={views} />
         <CommentButton totalComments={totalComments} />
-        <BoomarkButton />
+        <BoomarkButton id={id} />
         <ShareButton title={title} text={text} url={url} />
       </div>
     </>

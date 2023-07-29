@@ -1,5 +1,6 @@
 export const buttonConfig = {
   save: "Хадгалах",
+  unsave: "Устгах",
   comments: "Сэтгэгдэл",
   views: "Уншсан",
   viewed: "Хандалт",
@@ -11,4 +12,6 @@ export const buttonConfig = {
   error: "Алдаа гарлаа",
   reverse: "Буцаах",
   back: "Буцах",
+  saved: "Хадгалагдлаа",
+  deleted: "Устгагдлаа",
 };

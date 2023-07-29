@@ -43,3 +43,8 @@ export const commentFormSchema = z.object({
     .min(3, { message: "Comment must be at least 3 characters long." })
     .max(500, { message: "Comment must be at most 500 characters long." }),
 });
+
+export const bookmarkSchema = z.object({
+  id: z.string(),
+  user_id: z.string(),
+});

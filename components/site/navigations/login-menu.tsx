@@ -3,7 +3,7 @@
 import LoginButton from "@/components/login/login-button";
 import ProfileButton from "@/components/login/profile-button";
 import { supabase } from "@/utils/supabase-client";
-import { Session, User } from "@supabase/auth-helpers-nextjs";
+import { Session } from "@supabase/auth-helpers-nextjs";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
