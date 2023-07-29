@@ -1,15 +1,17 @@
 "use client";
 
-import CheckIcon from "@/components/icons/check";
-import CopyIcon from "@/components/icons/copy";
-import Email from "@/components/icons/email";
-import Facebook from "@/components/icons/facebook";
-import LinkedIn from "@/components/icons/linkedin";
 import ShareOutline from "@/components/icons/share-outline";
 import ShareSolid from "@/components/icons/share-solid";
-import Twitter from "@/components/icons/twitter";
 import { buttonConfig } from "@/config/buttons";
-import React, { Fragment, useEffect, useState } from "react";
+import {
+  CheckIcon,
+  CopyIcon,
+  FacebookIcon,
+  LinkedinIcon,
+  MailIcon,
+  TwitterIcon,
+} from "lucide-react";
+import React, { useEffect, useState } from "react";
 import { Drawer } from "vaul";
 
 interface ShareButtonProps {
@@ -34,11 +36,16 @@ const CopyButton = ({ url }: { url: string }) => {
   };
 
   return (
-    <button type="button" title="Copy url to clipboard" onClick={copy}>
+    <button
+      type="button"
+      title="Copy url to clipboard"
+      onClick={copy}
+      className="rounded-md border-[1.75px] border-gray-300 p-5 shadow-sm transition-all hover:-translate-y-1 hover:shadow-md"
+    >
       {copied ? (
-        <CheckIcon className="h-8 w-8 text-gray-500" />
+        <CheckIcon className="h-8 w-8 stroke-[1.5px] text-gray-400" />
       ) : (
-        <CopyIcon className="h-8 w-8 text-gray-500" />
+        <CopyIcon className="h-8 w-8 stroke-[1.5px] text-gray-400" />
       )}
     </button>
   );
@@ -91,9 +98,9 @@ const ShareButton: React.FC<ShareButtonProps> = ({
                         title,
                       )}`}
                       rel="noopener noreferrer"
-                      className="text-gray-400"
+                      className="rounded-md border-[1.75px] border-gray-300 p-5 shadow-sm transition-all hover:-translate-y-1 hover:shadow-md"
                     >
-                      <Twitter className="h-8 w-8 text-gray-500" />
+                      <TwitterIcon className="h-8 w-8 stroke-[1.5px] text-gray-400" />
                     </a>
                   </div>
                   <div className="mx-auto flex ">
@@ -102,9 +109,9 @@ const ShareButton: React.FC<ShareButtonProps> = ({
                       target="_blank"
                       href={`https://www.facebook.com/sharer/sharer.php?u=${url}`}
                       rel="noopener noreferrer"
-                      className="text-gray-400"
+                      className="rounded-md border-[1.75px] border-gray-300 p-5 shadow-sm transition-all hover:-translate-y-1 hover:shadow-md"
                     >
-                      <Facebook className="h-8 w-8 text-gray-500" />
+                      <FacebookIcon className="h-8 w-8 stroke-[1.5px] text-gray-400" />
                     </a>
                   </div>
                   <div className="mx-auto flex ">
@@ -113,9 +120,9 @@ const ShareButton: React.FC<ShareButtonProps> = ({
                       target="_blank"
                       href={`https://www.linkedin.com/sharing/share-offsite/?url=${url}`}
                       rel="noopener noreferrer"
-                      className="text-gray-400"
+                      className="rounded-md border-[1.75px] border-gray-300 p-5 shadow-sm transition-all hover:-translate-y-1 hover:shadow-md"
                     >
-                      <LinkedIn className="h-8 w-8 text-gray-500" />
+                      <LinkedinIcon className="h-8 w-8 stroke-[1.5px] text-gray-400" />
                     </a>
                   </div>
 
@@ -127,9 +134,9 @@ const ShareButton: React.FC<ShareButtonProps> = ({
                         title,
                       )}&body=${encodeURIComponent(text + "\n\n")}${url}`}
                       rel="noopener noreferrer"
-                      className="text-gray-400"
+                      className="rounded-md border-[1.75px] border-gray-300 p-5 shadow-sm transition-all hover:-translate-y-1 hover:shadow-md"
                     >
-                      <Email className="h-8 w-8 text-gray-500" />
+                      <MailIcon className="h-8 w-8 stroke-[1.5px] text-gray-400" />
                     </a>
                   </div>
 
