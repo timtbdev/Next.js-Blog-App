@@ -48,3 +48,11 @@ export const bookmarkSchema = z.object({
   id: z.string(),
   user_id: z.string(),
 });
+
+export function validationConfigMin(characters: number) {
+  return `Хамгийн багадаа ${characters} тэмдэгт оруулна уу.`;
+}
+
+export function validationConfigMax(characters: number) {
+  return `Хамгийн ихдээ ${characters} тэмдэгт оруулна уу.`;
+}

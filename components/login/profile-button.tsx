@@ -5,21 +5,14 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { loginConfig } from "@/config/login";
+import { dashBoardLogout, dashBoardMenus } from "@/config/dashboard";
 import { supabase } from "@/utils/supabase-client";
-import {
-  BookMarkedIcon,
-  FilePlus2Icon,
-  FileTextIcon,
-  LogOut,
-  SettingsIcon,
-} from "lucide-react";
 import { useRouter } from "next/navigation";
 import React, { FC } from "react";
+import { v4 } from "uuid";
 
 interface ProfileButtonProps {
   email?: string;
@@ -44,43 +37,27 @@ const ProfileButton: FC<ProfileButtonProps> = ({ email, profileImageUrl }) => {
         <DropdownMenuTrigger asChild>
           <Avatar>
             <AvatarImage src={profileImageUrl} />
-            <AvatarFallback>MN</AvatarFallback>
+            <AvatarFallback>UB</AvatarFallback>
           </Avatar>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56 font-sans">
-          <DropdownMenuLabel>
-            <div className="flex flex-col space-y-1">
-              <p className="text-sm font-medium leading-none text-gray-500">
-                {email}
-              </p>
-            </div>
-          </DropdownMenuLabel>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={() => router.push("/saved")}>
-            <FilePlus2Icon className="mr-2 h-4 w-4 text-gray-500" />
-            <span className="text-md text-gray-500">{loginConfig.new}</span>
-          </DropdownMenuItem>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={() => router.push("/saved")}>
-            <FileTextIcon className="mr-2 h-4 w-4 text-gray-500" />
-            <span className="text-md text-gray-500">{loginConfig.posts}</span>
-          </DropdownMenuItem>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={() => router.push("/saved")}>
-            <BookMarkedIcon className="mr-2 h-4 w-4 text-gray-500" />
-            <span className="text-md text-gray-500">{loginConfig.saved}</span>
-          </DropdownMenuItem>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={() => router.push("/saved")}>
-            <SettingsIcon className="mr-2 h-4 w-4 text-gray-500" />
-            <span className="text-md text-gray-500">
-              {loginConfig.settings}
-            </span>
-          </DropdownMenuItem>
-          <DropdownMenuSeparator />
+          {dashBoardMenus.map((menu) => (
+            <>
+              <DropdownMenuItem
+                key={v4()}
+                onClick={() => router.push(menu.slug)}
+              >
+                <menu.icon className="mr-2 h-4 w-4 text-gray-500" />
+                <span className="text-md text-gray-500">{menu.title}</span>
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+            </>
+          ))}
           <DropdownMenuItem onClick={signOut}>
-            <LogOut className="mr-2 h-4 w-4 text-gray-500" />
-            <span className="text-md text-gray-500">{loginConfig.logOut}</span>
+            <dashBoardLogout.icon className="mr-2 h-4 w-4 text-gray-500" />
+            <span className="text-md text-gray-500">
+              {dashBoardLogout.title}
+            </span>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

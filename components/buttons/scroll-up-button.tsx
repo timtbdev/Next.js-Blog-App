@@ -1,7 +1,6 @@
 "use client";
 
-import { ArrowUpIcon } from "lucide-react";
-import React, { useEffect } from "react";
+import React from "react";
 import ScrollToTop from "react-scroll-to-top";
 
 const ScrollUpButton = () => {

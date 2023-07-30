@@ -2,7 +2,7 @@
 
 import EyeOutline from "@/components/icons/eye-outline";
 import EyeSolid from "@/components/icons/eye-solid";
-import { buttonConfig } from "@/config/buttons";
+import { toolbarConfig } from "@/config/toolbar";
 import React from "react";
 import { toast } from "react-hot-toast";
 
@@ -20,7 +20,7 @@ const EyeButton: React.FC<EyeButtonProps> = ({ slug = "", views = 0 }) => {
     <button
       type="button"
       onClick={() => {
-        toast.success(`${buttonConfig.viewed} :` + views);
+        toast.success(`${toolbarConfig.view} :` + views);
       }}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
@@ -35,7 +35,7 @@ const EyeButton: React.FC<EyeButtonProps> = ({ slug = "", views = 0 }) => {
         {views}
       </span>
       <span className="ml-2 text-sm text-gray-400 group-hover:text-gray-900">
-        {buttonConfig.views}
+        {toolbarConfig.view}
       </span>
     </button>
   );

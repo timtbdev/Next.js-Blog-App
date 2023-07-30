@@ -3,7 +3,7 @@
 import { setPostUnlike } from "@/actions/set-post-unlike";
 import HeartOutline from "@/components/icons/heart-outline";
 import HeartSolid from "@/components/icons/heart-solid";
-import { buttonConfig } from "@/config/buttons";
+import { toolbarConfig } from "@/config/toolbar";
 import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 import toast from "react-hot-toast";
@@ -32,11 +32,11 @@ const UnlikeButton: React.FC<UnlikeButtonProps> = ({
         const response = await setPostUnlike(slug);
         if (response) {
           setUnliking(false);
-          toast.success(buttonConfig.unlike);
+          toast.success(toolbarConfig.cancel);
           router.refresh();
         } else {
           setUnliking(false);
-          toast.error(buttonConfig.error);
+          toast.error(toolbarConfig.error);
         }
       }}
       onMouseEnter={onMouseEnter}
@@ -52,7 +52,7 @@ const UnlikeButton: React.FC<UnlikeButtonProps> = ({
         {likes}
       </span>
       <span className="ml-2 text-sm text-gray-400 group-hover:text-gray-900">
-        {buttonConfig.reverse}
+        {isHovering ? toolbarConfig.cancel : toolbarConfig.liked}
       </span>
     </button>
   );

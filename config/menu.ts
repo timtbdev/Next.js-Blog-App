@@ -1,11 +1,4 @@
 import { MenuAttributes } from "@/types";
-import {
-  CircleDollarSignIcon,
-  CpuIcon,
-  FlaskConicalIcon,
-  HeartPulseIcon,
-  HomeIcon,
-} from "lucide-react";
 
 export const menus: MenuAttributes[] = [
   {

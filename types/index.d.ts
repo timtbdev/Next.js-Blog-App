@@ -1,3 +1,5 @@
+import { Icon } from "lucide-react";
+
 export type MetaAttributes = {
   title: string;
   subTitle: string;
@@ -13,6 +15,12 @@ export type MenuAttributes = {
   id: string;
   title: string;
   slug: string;
+};
+
+export type DashBoardAttributes = {
+  title: string;
+  slug: string;
+  icon: Icon;
 };
 
 // Types for comment section

@@ -6,9 +6,10 @@ import BookMarkOutline from "@/components/icons/bookmark-outline";
 import BookMarkSolid from "@/components/icons/bookmark-solid";
 import LoginSection from "@/components/login/login-section";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import { buttonConfig } from "@/config/buttons";
+import { toolbarConfig } from "@/config/toolbar";
 import { supabase } from "@/utils/supabase-client";
 import { Session } from "@supabase/auth-helpers-nextjs";
+import { is } from "date-fns/locale";
 import { Loader2 as SpinnerIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React from "react";
@@ -57,16 +58,16 @@ const BoomarkButton: React.FC<BoomarkButtonProps> = ({ id, bookmarked }) => {
 
       const response = await AddBookmark(bookmarkData);
       if (response) {
-        toast.success(buttonConfig.saved);
+        toast.success(toolbarConfig.saved);
         router.refresh();
         setIsLoading(false);
       } else {
         setIsLoading(false);
-        toast.error(buttonConfig.error);
+        toast.error(toolbarConfig.error);
       }
     } else {
       setIsLoading(false);
-      toast.error(buttonConfig.error);
+      toast.error(toolbarConfig.error);
     }
   }
 
@@ -83,15 +84,15 @@ const BoomarkButton: React.FC<BoomarkButtonProps> = ({ id, bookmarked }) => {
       const response = await DeleteBookmark(bookmarkData);
       if (response) {
         setIsLoading(false);
-        toast.success(buttonConfig.deleted);
+        toast.success(toolbarConfig.canceled);
         router.refresh();
       } else {
         setIsLoading(false);
-        toast.error(buttonConfig.error);
+        toast.error(toolbarConfig.error);
       }
     } else {
       setIsLoading(false);
-      toast.error(buttonConfig.error);
+      toast.error(toolbarConfig.error);
     }
   }
 
@@ -101,6 +102,7 @@ const BoomarkButton: React.FC<BoomarkButtonProps> = ({ id, bookmarked }) => {
         (bookmarked ? (
           <button
             type="button"
+            disabled={isLoading}
             onClick={deleteBookmark}
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}
@@ -114,12 +116,13 @@ const BoomarkButton: React.FC<BoomarkButtonProps> = ({ id, bookmarked }) => {
               <BookMarkSolid className="-ml-0.5 h-5 w-5 text-gray-900" />
             )}
             <span className="ml-2 text-sm text-gray-400">
-              {isHovering ? buttonConfig.unsave : buttonConfig.saved}
+              {isHovering ? toolbarConfig.cancel : toolbarConfig.saved}
             </span>
           </button>
         ) : (
           <button
             type="button"
+            disabled={isLoading}
             onClick={addBookmark}
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}
@@ -133,7 +136,7 @@ const BoomarkButton: React.FC<BoomarkButtonProps> = ({ id, bookmarked }) => {
               <BookMarkOutline className="-ml-0.5 h-5 w-5 text-gray-400" />
             )}
             <span className="ml-2 text-sm text-gray-400 group-hover:text-gray-900">
-              {buttonConfig.save}
+              {toolbarConfig.save}
             </span>
           </button>
         ))}
@@ -142,6 +145,7 @@ const BoomarkButton: React.FC<BoomarkButtonProps> = ({ id, bookmarked }) => {
           <DialogTrigger asChild>
             <button
               type="button"
+              disabled={isLoading}
               onMouseEnter={onMouseEnter}
               onMouseLeave={onMouseLeave}
               className="group relative mx-auto inline-flex w-full items-center justify-center rounded-md border border-black/5 bg-white py-2 hover:bg-gray-50 hover:shadow-sm"
@@ -152,7 +156,7 @@ const BoomarkButton: React.FC<BoomarkButtonProps> = ({ id, bookmarked }) => {
                 <BookMarkOutline className="-ml-0.5 h-5 w-5 text-gray-400" />
               )}
               <span className="ml-2 text-sm text-gray-400 group-hover:text-gray-900">
-                {buttonConfig.save}
+                {toolbarConfig.save}
               </span>
             </button>
           </DialogTrigger>

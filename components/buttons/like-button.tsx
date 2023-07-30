@@ -3,7 +3,7 @@
 import { setPostLike } from "@/actions/set-post-like";
 import HeartOutline from "@/components/icons/heart-outline";
 import HeartSolid from "@/components/icons/heart-solid";
-import { buttonConfig } from "@/config/buttons";
+import { toolbarConfig } from "@/config/toolbar";
 import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 import toast from "react-hot-toast";
@@ -17,23 +17,23 @@ const LikeButton: React.FC<LikeButtonProps> = ({ slug = "", likes = 0 }) => {
   const [isHovering, setIsHovered] = React.useState(false);
   const onMouseEnter = () => setIsHovered(true);
   const onMouseLeave = () => setIsHovered(false);
-  const [liking, setLiking] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(false);
   const router = useRouter();
 
   return (
     <button
       type="button"
-      disabled={liking}
+      disabled={isLoading}
       onClick={async () => {
-        setLiking(true);
+        setIsLoading(true);
         const response = await setPostLike(slug);
         if (response) {
-          setLiking(false);
-          toast.success(buttonConfig.thankyou);
+          setIsLoading(false);
+          toast.success(toolbarConfig.success);
           router.refresh();
         } else {
-          setLiking(false);
-          toast.error(buttonConfig.doubleLike);
+          setIsLoading(false);
+          toast.error(toolbarConfig.error);
         }
       }}
       onMouseEnter={onMouseEnter}
@@ -49,7 +49,7 @@ const LikeButton: React.FC<LikeButtonProps> = ({ slug = "", likes = 0 }) => {
         {likes}
       </span>
       <span className="ml-2 text-sm text-gray-400 group-hover:text-gray-900">
-        {buttonConfig.like}
+        {toolbarConfig.like}
       </span>
     </button>
   );

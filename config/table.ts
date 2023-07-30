@@ -1,0 +1,15 @@
+export const tableConfig = {
+  title: "Нийтлэлүүд",
+  date: "Огноо",
+  titleBoomark: "Хадгалсан",
+  descriptionBookmark: "Таны хадгалсан нийтлэлүүд",
+  page: "Хуудас",
+  rowsPerPage: "Хуудас бүрт",
+  search: "Хайх",
+  reset: "Цэвэрлэх",
+  ascending: "Өсөхөөр",
+  descending: "Буурахаар",
+  hide: "Нуух",
+  delete: "Устгах",
+  empty: "Хоосон",
+};
