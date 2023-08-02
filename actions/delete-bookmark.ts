@@ -1,7 +1,7 @@
 "use server";
 
 import { bookmarkSchema } from "@/lib/validations";
-import supabase from "@/utils/supabase-server";
+import supabase from "@/utils/supabase-server-action";
 import * as z from "zod";
 
 export async function DeleteBookmark(context: z.infer<typeof bookmarkSchema>) {

@@ -1,8 +1,9 @@
 "use server";
-import supabase from "@/utils/supabase-server";
-import * as z from "zod";
+
 import { commentSchema } from "@/lib/validations";
+import supabase from "@/utils/supabase-server-action";
 import { kv } from "@vercel/kv";
+import * as z from "zod";
 
 export async function PostComment(context: z.infer<typeof commentSchema>) {
   try {

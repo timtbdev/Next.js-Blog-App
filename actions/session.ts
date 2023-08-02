@@ -1,5 +1,6 @@
 "use server";
-import supabase from "@/utils/supabase-server";
+
+import supabase from "@/utils/supabase-server-action";
 
 export async function getSession() {
   const {

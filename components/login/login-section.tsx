@@ -19,11 +19,20 @@ import { loginConfig } from "@/config/login";
 import { placeholderBlurhash } from "@/lib/utils";
 import { supabase } from "@/utils/supabase-client";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import React from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import z from "zod";
+
+const getLoginRedirectPath = (pathname?: string | null): string => {
+  return (
+    process.env.NEXT_PUBLIC_APP_URL +
+    "/auth/callback" + // Required for PKCE authentication.
+    "?redirect=" + // Passed to auth/route/callback to redirect after auth
+    (pathname ? pathname : "/dashboard")
+  );
+};
 
 const FormSchema = z.object({
   email: z
@@ -50,13 +59,18 @@ const LoginSection: React.FC<LoginSectionProps> = ({ setOpen }) => {
   const [signInEmailClicked, setSignInEmailClicked] =
     React.useState<boolean>(false);
   const router = useRouter();
+  const currentPathname = usePathname();
+  const redirectTo = getLoginRedirectPath(currentPathname);
 
   async function signInWithGoogle() {
     setSignInGoogleClicked(true);
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: `${location.origin}/auth/callback`,
+        redirectTo,
+        queryParams: {
+          prompt: "consent",
+        },
       },
     });
     router.refresh();
@@ -67,7 +81,10 @@ const LoginSection: React.FC<LoginSectionProps> = ({ setOpen }) => {
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "github",
       options: {
-        redirectTo: `${location.origin}/auth/callback`,
+        redirectTo,
+        queryParams: {
+          prompt: "consent",
+        },
       },
     });
     router.refresh();
@@ -78,7 +95,10 @@ const LoginSection: React.FC<LoginSectionProps> = ({ setOpen }) => {
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "facebook",
       options: {
-        redirectTo: `${location.origin}/auth/callback`,
+        redirectTo,
+        queryParams: {
+          prompt: "consent",
+        },
       },
     });
     router.refresh();
@@ -89,7 +109,7 @@ const LoginSection: React.FC<LoginSectionProps> = ({ setOpen }) => {
     const { data, error } = await supabase.auth.signInWithOtp({
       email: formData.email,
       options: {
-        emailRedirectTo: `${location.origin}/auth/callback`,
+        emailRedirectTo: redirectTo,
       },
     });
     if (error) {
