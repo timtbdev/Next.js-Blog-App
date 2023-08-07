@@ -1,29 +1,60 @@
 import PostItem from "@/components/post/post-item";
-import { v4 } from "uuid";
-import supabase from "@/utils/supabase-server";
+import Pagination from "@/components/shared/pagination";
 import { PostWithCategoryWithAuthor } from "@/types/collection";
+import supabase from "@/utils/supabase-server";
 import { notFound } from "next/navigation";
+import { v4 } from "uuid";
 
-export default async function HomePage() {
-  const response = await supabase
+interface HomePageProps {
+  searchParams: { [key: string]: string | string[] | undefined };
+}
+
+export default async function HomePage({ searchParams }: HomePageProps) {
+  // Fetch total pages
+  const { count } = await supabase
+    .from("posts")
+    .select("*", { count: "exact", head: true });
+
+  // Pagination
+  const limit = 10;
+  const totalPages = count ? Math.ceil(count / limit) : 0;
+  const page =
+    typeof searchParams.page === "string" &&
+    +searchParams.page > 1 &&
+    +searchParams.page <= totalPages
+      ? +searchParams.page
+      : 1;
+  const from = (page - 1) * limit;
+  const to = page ? from + limit : limit;
+
+  // Fetch posts
+  const { data, error } = await supabase
     .from("posts")
     .select(`*, categories(*), authors(*)`)
+    .order("created_at", { ascending: false })
+    .range(from, to)
     .returns<PostWithCategoryWithAuthor[]>();
 
-  if (!response.data) {
+  if (!data || error || !data.length) {
     notFound;
-  }
-
-  if (response.error) {
-    console.error(response.error.message);
   }
 
   return (
     <>
-      {/* Posts */}
       <div className="space-y-6">
-        {response.data?.map((post) => <PostItem key={v4()} post={post} />)}
+        {data?.map((post) => <PostItem key={v4()} post={post} />)}
       </div>
+      {/* Pagination */}
+      {totalPages > 1 && (
+        <Pagination
+          page={page}
+          perPage={limit}
+          totalItems={count ? count : 0}
+          totalPages={totalPages}
+          baseUrl="/"
+          pageUrl="?page="
+        />
+      )}
     </>
   );
 }

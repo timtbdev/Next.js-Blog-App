@@ -49,6 +49,10 @@ export const bookmarkSchema = z.object({
   user_id: z.string(),
 });
 
+export const postSlugSchema = z.object({
+  slug: z.string(),
+});
+
 export function validationConfigMin(characters: number) {
   return `Хамгийн багадаа ${characters} тэмдэгт оруулна уу.`;
 }

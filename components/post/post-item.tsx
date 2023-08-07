@@ -1,19 +1,19 @@
 import BlurImage from "@/components/shared/blur-image";
 import { getMinutes, placeholderBlurhash } from "@/lib/utils";
+import { PostWithCategoryWithAuthor } from "@/types/collection";
+import { kv } from "@vercel/kv";
 import { format, parseISO } from "date-fns";
 import {
-  Clock10Icon,
-  HeadphonesIcon,
-  EyeIcon,
   CalendarIcon,
-  MessageCircleIcon,
+  Clock10Icon,
+  EyeIcon,
+  HeadphonesIcon,
   HeartIcon,
+  MessageCircleIcon,
 } from "lucide-react";
 import Link from "next/link";
 import React from "react";
-import { PostWithCategoryWithAuthor } from "@/types/collection";
 import readingTime from "reading-time";
-import { kv } from "@vercel/kv";
 
 export const dynamic = "force-dynamic";
 
@@ -22,7 +22,8 @@ interface PostItemProps {
 }
 
 const PostItem: React.FC<PostItemProps> = async ({ post }) => {
-  const readTime = readingTime(post.content as string);
+  const readTime = readingTime(post.content ? post.content : "");
+
   const views =
     (await kv.get<number>(["views", "post", post.slug].join(":"))) ?? 0;
   const comments =
@@ -35,7 +36,7 @@ const PostItem: React.FC<PostItemProps> = async ({ post }) => {
         <div className="absolute -inset-0.5 rounded-lg bg-gradient-to-br from-sky-500 to-blue-600 opacity-[0.15] blur-lg"></div>
         <div className="relative max-w-full rounded-[0.62rem] shadow-sm shadow-black/5 ring-[0.8px] ring-black/5">
           <Link href={`/posts/${post.slug}`}>
-            <article className="relative bg-white max-w-3xl shadow-md shadow-gray-300 ring-1 ring-black/5 px-5 sm:px-10 py-3 sm:py-6 rounded-lg isolate flex flex-col gap-2 sm:gap-8 lg:flex-row">
+            <article className="relative isolate flex max-w-3xl flex-col gap-2 rounded-lg bg-white px-5 py-3 shadow-md shadow-gray-300 ring-1 ring-black/5 sm:gap-8 sm:px-10 sm:py-6 lg:flex-row">
               <div className="relative aspect-[16/9] sm:aspect-[2/1] lg:aspect-square lg:w-64 lg:shrink-0">
                 <BlurImage
                   src={post.image!}
@@ -51,7 +52,7 @@ const PostItem: React.FC<PostItemProps> = async ({ post }) => {
               </div>
               <div>
                 {/* Desktop category view */}
-                <div className="hidden sm:flex items-center gap-x-3 text-xs">
+                <div className="hidden items-center gap-x-3 text-xs sm:flex">
                   <span className="relative z-10 rounded-full bg-gray-100 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-200">
                     {post.categories?.title}
                   </span>
@@ -63,7 +64,7 @@ const PostItem: React.FC<PostItemProps> = async ({ post }) => {
                     {post.title}
                   </h3>
                   {/* Mobile toobar view*/}
-                  <div className="flex sm:hidden mt-2 items-center gap-x-3 text-xs">
+                  <div className="mt-2 flex items-center gap-x-3 text-xs sm:hidden">
                     <div className="inline-flex items-center text-gray-500">
                       <span className="relative z-10 rounded-full bg-gray-100 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-200">
                         {post.categories?.title}
@@ -76,11 +77,11 @@ const PostItem: React.FC<PostItemProps> = async ({ post }) => {
                       </span>
                     </div>
                   </div>
-                  <div className="flex sm:hidden mt-2 items-center gap-x-3 text-xs">
+                  <div className="mt-2 flex items-center gap-x-3 text-xs sm:hidden">
                     <div className="inline-flex items-center text-gray-500">
                       <Clock10Icon className="h-4 w-4" />
                       <span className="ml-1">
-                        {getMinutes(readTime.minutes)}
+                        {getMinutes(readTime.minutes ? readTime.minutes : 0)}
                       </span>
                     </div>
                     <div className="inline-flex items-center text-gray-500">
@@ -104,7 +105,7 @@ const PostItem: React.FC<PostItemProps> = async ({ post }) => {
                     {post.description}
                   </p>
                   {/* Desktop toolbar view */}
-                  <div className="hidden sm:flex items-center mt-3 gap-x-3 text-xs">
+                  <div className="mt-3 hidden items-center gap-x-3 text-xs sm:flex">
                     <div className="inline-flex items-center text-gray-500">
                       <CalendarIcon className="h-4 w-4" />
                       <span className="ml-1">
@@ -139,12 +140,12 @@ const PostItem: React.FC<PostItemProps> = async ({ post }) => {
                 <div className="mt-3 flex border-t border-gray-900/5 pt-2">
                   <div className="relative flex items-center gap-x-4">
                     <BlurImage
-                      src={(post.authors.image as string) || ""}
+                      src={post.authors?.image ? post.authors.image : ""}
                       alt={post.authors?.name ?? "Avatar"}
                       height={45}
                       width={45}
                       priority
-                      className="h-[45px] w-[45px] object-cover rounded-full bg-gray-50"
+                      className="h-[45px] w-[45px] rounded-full bg-gray-50 object-cover"
                       placeholder="blur"
                       blurDataURL={placeholderBlurhash}
                     />
@@ -153,7 +154,7 @@ const PostItem: React.FC<PostItemProps> = async ({ post }) => {
                         <span className="absolute inset-0 tracking-tight [word-spacing:-2px]" />
                         {post.authors?.name}
                       </p>
-                      <p className="text-gray-600 tracking-tight [word-spacing:-3px]">
+                      <p className="tracking-tight text-gray-600 [word-spacing:-3px]">
                         {post.authors?.title}
                       </p>
                     </div>

@@ -1,40 +1,21 @@
-import React from "react";
+import PostItem from "@/components/post/post-item";
+import Pagination from "@/components/shared/pagination";
+import { SiteEmpty } from "@/components/site/site-empty";
 import { menus } from "@/config/menu";
-import notFound from "next/navigation";
-import supabase from "@/utils/supabase-server";
-import { PostWithCategoryWithAuthor } from "@/types/collection";
-import { Metadata } from "next";
 import { metaData } from "@/config/meta";
 import { getOgImageUrl, getUrl } from "@/lib/utils";
-import { SiteEmpty } from "@/components/site/site-empty";
-import PostItem from "@/components/post/post-item";
+import { PostWithCategoryWithAuthor } from "@/types/collection";
+import supabase from "@/utils/supabase-server";
+import { Metadata } from "next";
+import notFound from "next/navigation";
+import React from "react";
 import { v4 } from "uuid";
 
 interface CategoryPageProps {
   params: {
     slug: string[];
   };
-}
-
-async function getPosts(params: { slug: string[] }) {
-  const slug = params?.slug?.join("/");
-  const category = menus.find((menu) => menu.slug === slug);
-
-  if (!category) {
-    notFound;
-  }
-
-  const response = await supabase
-    .from("posts")
-    .select(`*, categories(*), authors(*)`)
-    .eq("category_id", category?.id)
-    .returns<PostWithCategoryWithAuthor[]>();
-
-  if (!response.data) {
-    null;
-  }
-
-  return response.data;
+  searchParams: { [key: string]: string | string[] | undefined };
 }
 
 export async function generateMetadata({
@@ -65,7 +46,7 @@ export async function generateMetadata({
             category?.title,
             metaData.absoluteTitle,
             metaData.tags,
-            category?.slug
+            category?.slug,
           ),
           width: 1200,
           height: 630,
@@ -82,26 +63,77 @@ export async function generateMetadata({
           category?.title,
           metaData.absoluteTitle,
           metaData.tags,
-          category?.slug
+          category?.slug,
         ),
       ],
     },
   };
 }
 
-export default async function CategoryPage({ params }: CategoryPageProps) {
-  const posts = await getPosts(params);
+export default async function CategoryPage({
+  params,
+  searchParams,
+}: CategoryPageProps) {
+  // Get category by slug
+  const slug = params?.slug?.join("/");
+  const category = menus.find((menu) => menu.slug === slug);
+  // Fetch total pages
+  const { count } = await supabase
+    .from("posts")
+    .select("*", { count: "exact", head: true })
+    .eq("category_id", category?.id);
+
+  // Pagination
+  const limit = 10;
+  const totalPages = count ? Math.ceil(count / limit) : 0;
+  const page =
+    typeof searchParams.page === "string" &&
+    +searchParams.page > 1 &&
+    +searchParams.page <= totalPages
+      ? +searchParams.page
+      : 1;
+  const from = (page - 1) * limit;
+  const to = page ? from + limit : limit;
+
+  // Fetch posts
+
+  if (!category) {
+    notFound;
+  }
+
+  const { data, error } = await supabase
+    .from("posts")
+    .select(`*, categories(*), authors(*)`)
+    .eq("category_id", category?.id)
+    .order("created_at", { ascending: false })
+    .range(from, to)
+    .returns<PostWithCategoryWithAuthor[]>();
+
+  if (!data || error || !data.length) {
+    notFound;
+  }
 
   return (
     <>
       {/* Posts */}
       <div className="my-5 space-y-6">
-        {posts?.length === 0 ? (
+        {data?.length === 0 ? (
           <SiteEmpty />
         ) : (
-          posts?.map((post) => <PostItem key={v4()} post={post} />)
+          data?.map((post) => <PostItem key={v4()} post={post} />)
         )}
       </div>
+      {/* Pagination */}
+      {totalPages > 1 && (
+        <Pagination
+          page={page}
+          perPage={limit}
+          totalItems={count ? count : 0}
+          totalPages={totalPages}
+          baseUrl={`/category/${slug}`}
+          pageUrl="?page="
+        />
+      )}
     </>
   );
 }

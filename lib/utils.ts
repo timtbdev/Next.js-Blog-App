@@ -1,5 +1,6 @@
-import { ClassValue, clsx } from "clsx";
 import { createHash } from "crypto";
+import { faker } from "@faker-js/faker";
+import { ClassValue, clsx } from "clsx";
 import { NextRequest } from "next/server";
 import { twMerge } from "tailwind-merge";
 
@@ -19,7 +20,7 @@ export function getOgImageUrl(
   subTitle: string,
   title: string,
   tags: Array<string>,
-  slug: string
+  slug: string,
 ) {
   const uri = [
     `?title=${encodeURIComponent(title)}`,
@@ -38,7 +39,7 @@ export function getOgImagePostUrl(
   image: string,
   name: string,
   avatar: string,
-  job: string
+  job: string,
 ) {
   const uri = [
     `?title=${encodeURIComponent(title)}`,
@@ -71,7 +72,7 @@ export const punctuationRegex = /[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]/g;
 
 export function isEmail({ email }: { email: string }) {
   return /^([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x22([^\x0d\x22\x5c\x80-\xff]|\x5c[\x00-\x7f])*\x22)(\x2e([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x22([^\x0d\x22\x5c\x80-\xff]|\x5c[\x00-\x7f])*\x22))*\x40([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x5b([^\x0d\x5b-\x5d\x80-\xff]|\x5c[\x00-\x7f])*\x5d)(\x2e([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x5b([^\x0d\x5b-\x5d\x80-\xff]|\x5c[\x00-\x7f])*\x5d))*$/.test(
-    email
+    email,
   );
 }
 
@@ -84,7 +85,7 @@ export function countLines(el: HTMLElement): number {
   if (!el) return -1;
   const divHeight = el.offsetHeight;
   const lineHeight = parseInt(
-    window.getComputedStyle(el).getPropertyValue("line-height")
+    window.getComputedStyle(el).getPropertyValue("line-height"),
   );
   const lines = divHeight / lineHeight;
   return lines;
@@ -101,3 +102,16 @@ export function getUrl() {
 export function getHash(ip: string) {
   return createHash("sha256").update(ip).digest("base64");
 }
+
+const generateFakePost = () => {
+  return {
+    id: faker.string.uuid(),
+    title: faker.commerce.productName(),
+    created_at: faker.date.past(),
+    image: faker.image.url(),
+  };
+};
+
+export const generateFakePosts = (length: number) => {
+  return Array.from({ length }, generateFakePost);
+};

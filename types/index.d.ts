@@ -66,3 +66,10 @@ export interface User {
   id: string;
   image?: string;
 }
+
+export interface PostKvDataAttributes {
+  views: number;
+  likes: number;
+  comments: number;
+  error: boolean;
+}
