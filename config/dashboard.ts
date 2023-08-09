@@ -1,6 +1,7 @@
 import { DashBoardAttributes } from "@/types";
 import {
   BookMarkedIcon,
+  LayoutGridIcon as DashBoardIcon,
   LogOut,
   FilePlus2Icon as NewIcon,
   FileTextIcon as PostIcon,
@@ -9,28 +10,38 @@ import {
 
 export const dashBoardMenus: DashBoardAttributes[] = [
   {
+    title: "Хяналтын самбар",
+    icon: DashBoardIcon,
+  },
+  {
     title: "Шинэ нийтлэл",
-    slug: "/dashboard/new",
+    slug: "new",
     icon: NewIcon,
   },
   {
     title: "Бичсэн нийтлэл",
-    slug: "/dashboard/posts",
+    slug: "posts",
     icon: PostIcon,
   },
   {
     title: "Хадгалсан нийтлэл",
-    slug: "/dashboard/bookmarks",
+    slug: "bookmarks",
     icon: BookMarkedIcon,
   },
   {
     title: "Тохиргоо",
-    slug: "/dashboard/settings",
+    slug: "settings",
     icon: SettingsIcon,
+  },
+  {
+    title: "Гарах",
+    slug: "logout",
+    icon: LogOut,
   },
 ];
 
-export const dashBoardLogout = {
-  title: "Гарах",
-  icon: LogOut,
+export const dashBoardConfig = {
+  title: "Хяналтын самбар",
+  description: "Хяналтын самбар",
+  slug: "dashboard",
 };

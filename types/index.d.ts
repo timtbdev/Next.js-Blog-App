@@ -19,7 +19,7 @@ export type MenuAttributes = {
 
 export type DashBoardAttributes = {
   title: string;
-  slug: string;
+  slug?: string;
   icon: Icon;
 };
 

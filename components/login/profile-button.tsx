@@ -8,7 +8,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { dashBoardLogout, dashBoardMenus } from "@/config/dashboard";
+import { dashBoardMenus } from "@/config/dashboard";
 import { supabase } from "@/utils/supabase-client";
 import { useRouter } from "next/navigation";
 import React, { FC } from "react";
@@ -41,24 +41,27 @@ const ProfileButton: FC<ProfileButtonProps> = ({ email, profileImageUrl }) => {
           </Avatar>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56 font-sans">
-          {dashBoardMenus.map((menu) => (
-            <>
-              <DropdownMenuItem
-                key={v4()}
-                onClick={() => router.push(menu.slug)}
-              >
+          {dashBoardMenus.map((menu, idx) =>
+            menu.slug == "logout" ? (
+              <DropdownMenuItem key={v4()} onClick={signOut}>
                 <menu.icon className="mr-2 h-4 w-4 text-gray-500" />
                 <span className="text-md text-gray-500">{menu.title}</span>
               </DropdownMenuItem>
-              <DropdownMenuSeparator />
-            </>
-          ))}
-          <DropdownMenuItem onClick={signOut}>
-            <dashBoardLogout.icon className="mr-2 h-4 w-4 text-gray-500" />
-            <span className="text-md text-gray-500">
-              {dashBoardLogout.title}
-            </span>
-          </DropdownMenuItem>
+            ) : (
+              <>
+                <DropdownMenuItem
+                  key={v4()}
+                  onClick={() =>
+                    router.push(`/dashboard/${menu.slug ? menu.slug : ""}`)
+                  }
+                >
+                  <menu.icon className="mr-2 h-4 w-4 text-gray-500" />
+                  <span className="text-md text-gray-500">{menu.title}</span>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+              </>
+            ),
+          )}
         </DropdownMenuContent>
       </DropdownMenu>
     </div>

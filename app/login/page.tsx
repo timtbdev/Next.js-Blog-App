@@ -2,9 +2,22 @@
 
 import LoginHeader from "@/components/login/login-header";
 import LoginSection from "@/components/login/login-section";
-import React from "react";
+import { supabase } from "@/utils/supabase-client";
+import { redirect, useRouter } from "next/navigation";
+import React, { useEffect } from "react";
 
 const LoginPage = () => {
+  const router = useRouter();
+  useEffect(() => {
+    const user = async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      user && router.replace("/dashboard");
+    };
+    user();
+  }, []);
+
   return (
     <>
       <LoginHeader />{" "}

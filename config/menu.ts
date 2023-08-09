@@ -27,3 +27,9 @@ export const menus: MenuAttributes[] = [
     slug: "technology",
   },
 ];
+
+export const loginMenu: MenuAttributes = {
+  id: "962f860d-ab0d-4650-ae93-8171c8b47169",
+  title: "Нэвтрэх",
+  slug: "login",
+};

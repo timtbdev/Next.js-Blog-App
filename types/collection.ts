@@ -18,3 +18,7 @@ export interface PostWithCategoryWithAuthor
 export interface CategoryWithPost extends Omit<Category, "posts"> {
   posts: Post;
 }
+
+export interface BookMarkWithPost extends Omit<BookMark, "posts"> {
+  posts: Post;
+}
