@@ -81,7 +81,7 @@ export default async function CategoryPage({
   const { count } = await supabase
     .from("posts")
     .select("*", { count: "exact", head: true })
-    .eq("category_id", category?.id);
+    .eq("category_id", category?.id ? category?.id : "");
 
   // Pagination
   const limit = 10;
@@ -104,7 +104,7 @@ export default async function CategoryPage({
   const { data, error } = await supabase
     .from("posts")
     .select(`*, categories(*), authors(*)`)
-    .eq("category_id", category?.id)
+    .eq("category_id", category?.id ? category?.id : "")
     .order("created_at", { ascending: false })
     .range(from, to)
     .returns<PostWithCategoryWithAuthor[]>();
