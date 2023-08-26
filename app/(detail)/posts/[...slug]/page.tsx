@@ -5,21 +5,19 @@ import PostAudioPlayer from "@/components/post/post-audio-player";
 import PostComment from "@/components/post/post-comment";
 import PostDetailProgressBar from "@/components/post/post-detail-progressbar";
 import PostFloatingBar from "@/components/post/post-floating-bar";
-import BlurImage from "@/components/shared/blur-image";
 import { metaData } from "@/config/meta";
 import {
   getHash,
   getOgImagePostUrl,
   getUrl,
-  placeholderBlurhash,
 } from "@/lib/utils";
 import { Comment, PostWithCategoryWithAuthor } from "@/types/collection";
 import supabase from "@/utils/supabase-server";
-import { Separator } from "@radix-ui/react-dropdown-menu";
 import { kv } from "@vercel/kv";
 import { Metadata } from "next";
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
+import Image from "next/image";
 
 export const revalidate = 0;
 
@@ -204,28 +202,24 @@ export default async function PostPage({ params }: PostPageProps) {
                         </blockquote>
                       </div>
                       <div className="col-end-1 w-28 lg:row-span-4 lg:w-72">
-                        <BlurImage
+                        <Image
                           src={post.image as string}
                           height={288}
                           width={288}
                           className="rounded-xl bg-gray-50 lg:rounded-3xl"
                           alt={post.title || "Cover"}
-                          placeholder="blur"
                           priority
-                          blurDataURL={placeholderBlurhash}
                         />
                       </div>
                       <figcaption className="text-base lg:col-start-1 lg:row-start-3">
                         <div className="flex flex-row items-center">
-                          <BlurImage
+                          <Image
                             src={post.authors?.image as string}
                             height={40}
                             width={40}
                             alt={(post.authors?.name as string) || "Avatar"}
                             className="flex h-[40px] w-[40px] rounded-full object-cover shadow-sm"
                             priority
-                            placeholder="blur"
-                            blurDataURL={placeholderBlurhash}
                           />
                           <div className="ml-2 flex flex-col">
                             <span className="flex text-sm font-semibold tracking-tight text-gray-900 [word-spacing:-2px]">

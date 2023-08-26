@@ -1,4 +1,3 @@
-import BlurImage from "@/components/shared/blur-image";
 import { getMinutes, placeholderBlurhash } from "@/lib/utils";
 import { PostWithCategoryWithAuthor } from "@/types/collection";
 import { kv } from "@vercel/kv";
@@ -14,6 +13,7 @@ import {
 import Link from "next/link";
 import React from "react";
 import readingTime from "reading-time";
+import Image from "next/image";
 
 export const dynamic = "force-dynamic";
 
@@ -38,15 +38,13 @@ const PostItem: React.FC<PostItemProps> = async ({ post }) => {
           <Link href={`/posts/${post.slug}`}>
             <article className="relative isolate flex max-w-3xl flex-col gap-2 rounded-lg bg-white px-5 py-3 shadow-md shadow-gray-300 ring-1 ring-black/5 sm:gap-8 sm:px-10 sm:py-6 lg:flex-row">
               <div className="relative aspect-[16/9] sm:aspect-[2/1] lg:aspect-square lg:w-64 lg:shrink-0">
-                <BlurImage
+                <Image
                   src={post.image!}
                   alt={post.title ?? "Cover"}
                   height={256}
                   width={256}
                   priority
                   className="absolute inset-0 h-full w-full rounded-2xl bg-gray-50 object-cover"
-                  placeholder="blur"
-                  blurDataURL={placeholderBlurhash}
                 />
                 <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-gray-900/10" />
               </div>
@@ -139,15 +137,13 @@ const PostItem: React.FC<PostItemProps> = async ({ post }) => {
 
                 <div className="mt-3 flex border-t border-gray-900/5 pt-2">
                   <div className="relative flex items-center gap-x-4">
-                    <BlurImage
+                    <Image
                       src={post.authors?.image ? post.authors.image : ""}
                       alt={post.authors?.name ?? "Avatar"}
                       height={45}
                       width={45}
                       priority
                       className="h-[45px] w-[45px] rounded-full bg-gray-50 object-cover"
-                      placeholder="blur"
-                      blurDataURL={placeholderBlurhash}
                     />
                     <div className="text-sm leading-6">
                       <p className="font-semibold text-gray-900">
