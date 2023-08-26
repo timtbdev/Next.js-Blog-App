@@ -45,3 +45,8 @@ export const dashBoardConfig = {
   description: "Хяналтын самбар",
   slug: "dashboard",
 };
+
+export const dashBoardBookmarkTableEmpty = {
+  title: "Хоосон байна",
+  description: "Одоогоор хадгалсан нийтлэл алга",
+};

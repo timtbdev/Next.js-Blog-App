@@ -9,7 +9,7 @@ const ProtectedHeader = () => {
         aria-label="Global"
       >
         <div className="flex flex-1 items-center justify-start">
-          <BackButton />
+          <BackButton url="/dashboard" />
         </div>
         <div className="flex w-full max-w-3xl"></div>
         <div className="flex flex-1 items-center justify-end">

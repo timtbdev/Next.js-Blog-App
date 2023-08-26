@@ -5,9 +5,13 @@ import React from "react";
 
 interface BackButtonProps {
   className?: string;
+  url?: string;
 }
 
-const BackButton: React.FC<BackButtonProps> = ({ className = "" }) => {
+const BackButton: React.FC<BackButtonProps> = ({
+  className = "",
+  url = "/",
+}) => {
   const router = useRouter();
   return (
     <button
@@ -17,7 +21,7 @@ const BackButton: React.FC<BackButtonProps> = ({ className = "" }) => {
         if (window.history.state && window.history.state.idx > 0) {
           router.back();
         } else {
-          router.push("/");
+          router.push(url);
         }
       }}
     >

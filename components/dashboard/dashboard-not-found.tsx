@@ -1,17 +1,12 @@
-import Health from "@/components/icons/health";
-import Home from "@/components/icons/home";
+import DashBoardFooter from "@/components/dashboard/dashboard-footer";
 import LogoIcon from "@/components/icons/logo";
-import Marketing from "@/components/icons/marketing";
-import Science from "@/components/icons/science";
-import Technology from "@/components/icons/technology";
-import SiteFooter from "@/components/site/site-footer";
-import { menus } from "@/config/menu";
+import { dashBoardMenus } from "@/config/dashboard";
 import { notFoundConfig } from "@/config/not-found";
 import { ChevronRightIcon } from "@heroicons/react/20/solid";
 import Link from "next/link";
 import { v4 } from "uuid";
 
-export default function SiteNotFound() {
+export default function DashBoardNotFound() {
   return (
     <div className="bg-white">
       <main className="mx-auto w-full max-w-7xl px-6 pb-16 pt-10 sm:pb-24 lg:px-8">
@@ -28,25 +23,11 @@ export default function SiteNotFound() {
         <div className="mx-auto mt-5 flow-root max-w-lg sm:mt-10">
           <h2 className="sr-only">{notFoundConfig.menu}</h2>
           <ul role="list" className="divide-y divide-gray-900/5">
-            {menus.map((menu) => (
+            {dashBoardMenus.map((menu) => (
               <Link key={v4()} href={menu.slug || ""}>
                 <li className="relative flex gap-x-6 border-b border-black/5 py-6">
                   <div className="flex h-10 w-10 flex-none items-center justify-center rounded-lg shadow-sm ring-1 ring-gray-900/10">
-                    {menu.slug === "/" && (
-                      <Home className="h-6 w-6 text-gray-600" />
-                    )}
-                    {menu.slug === "health" && (
-                      <Health className="h-6 w-6 text-gray-600" />
-                    )}
-                    {menu.slug === "science" && (
-                      <Science className="h-6 w-6 text-gray-600" />
-                    )}
-                    {menu.slug === "technology" && (
-                      <Technology className="h-6 w-6 text-gray-600" />
-                    )}
-                    {menu.slug === "marketing" && (
-                      <Marketing className="h-6 w-6 text-gray-600" />
-                    )}
+                    <menu.icon className="h-6 w-6 text-gray-600" />
                   </div>
                   <div className="my-auto flex-auto items-center text-sm font-semibold leading-6 text-gray-900">
                     {menu.title}
@@ -71,7 +52,7 @@ export default function SiteNotFound() {
           </div>
         </div>
       </main>
-      <SiteFooter />
+      <DashBoardFooter />
     </div>
   );
 }
