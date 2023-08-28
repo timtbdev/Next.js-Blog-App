@@ -4,33 +4,28 @@
   </a>
 
   <p align="center">
-  The Open Source DocuSign Alternative.
+  Blog app built with Next.js 13 & Supabase.
   <br>
-    <a href="https://documenso.com"><strong>Learn more »</strong></a>
+    <a href="https://documenso.com"><strong>Demo</strong></a>
     <br />
     <br />
-    <a href="https://documen.so/discord">Discord</a>
+    <a href="https://ub.cafe">Home</a>
     ·
-    <a href="https://documenso.com">Website</a>
+    <a href="https://ub.cafe/marketing/">Category</a>
     ·
-    <a href="https://github.com/documenso/documenso/issues">Issues</a>
+    <a href="https://ub.cafe/post">Post</a>
     ·
-    <a href="https://github.com/documenso/documenso/milestones">Roadmap</a>
+    <a href="https://ub.cafe/contact">Contact</a>
+        ·
+    <a href="https://ub.cafe/login">Login</a>
+        ·
+    <a href="https://ub.cafe/contact">Dashboard</a>
   </p>
 </p>
 
-<p align="center">
-   <a href="https://documen.so/discord"><img src="https://img.shields.io/badge/Discord-documen.so/discord-%235865F2" alt="Join Documenso on Discord"></a> 
-   <a href="https://github.com/documenso/documenso/stargazers"><img src="https://img.shields.io/github/stars/documenso/documenso" alt="Github Stars"></a>
-   <a href="https://github.com/documenso/documenso/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-AGPLv3-purple" alt="License"></a>
-   <a href="https://github.com/documenso/documenso/pulse"><img src="https://img.shields.io/github/commit-activity/m/documenso/documenso" alt="Commits-per-month"></a>
-</p>
+<img width="1040" alt="Screenshot 2023-06-10 at 10 40 32 PM" src="https://github.com/timtbdev/Portfolio/assets/25026241/c8ca1979-4e0f-4963-a79d-7720396e2b1d">
 
-> **🚧 We're currently working on a large scale refactor which can be found on the [feat/refresh](https://github.com/documenso/documenso/tree/feat/refresh) branch.**
->
-> **[Read more on why 👀](https://documenso.com/blog/why-were-doing-a-rewrite)**
-
-# Documenso 0.9 - Developer Preview
+# Screenshots
 
 <div>
   <img style="display: block; height: 120px; width: 24%"
@@ -56,18 +51,6 @@
 Blog app built using Next.js 13, Supabase, shadcn-ui.
 
 <img width="1040" alt="Screenshot 2023-06-10 at 10 40 32 PM" src="https://github.com/timtbdev/Portfolio/assets/25026241/c8ca1979-4e0f-4963-a79d-7720396e2b1d">
-
-## Frontend - [Demo](https://timtb.dev)
-
-https://github.com/timtbdev/Portfolio/assets/25026241/a01b5068-0bdc-4349-ad66-14a06a6fbda7
-
-## Backend - [Demo](https://timtb.dev/dashboard)
-
-https://github.com/timtbdev/Portfolio/assets/25026241/044e4d21-4aad-4f5a-bef5-a1c055b65dfa
-
-## 📱 Mobile - [Demo](https://timtb.dev)
-
-https://github.com/timtbdev/Portfolio/assets/25026241/912a673c-ae98-4f82-8730-f52b9939d30f
 
 ## 📊 Google Lighthouse performance statistics
 
