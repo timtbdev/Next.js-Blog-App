@@ -1,18 +1,18 @@
 export const loginConfig = {
-  // Login form
-  title: "Нэвтрэх",
-  description: "Та өөрт тохирох сонголтоо хийж нэвтэрнэ үү.",
-  or: "Эсвэл",
-  close: "Хаах",
-  // Social login form
-  google: "Google-р нэвтрэх",
-  facebook: "Facebook-р нэвтрэх",
-  github: "Github-р нэвтрэх",
+    // Login form
+    title: 'Sign in',
+    description: 'Please sign in to continue.',
+    or: 'or',
+    close: 'Close',
+    // Social login form
+    google: 'Sign in with Google',
+    facebook: 'Sing in with Facebook',
+    github: 'Sign in with Github',
 
-  // Email login form
-  email: "Имэйл-р нэвтрэх",
-  sendButton: "Нэвтрэх линк илгээх",
-  emailRequiredError: "Имэйл хаягаа зөв оруулна уу.",
-  emailSent: "Нэвтрэх линкийг имэйлээр илгээсэн.",
-  error: "Алдаа гарлаа.",
+    // Email login form
+    email: 'Sign in with email',
+    sendButton: 'Send login link',
+    emailRequiredError: 'Email is required.',
+    emailSent: 'Email sent.',
+    error: 'Error occured.',
 };

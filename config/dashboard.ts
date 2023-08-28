@@ -1,52 +1,33 @@
-import { DashBoardAttributes } from "@/types";
+import { DashBoardAttributes } from '@/types';
 import {
-  BookMarkedIcon,
-  LayoutGridIcon as DashBoardIcon,
-  LogOut,
-  FilePlus2Icon as NewIcon,
-  FileTextIcon as PostIcon,
-  SettingsIcon,
-} from "lucide-react";
+    BookMarkedIcon,
+    LayoutGridIcon as DashBoardIcon,
+    LogOut,
+    FilePlus2Icon as NewIcon,
+    FileTextIcon as PostIcon,
+    SettingsIcon,
+} from 'lucide-react';
 
 export const dashBoardMenus: DashBoardAttributes[] = [
-  {
-    title: "Хяналтын самбар",
-    icon: DashBoardIcon,
-  },
-  {
-    title: "Шинэ нийтлэл",
-    slug: "new",
-    icon: NewIcon,
-  },
-  {
-    title: "Бичсэн нийтлэл",
-    slug: "posts",
-    icon: PostIcon,
-  },
-  {
-    title: "Хадгалсан нийтлэл",
-    slug: "bookmarks",
-    icon: BookMarkedIcon,
-  },
-  {
-    title: "Тохиргоо",
-    slug: "settings",
-    icon: SettingsIcon,
-  },
-  {
-    title: "Гарах",
-    slug: "logout",
-    icon: LogOut,
-  },
+    {
+        title: 'Bookmarks',
+        slug: 'bookmarks',
+        icon: BookMarkedIcon,
+    },
+    {
+        title: 'Sign out',
+        slug: 'logout',
+        icon: LogOut,
+    },
 ];
 
 export const dashBoardConfig = {
-  title: "Хяналтын самбар",
-  description: "Хяналтын самбар",
-  slug: "dashboard",
+    title: 'Dashboard',
+    description: 'Dashboard',
+    slug: 'dashboard',
 };
 
 export const dashBoardBookmarkTableEmpty = {
-  title: "Хоосон байна",
-  description: "Одоогоор хадгалсан нийтлэл алга",
+    title: 'Empty',
+    description: 'There is no bookmark yet',
 };

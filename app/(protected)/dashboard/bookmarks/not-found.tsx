@@ -1,8 +1,8 @@
-import DashBoardNotFound from "@/components/dashboard/dashboard-not-found";
-import React from "react";
+import DashBoardNotFound from '@/components/dashboard/dashboard-not-found';
+import React from 'react';
 
 const NotFound = () => {
-  return <DashBoardNotFound />;
+    return <DashBoardNotFound />;
 };
 
 export default NotFound;

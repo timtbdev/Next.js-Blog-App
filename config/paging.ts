@@ -1,4 +1,4 @@
 export const pagingConfig = {
-  previous: "Өмнөх",
-  next: "Дараах",
+    previous: 'Previous',
+    next: 'Next',
 };

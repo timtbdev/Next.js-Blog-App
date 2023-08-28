@@ -1,6 +1,6 @@
 export const notFoundConfig = {
-  title: "Хуудас олдсонгүй",
-  description: "Таны хайсан хуудас эсвэл нийтлэл олдсонгүй",
-  back: "Буцах",
-  menu: "Цэс",
+    title: 'Page not found',
+    description: 'The page you are looking for does not exist.',
+    back: 'Back',
+    menu: 'Menu',
 };

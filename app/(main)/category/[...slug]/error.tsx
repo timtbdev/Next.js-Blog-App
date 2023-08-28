@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import SiteError from "@/components/site/site-error";
-import React from "react";
+import SiteError from '@/components/site/site-error';
+import React from 'react';
 
 const Error = () => {
-  return <SiteError />;
+    return <SiteError />;
 };
 
 export default Error;

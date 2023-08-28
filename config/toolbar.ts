@@ -1,25 +1,30 @@
 export const toolbarConfig = {
-  // Save button
-  save: "Хадгалах",
-  saved: "Хадгалсан",
-  // Like button
-  like: "Таалагдлаа",
-  liked: "Таалагдсан",
-  // Share button
-  share: "Хуваалцах",
-  // View button
-  view: "Хандалт",
-  // Comment button
-  comment: "Сэтгэгдэл",
-  // Success message
-  success: "Амжилттай хадгалагдлаа.",
-  // Error message
-  error: "Алдаа гарлаа.",
-  // Cancel button
-  cancel: "Цуцлах",
-  canceled: "Амжилттай цуцлагдлаа.",
-  // Send button
-  send: "Илгээх",
-  // Guest info
-  guest: "Зочин",
+    // Save button
+    save: 'Save',
+    saved: 'Saved',
+    unsave: 'Unsave',
+    unsaved: 'Unsaved',
+    // Like button
+    like: 'Like',
+    liked: 'Liked',
+    unlike: 'Unlike',
+    unliked: 'Unliked',
+    // Share button
+    share: 'Share',
+    // View button
+    view: 'Views',
+    // Comment button
+    comment: 'Comments',
+    // Success message
+    success: 'Saved successfully',
+    // Error message
+    error: 'Error occured',
+    // Cancel button
+    cancel: 'Cancel',
+    canceled: 'Canceled',
+    // Send button
+    send: 'Submit',
+    // Guest info
+    guest: 'Guest',
+    name: 'Name',
 };

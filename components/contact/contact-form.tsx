@@ -1,142 +1,123 @@
-"use client";
+'use client';
 
-import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Loader2 as SpinnerIcon } from "lucide-react";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { toast } from "react-hot-toast";
-import * as z from "zod";
-
-const contactFormSchema = z.object({
-  name: z.string().min(3, { message: "Нэрээ бүрэн оруулна уу?" }),
-  email: z.string().email({ message: "Имэйлээ оруулна уу?." }),
-  message: z
-    .string()
-    .min(4, {
-      message: "Таны зурвас 4-320 тэмдэгтийн хооронд байх ёстой.",
-    })
-    .max(320, {
-      message: "Таны зурвас 4-320 тэмдэгтийн хооронд байх ёстой.",
-    }),
-});
+import { Button } from '@/components/ui/button';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Loader2 as SpinnerIcon } from 'lucide-react';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { toast } from 'react-hot-toast';
+import * as z from 'zod';
+import { contactFormSchema } from '@/lib/validations';
+import { contactConfig } from '@/config/contact';
 
 type ContactFormValues = z.infer<typeof contactFormSchema>;
 
 const defaultValues: Partial<ContactFormValues> = {
-  name: "",
-  email: "",
-  message: "",
+    name: '',
+    email: '',
+    message: '',
 };
 
 const ContactForm = () => {
-  const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
-  const form = useForm<ContactFormValues>({
-    resolver: zodResolver(contactFormSchema),
-    defaultValues,
-  });
+    const form = useForm<ContactFormValues>({
+        resolver: zodResolver(contactFormSchema),
+        defaultValues,
+    });
 
-  async function onSubmit(data: ContactFormValues) {
-    try {
-      setIsLoading(true);
-      // Send email using Nodemailer
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: data.name,
-          email: data.email,
-          message: data.message,
-        }),
-      });
-      setIsLoading(false);
-      form.reset();
+    async function onSubmit(data: ContactFormValues) {
+        try {
+            setIsLoading(true);
+            // Send email using Nodemailer
+            const response = await fetch('/api/contact', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    name: data.name,
+                    email: data.email,
+                    message: data.message,
+                }),
+            });
+            setIsLoading(false);
+            form.reset();
 
-      if (!response?.ok) {
-        return toast.error("Алдаа гарлаа.");
-      }
-    } catch (error) {
-      // Handle error
-      console.error("Failed to send email:", error);
-    } finally {
-      setIsLoading(false);
-      toast.success("Имэйл илгээгдсэн.");
+            if (!response?.ok) {
+                return toast.error(contactConfig.error);
+            }
+        } catch (error) {
+            // Handle error
+            console.error(contactConfig.error, error);
+        } finally {
+            setIsLoading(false);
+            toast.success(contactConfig.emailSent);
+        }
     }
-  }
-  return (
-    <>
-      <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="mx-auto my-10 space-y-4 text-center"
-        >
-          <FormField
-            control={form.control}
-            name="name"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="text-gray-600">Нэр</FormLabel>
-                <div className="mx-auto flex w-full max-w-md space-x-2">
-                  <FormControl>
-                    <Input {...field} />
-                  </FormControl>
-                </div>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="text-gray-600">Имэйл</FormLabel>
-                <div className="mx-auto flex w-full max-w-md space-x-2">
-                  <FormControl>
-                    <Input {...field} />
-                  </FormControl>
-                </div>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="message"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="text-gray-600">Зурвас</FormLabel>
-                <div className="mx-auto bg-white flex w-full max-w-md space-x-2">
-                  <FormControl>
-                    <Textarea className="resize-none" {...field} />
-                  </FormControl>
-                </div>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <Button type="submit" className="w-full max-w-sm">
-            {isLoading && <SpinnerIcon className="mr-2 h-4 w-4 animate-spin" />}
-            Илгээх
-          </Button>
-        </form>
-      </Form>
-    </>
-  );
+    return (
+        <>
+            <Form {...form}>
+                <form onSubmit={form.handleSubmit(onSubmit)} className="mx-auto my-10 space-y-4 text-center">
+                    <FormField
+                        control={form.control}
+                        name="name"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel className="text-gray-600">{contactConfig.name}</FormLabel>
+                                <div className="mx-auto flex w-full max-w-md space-x-2">
+                                    <FormControl>
+                                        <Input {...field} />
+                                    </FormControl>
+                                </div>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name="email"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel className="text-gray-600">{contactConfig.email}</FormLabel>
+                                <div className="mx-auto flex w-full max-w-md space-x-2">
+                                    <FormControl>
+                                        <Input {...field} />
+                                    </FormControl>
+                                </div>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name="message"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel className="text-gray-600">{contactConfig.message}</FormLabel>
+                                <div className="mx-auto bg-white flex w-full max-w-md space-x-2">
+                                    <FormControl>
+                                        <Textarea className="resize-none" {...field} />
+                                    </FormControl>
+                                </div>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <Button
+                        type="submit"
+                        className=" w-full max-w-sm items-center justify-center bg-gray-600 px-3 py-2 text-sm rounded-lg bg-gradient-to-t from-gray-200 via-gray-100 to-gray-50 text-gray-500 shadow-md shadow-black/5 ring-1 ring-black/10 transition duration-200 hover:bg-gradient-to-tr hover:from-gray-200 hover:via-gray-100 hover:to-gray-50 active:scale-[96%] active:ring-black/20"
+                    >
+                        {isLoading && <SpinnerIcon className="mr-2 h-4 w-4 animate-spin" />}
+                        {contactConfig.send}
+                    </Button>
+                </form>
+            </Form>
+        </>
+    );
 };
 
 export default ContactForm;
