@@ -7,14 +7,14 @@ import { ImageResponse } from 'next/server';
 
 export const runtime = 'edge';
 
-const jetBrainMonoBold = fetch(new URL('../../../public/fonts/JetBrainsMono-Bold.ttf', import.meta.url)).then((res) =>
+const interBold = fetch(new URL('../../../public/fonts/Inter-Bold.ttf', import.meta.url)).then((res) =>
     res.arrayBuffer()
 );
 
 export async function GET(req: Request) {
     try {
         const { searchParams } = new URL(`${req.url}`);
-        const fontBold = await jetBrainMonoBold;
+        const fontBold = await interBold;
         console.log('Route API Year', searchParams.get('year'));
         const { title, year, image, name, avatar, job } = ogImagePostSchema.parse({
             title: searchParams.get('title'),
@@ -32,8 +32,9 @@ export async function GET(req: Request) {
                 height: 630,
                 fonts: [
                     {
-                        name: 'JetBrainMono',
+                        name: 'Inter',
                         data: fontBold,
+                        weight: 700,
                         style: 'normal',
                     },
                 ],

@@ -1,3 +1,56 @@
+<p align="center" style="margin-top: 120px">
+  <a href="https://github.com/documenso/documenso">
+   <img width="250px" src="https://github.com/documenso/documenso/assets/1309312/cd7823ec-4baa-40b9-be78-4acb3b1c73cb" alt="Documenso Logo">
+  </a>
+
+  <p align="center">
+  The Open Source DocuSign Alternative.
+  <br>
+    <a href="https://documenso.com"><strong>Learn more »</strong></a>
+    <br />
+    <br />
+    <a href="https://documen.so/discord">Discord</a>
+    ·
+    <a href="https://documenso.com">Website</a>
+    ·
+    <a href="https://github.com/documenso/documenso/issues">Issues</a>
+    ·
+    <a href="https://github.com/documenso/documenso/milestones">Roadmap</a>
+  </p>
+</p>
+
+<p align="center">
+   <a href="https://documen.so/discord"><img src="https://img.shields.io/badge/Discord-documen.so/discord-%235865F2" alt="Join Documenso on Discord"></a> 
+   <a href="https://github.com/documenso/documenso/stargazers"><img src="https://img.shields.io/github/stars/documenso/documenso" alt="Github Stars"></a>
+   <a href="https://github.com/documenso/documenso/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-AGPLv3-purple" alt="License"></a>
+   <a href="https://github.com/documenso/documenso/pulse"><img src="https://img.shields.io/github/commit-activity/m/documenso/documenso" alt="Commits-per-month"></a>
+</p>
+
+> **🚧 We're currently working on a large scale refactor which can be found on the [feat/refresh](https://github.com/documenso/documenso/tree/feat/refresh) branch.**
+>
+> **[Read more on why 👀](https://documenso.com/blog/why-were-doing-a-rewrite)**
+
+# Documenso 0.9 - Developer Preview
+
+<div>
+  <img style="display: block; height: 120px; width: 24%"
+    src="https://user-images.githubusercontent.com/1309312/224570645-167128ee-3e39-4578-85d2-5394d9a0379c.png">
+  <img style="display: block; height: 120px; width: 24%"
+    src="https://user-images.githubusercontent.com/1309312/224570651-0afd12f8-cfe3-49d1-805e-e495af963d91.png">
+  <img style="display: block; height: 120px; width: 24%"
+    src="https://user-images.githubusercontent.com/1309312/224570655-328d2279-058d-4a3e-b5c3-5cbd8a1f4e05.png">
+  <img style="display: block; height: 120px; width: 24%"
+    src="https://user-images.githubusercontent.com/1309312/224571617-1f3c2811-c1ac-4d7d-b9b0-4ab183731405.png">
+  <img style="display: block; height: 120px; width: 24%"
+    src="https://user-images.githubusercontent.com/1309312/224570322-b2c76ea8-7482-4043-ad97-f1221220c591.png">
+  <img style="display: block; height: 120px; width: 24%"
+    src="https://user-images.githubusercontent.com/1309312/224570325-a8055f24-9826-4a23-b116-4fbb0577581a.png">
+  <img style="display: block; height: 120px; width: 24%"
+    src="https://user-images.githubusercontent.com/1309312/224570318-f724bbd9-c394-4bdc-bace-2d78af92de44.png">
+      <img style="display: block; height: 120px; width: 24%"
+    src="https://user-images.githubusercontent.com/1309312/224571539-f019b860-f613-4b20-86e8-4437c5784265.png">
+</div>
+
 # Blog App
 
 Blog app built using Next.js 13, Supabase, shadcn-ui.
