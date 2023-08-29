@@ -4,6 +4,12 @@
   </a>
 </p>
 
+  <p align="center">
+  Blogging app built with Next.js 13 & Supabase Auth & Database
+  <br>
+    <a href="https://ub.cafe"><strong>Visit Demo</strong></a>
+  </p>
+
 <img width="1040" alt="Screenshot 2023-06-10 at 10 40 32 PM" src="https://github.com/timtbdev/Next.js-Blog-App/assets/25026241/99355f56-4c19-45ba-a0a0-7f24b24c27ca">
 
 ## 📺 Screenshots
