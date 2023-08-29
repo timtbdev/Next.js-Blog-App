@@ -15,18 +15,24 @@ export async function GET(req: Request) {
     try {
         const { searchParams } = new URL(`${req.url}`);
         const fontBold = await interBold;
-        console.log('Route API Year', searchParams.get('year'));
-        const { title, year, image, name, avatar, job } = ogImagePostSchema.parse({
+        const { title, image, author_name, author_image, author_title } = ogImagePostSchema.parse({
             title: searchParams.get('title'),
-            year: searchParams.get('year'),
             image: searchParams.get('image'),
-            name: searchParams.get('name'),
-            avatar: searchParams.get('avatar'),
-            job: searchParams.get('job'),
+            author_name: searchParams.get('author_name'),
+            author_image: searchParams.get('author_image'),
+            author_title: searchParams.get('author_title'),
         });
 
         return new ImageResponse(
-            <OgImage title={title} year={year} image={image} name={name} avatar={avatar} job={job} />,
+            (
+                <OgImage
+                    title={title}
+                    image={image}
+                    author_name={author_name}
+                    author_image={author_image}
+                    author_title={author_title}
+                />
+            ),
             {
                 width: 1200,
                 height: 630,

@@ -13,6 +13,8 @@ import { Metadata } from 'next';
 import { cookies } from 'next/headers';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
+import { CalendarIcon } from 'lucide-react';
+import { format, parseISO } from 'date-fns';
 
 export const revalidate = 0;
 
@@ -72,7 +74,6 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
                 {
                     url: getOgImagePostUrl(
                         post.title as string,
-                        post.year as string,
                         post.image as string,
                         post.authors?.name as string,
                         post.authors?.image as string,
@@ -91,7 +92,6 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
             images: [
                 getOgImagePostUrl(
                     post.title as string,
-                    post.year as string,
                     post.image as string,
                     post.authors?.name as string,
                     post.authors?.image as string,
@@ -182,7 +182,13 @@ export default async function PostPage({ params }: PostPageProps) {
                                                     <use href="#b56e9dab-6ccb-4d32-ad02-6b4bb5d9bbeb" x={86} />
                                                 </svg>
                                                 <blockquote className="text-xl font-semibold leading-8 text-gray-900 sm:text-2xl sm:leading-9">
-                                                    <p>{post.quote}</p>
+                                                    <div className="inline-flex items-center text-gray-500">
+                                                        <CalendarIcon className="h-4 w-4" />
+                                                        <span className="ml-1 text-sm font-medium">
+                                                            {format(parseISO(post.updated_at!), 'MM/dd/yyyy')}
+                                                        </span>
+                                                    </div>
+                                                    <p>{post.title}</p>
                                                 </blockquote>
                                             </div>
                                             <div className="col-end-1 w-28 lg:row-span-4 lg:w-72">
@@ -235,7 +241,7 @@ export default async function PostPage({ params }: PostPageProps) {
                                 </div>
                             </div>
 
-                            <div className="relative mx-auto max-w-3xl border-slate-500/50">
+                            <div className="relative mx-auto max-w-3xl border-slate-500/50 py-5">
                                 <div
                                     className="lg:prose-md prose"
                                     dangerouslySetInnerHTML={{ __html: post.content || '' }}

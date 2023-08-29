@@ -10,11 +10,10 @@ export const ogImageSchema = z.object({
 
 export const ogImagePostSchema = z.object({
     title: z.string(),
-    year: z.string(),
     image: z.string(),
-    name: z.string(),
-    avatar: z.string(),
-    job: z.string(),
+    author_name: z.string(),
+    author_image: z.string(),
+    author_title: z.string(),
 });
 
 export const postViewSchema = z.object({

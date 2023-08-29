@@ -1,20 +1,19 @@
-import { CoffeeIcon } from 'lucide-react';
 import { FC } from 'react';
 import { OgWrapper } from './og-wrapper';
+import { metaData } from '@/config/meta';
 
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable @next/next/no-img-element */
 
 interface OgImageProps {
     title: string;
-    year: string;
     image: string;
-    name: string;
-    avatar: string;
-    job: string;
+    author_name: string;
+    author_image: string;
+    author_title: string;
 }
 
-export const OgImage: FC<OgImageProps> = ({ title, year, image, name, avatar, job }) => {
+export const OgImage: FC<OgImageProps> = ({ title, image, author_name, author_image, author_title }) => {
     return (
         <>
             <OgWrapper>
@@ -74,7 +73,7 @@ export const OgImage: FC<OgImageProps> = ({ title, year, image, name, avatar, jo
                                 fontSize: 30,
                             }}
                         >
-                            UB.cafe
+                            {metaData.title}
                         </span>
                     </div>
 
@@ -89,20 +88,15 @@ export const OgImage: FC<OgImageProps> = ({ title, year, image, name, avatar, jo
                                         {title}
                                     </span>
                                 </div>
-                                <div tw="flex">
-                                    <span tw="flex items-center max-w-md w-justify-start px-5 py-3 font-semibold text-3xl text-gray-600 ">
-                                        {year} он
-                                    </span>
-                                </div>
                                 <div tw="flex flex-row px-5 py-2 items-cener">
-                                    <img src={avatar} height={40} width={40} tw="rounded-full" />
+                                    <img src={author_image} height={40} width={40} tw="rounded-full" />
                                     <span tw="flex tracking-tight items-center px-4 text-2xl font-semibold text-gray-900">
-                                        {name}
+                                        {author_name}
                                     </span>
                                 </div>
                                 <div tw="flex">
                                     <span tw="flex tracking-tight items-center justify-start px-5 py-3 font-semibold text-2xl text-gray-600 ">
-                                        {job}
+                                        {author_title}
                                     </span>
                                 </div>
                             </div>

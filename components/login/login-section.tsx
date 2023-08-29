@@ -1,19 +1,14 @@
 'use client';
 
-import Facebook from '@/components/icons/facebook';
 import Github from '@/components/icons/github';
 import Google from '@/components/icons/google';
 import LoadingDots from '@/components/icons/loading-dots';
-import Send from '@/components/icons/send';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
 import { loginConfig } from '@/config/login';
 import { supabase } from '@/utils/supabase-client';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { usePathname, useRouter } from 'next/navigation';
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import toast from 'react-hot-toast';
 import z from 'zod';
 import Image from 'next/image';
 
@@ -43,9 +38,7 @@ const LoginSection: React.FC<LoginSectionProps> = ({ setOpen }) => {
         resolver: zodResolver(FormSchema),
     });
     const [signInGoogleClicked, setSignInGoogleClicked] = React.useState<boolean>(false);
-    const [signInFacebookClicked, setSignInFacebookClicked] = React.useState<boolean>(false);
     const [signInGithubClicked, setSignInGithubClicked] = React.useState<boolean>(false);
-    const [signInEmailClicked, setSignInEmailClicked] = React.useState<boolean>(false);
     const router = useRouter();
     const currentPathname = usePathname();
     const redirectTo = getLoginRedirectPath(currentPathname);
@@ -76,40 +69,6 @@ const LoginSection: React.FC<LoginSectionProps> = ({ setOpen }) => {
             },
         });
         router.refresh();
-    }
-
-    async function signInWithFacebook() {
-        setSignInFacebookClicked(true);
-        const { data, error } = await supabase.auth.signInWithOAuth({
-            provider: 'facebook',
-            options: {
-                redirectTo,
-                queryParams: {
-                    prompt: 'consent',
-                },
-            },
-        });
-        router.refresh();
-    }
-
-    async function signInWithEmail(formData: z.infer<typeof FormSchema>) {
-        setSignInEmailClicked(true);
-        const { data, error } = await supabase.auth.signInWithOtp({
-            email: formData.email,
-            options: {
-                emailRedirectTo: redirectTo,
-            },
-        });
-        if (error) {
-            console.error(error);
-            setSignInEmailClicked(false);
-            toast.error(loginConfig.error);
-        } else {
-            toast.success(loginConfig.emailSent);
-            setSignInEmailClicked(false);
-            setOpen && setOpen(false);
-            router.refresh();
-        }
     }
 
     return (
@@ -149,24 +108,7 @@ const LoginSection: React.FC<LoginSectionProps> = ({ setOpen }) => {
                             </>
                         )}
                     </button>
-                    <button
-                        disabled={signInFacebookClicked}
-                        className={`${
-                            signInFacebookClicked
-                                ? 'cursor-not-allowed border-gray-200 bg-gray-100'
-                                : 'border border-gray-200 bg-white text-black hover:bg-gray-50'
-                        } flex h-10 w-full items-center justify-center space-x-3 rounded-md border text-sm shadow-sm transition-all duration-75 focus:outline-none`}
-                        onClick={() => signInWithFacebook()}
-                    >
-                        {signInFacebookClicked ? (
-                            <LoadingDots color="#808080" />
-                        ) : (
-                            <>
-                                <Facebook className="h-5 w-5 text-blue-600" />
-                                <p>{loginConfig.facebook}</p>
-                            </>
-                        )}
-                    </button>
+
                     <button
                         disabled={signInGithubClicked}
                         className={`${
@@ -186,55 +128,6 @@ const LoginSection: React.FC<LoginSectionProps> = ({ setOpen }) => {
                         )}
                     </button>
                 </div>
-
-                {/* Seperation line */}
-                <div className="relative">
-                    <div className="absolute inset-0 flex items-center">
-                        <span className="w-full border-t" />
-                    </div>
-                    <div className="relative flex justify-center text-sm uppercase">
-                        <span className="bg-gray-50 px-2">{loginConfig.or}</span>
-                    </div>
-                </div>
-
-                <Form {...form}>
-                    <form
-                        onSubmit={form.handleSubmit(signInWithEmail)}
-                        className="grid-cols grid space-y-3 px-4 py-6 pt-8 text-center md:px-16"
-                    >
-                        <FormField
-                            control={form.control}
-                            name="email"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>{loginConfig.email}</FormLabel>
-                                    <FormControl>
-                                        <Input placeholder="email@example.com" {...field} className="text-center" />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <button
-                            type="submit"
-                            disabled={signInEmailClicked}
-                            className={`${
-                                signInEmailClicked
-                                    ? 'cursor-not-allowed border-gray-200 bg-gray-100'
-                                    : 'border border-gray-200 bg-white text-black hover:bg-gray-50'
-                            } flex h-10 w-full items-center justify-center space-x-3 rounded-md border text-sm shadow-sm transition-all duration-75 focus:outline-none`}
-                        >
-                            {signInEmailClicked ? (
-                                <LoadingDots color="#808080" />
-                            ) : (
-                                <>
-                                    <Send className="h-5 w-5" />
-                                    <p>{loginConfig.sendButton}</p>
-                                </>
-                            )}
-                        </button>
-                    </form>
-                </Form>
             </div>
         </>
     );

@@ -29,19 +29,17 @@ export function getOgImageUrl(subTitle: string, title: string, tags: Array<strin
 // Construction of a Open Graph Images url for Twitter and Facebook
 export function getOgImagePostUrl(
     title: string,
-    year: string,
     image: string,
-    name: string,
-    avatar: string,
-    job: string
+    author_name: string,
+    author_image: string,
+    author_title: string
 ) {
     const uri = [
         `?title=${encodeURIComponent(title)}`,
-        `&year=${encodeURIComponent(year)}`,
         `&image=${encodeURIComponent(image)}`,
-        `&name=${encodeURIComponent(name)}`,
-        `&avatar=${encodeURIComponent(avatar)}`,
-        `&job=${encodeURIComponent(job)}`,
+        `&author_name=${encodeURIComponent(author_name)}`,
+        `&author_image=${encodeURIComponent(author_image)}`,
+        `&author_title=${encodeURIComponent(author_title)}`,
         // Joining a multiline string for readability.
     ].join('');
 

@@ -40,13 +40,7 @@ export default async function MainLayout({
     }
     return (
         <>
-            <PostDetailHeader
-                title={post.title as string}
-                author={post.authors?.name as string}
-                year={post.year as string}
-                description={post.description as string}
-                slug={post.slug as string}
-            />
+            <PostDetailHeader title={post.title as string} />
             <div className="bg-gray-100 py-3 min-h-full">
                 <div className="mx-auto max-w-7xl px-6 lg:px-8">
                     <div className="mx-auto max-w-4xl">{children}</div>

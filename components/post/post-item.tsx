@@ -2,7 +2,7 @@ import { getMinutes } from '@/lib/utils';
 import { PostWithCategoryWithAuthor } from '@/types/collection';
 import { kv } from '@vercel/kv';
 import { format, parseISO } from 'date-fns';
-import { CalendarIcon, Clock10Icon, EyeIcon, HeadphonesIcon, HeartIcon, MessageCircleIcon } from 'lucide-react';
+import { CalendarIcon, Clock10Icon, EyeIcon, HeartIcon, MessageCircleIcon } from 'lucide-react';
 import Link from 'next/link';
 import React from 'react';
 import readingTime from 'reading-time';
@@ -114,23 +114,18 @@ const PostItem: React.FC<PostItemProps> = async ({ post }) => {
                                 </div>
 
                                 <div className="mt-3 flex border-t border-gray-900/5 pt-2">
-                                    <div className="relative flex items-center gap-x-4">
+                                    <div className="relative flex items-center gap-x-2">
                                         <Image
                                             src={post.authors?.image ? post.authors.image : ''}
                                             alt={post.authors?.name ?? 'Avatar'}
-                                            height={45}
-                                            width={45}
+                                            height={40}
+                                            width={40}
                                             priority
-                                            className="h-[45px] w-[45px] rounded-full bg-gray-50 object-cover"
+                                            className="h-[40px] w-[40px] rounded-full bg-gray-50 object-cover"
                                         />
-                                        <div className="text-sm leading-6">
-                                            <p className="font-semibold text-gray-900">
-                                                <span className="absolute inset-0 tracking-tight [word-spacing:-2px]" />
-                                                {post.authors?.name}
-                                            </p>
-                                            <p className="tracking-tight text-gray-600 [word-spacing:-3px]">
-                                                {post.authors?.title}
-                                            </p>
+                                        <div className="text-sm">
+                                            <p className="font-semibold text-gray-900">{post.authors?.name}</p>
+                                            <p className="text-gray-600">{post.authors?.title}</p>
                                         </div>
                                     </div>
                                 </div>
