@@ -67,7 +67,7 @@ export const OgImage: FC<OgImageProps> = ({ title, image, author_name, author_im
                             </svg>
                         </div>
                         <span
-                            tw="text-md font-semibold tracking-tighter"
+                            tw="text-md font-semibold"
                             style={{
                                 marginLeft: 8,
                                 fontSize: 30,

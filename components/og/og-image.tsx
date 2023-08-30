@@ -20,7 +20,7 @@ export const OgImage: FC<OgImageProps> = ({ title, subTitle, tags, slug }) => {
                         <div
                             tw="flex text-xl font-bold text-gray-900 tracking-tight"
                             style={{
-                                fontFamily: 'JetBrainMono',
+                                fontFamily: 'Inter',
                                 fontWeight: 'bold',
                                 fontSize: 46,
                                 marginBottom: 8,
@@ -29,9 +29,9 @@ export const OgImage: FC<OgImageProps> = ({ title, subTitle, tags, slug }) => {
                             {subTitle}
                         </div>
                         <div
-                            tw="flex leading-[1.1] text-[40px] font-bold text-gray-500 tracking-tighter"
+                            tw="flex leading-[1.1] text-[40px] font-bold text-gray-500"
                             style={{
-                                fontFamily: 'JetBrainMono',
+                                fontFamily: 'Inter',
                                 fontWeight: 'bolder',
                                 marginBottom: 16,
                             }}
@@ -43,7 +43,7 @@ export const OgImage: FC<OgImageProps> = ({ title, subTitle, tags, slug }) => {
                                 <div
                                     tw="flex bg-gray-200 text-[30px] text-gray-500"
                                     style={{
-                                        fontFamily: 'JetBrainMono',
+                                        fontFamily: 'Inter',
                                         fontWeight: 'normal',
                                         alignItems: 'center',
                                         borderRadius: 100,
@@ -64,7 +64,7 @@ export const OgImage: FC<OgImageProps> = ({ title, subTitle, tags, slug }) => {
                         <div tw="flex justify-start">
                             <div
                                 tw="flex items-center font-bold text-3xl"
-                                style={{ fontFamily: 'JetBrainMono', fontWeight: 'bolder' }}
+                                style={{ fontFamily: 'Inter', fontWeight: 'bolder' }}
                             >
                                 {`https://ub.cafe${slug}`}
                             </div>
