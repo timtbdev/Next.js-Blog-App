@@ -1,14 +1,37 @@
 import { getMinutes } from '@/lib/utils';
-import { PostWithCategoryWithAuthor } from '@/types/collection';
-import { kv } from '@vercel/kv';
+import { Comment, Like, PostWithCategoryWithAuthor } from '@/types/collection';
 import { format, parseISO } from 'date-fns';
-import { CalendarIcon, Clock10Icon, EyeIcon, HeartIcon, MessageCircleIcon } from 'lucide-react';
+import { CalendarIcon, Clock10Icon, HeartIcon, MessageCircleIcon } from 'lucide-react';
 import Link from 'next/link';
 import React from 'react';
 import readingTime from 'reading-time';
 import Image from 'next/image';
+import supabase from '@/utils/supabase-server';
 
 export const dynamic = 'force-dynamic';
+
+async function getLikes(id: string) {
+    const { data: likes, error } = await supabase.from('likes').select().eq('id', id).returns<Like[]>();
+
+    if (error) {
+        console.error(error.message);
+    }
+    return likes;
+}
+
+async function getComments(slug: string) {
+    const { data: comments, error } = await supabase
+        .from('comments')
+        .select()
+        .eq('post_slug', slug)
+        .order('created_at', { ascending: true })
+        .returns<Comment[]>();
+
+    if (error) {
+        console.error(error.message);
+    }
+    return comments;
+}
 
 interface PostItemProps {
     post: PostWithCategoryWithAuthor;
@@ -16,10 +39,9 @@ interface PostItemProps {
 
 const PostItem: React.FC<PostItemProps> = async ({ post }) => {
     const readTime = readingTime(post.content ? post.content : '');
+    const comments = await getComments(post.slug ? post.slug : '');
+    const likes = await getLikes(post.id ? post.id : '');
 
-    const views = (await kv.get<number>(['views', 'post', post.slug].join(':'))) ?? 0;
-    const comments = (await kv.get<number>(['comments', 'post', post.slug].join(':'))) ?? 0;
-    const likes = (await kv.get<number>(['likes', 'post', post.slug].join(':'))) ?? 0;
     return (
         <>
             <div className="group relative w-full rounded-2xl bg-white/20 p-2.5 shadow-sm shadow-black/5 ring-[0.8px] ring-black/5 transition duration-200 hover:-translate-y-1">
@@ -73,16 +95,12 @@ const PostItem: React.FC<PostItemProps> = async ({ post }) => {
                                             </span>
                                         </div>
                                         <div className="inline-flex items-center text-gray-500">
-                                            <EyeIcon className="h-4 w-4" />
-                                            <span className="ml-1">{views}</span>
-                                        </div>
-                                        <div className="inline-flex items-center text-gray-500">
                                             <MessageCircleIcon className="h-4 w-4" />
-                                            <span className="ml-1">{comments}</span>
+                                            <span className="ml-1">{comments?.length}</span>
                                         </div>
                                         <div className="inline-flex items-center text-gray-500">
                                             <HeartIcon className="h-4 w-4" />
-                                            <span className="ml-1 text-sm">{likes}</span>
+                                            <span className="ml-1 text-sm">{likes?.length}</span>
                                         </div>
                                     </div>
                                     <p className="mt-3 text-sm leading-6 text-gray-600">{post.description}</p>
@@ -95,20 +113,16 @@ const PostItem: React.FC<PostItemProps> = async ({ post }) => {
                                             </span>
                                         </div>
                                         <div className="inline-flex items-center text-gray-500">
-                                            <EyeIcon className="h-4 w-4" />
-                                            <span className="ml-1">{views}</span>
-                                        </div>
-                                        <div className="inline-flex items-center text-gray-500">
                                             <Clock10Icon className="h-4 w-4" />
                                             <span className="ml-1">{getMinutes(readTime.minutes)}</span>
                                         </div>
                                         <div className="inline-flex items-center text-gray-500">
                                             <MessageCircleIcon className="h-4 w-4" />
-                                            <span className="ml-1">{comments}</span>
+                                            <span className="ml-1">{comments?.length}</span>
                                         </div>
                                         <div className="inline-flex items-center text-gray-500">
                                             <HeartIcon className="h-4 w-4" />
-                                            <span className="ml-1">{likes}</span>
+                                            <span className="ml-1">{likes?.length}</span>
                                         </div>
                                     </div>
                                 </div>

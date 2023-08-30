@@ -10,8 +10,8 @@ import {
 
 export const dashBoardMenus: DashBoardAttributes[] = [
     {
-        title: 'Bookmarks',
-        slug: 'bookmarks',
+        title: 'Saved Posts',
+        slug: 'saved-posts',
         icon: BookMarkedIcon,
     },
     {

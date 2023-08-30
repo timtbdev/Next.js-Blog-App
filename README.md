@@ -33,19 +33,6 @@
     src="https://user-images.githubusercontent.com/1309312/224571539-f019b860-f613-4b20-86e8-4437c5784265.png">
 </div>
 
-## 🎡 Features
-
--   View Counter
--   Like / Unlike
--   Bookmark / Unbookmark
--   Comment
--   Share
--   Search
--   Login with Social links
--   Pagination
--   Newsletter sign up
--   Contact form
-
 ## 📚 Tech Stacks
 
 -   App Router,
@@ -55,7 +42,6 @@
 -   API Routes and Middlewares
 -   Cookie based Authentication using <b>Supabase Auth</b>
 -   CMS using <b>Supabase Database</b>
--   Caching using <b>Vercel KV</b>
 -   Metadata files
 -   Open Graph Image Generation
 -   UI Components using TailwindCSS, HeadlessUI, Radix-UI, Shadcn-UI

@@ -1,16 +1,14 @@
 import { GetBookmark } from '@/actions/get-bookmark';
-import { setPostViews } from '@/actions/set-post-views';
+import { GetLike } from '@/actions/get-like';
 import ScrollUpButton from '@/components/buttons/scroll-up-button';
 import PostComment from '@/components/post/post-comment';
 import PostDetailProgressBar from '@/components/post/post-detail-progressbar';
 import PostFloatingBar from '@/components/post/post-floating-bar';
 import { metaData } from '@/config/meta';
-import { getHash, getOgImagePostUrl, getUrl } from '@/lib/utils';
-import { Comment, PostWithCategoryWithAuthor } from '@/types/collection';
+import { getOgImagePostUrl, getUrl } from '@/lib/utils';
+import { Comment, Like, PostWithCategoryWithAuthor } from '@/types/collection';
 import supabase from '@/utils/supabase-server';
-import { kv } from '@vercel/kv';
 import { Metadata } from 'next';
-import { cookies } from 'next/headers';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import { CalendarIcon } from 'lucide-react';
@@ -24,6 +22,15 @@ interface PostPageProps {
     };
 }
 
+async function getTotalLikes(id: string) {
+    const { data: likes, error } = await supabase.from('likes').select().eq('id', id).returns<Like[]>();
+
+    if (error) {
+        console.error(error.message);
+    }
+    return likes;
+}
+
 async function getBookmark(postId: string, userId: string) {
     if (postId && userId) {
         const bookmarkData = {
@@ -35,6 +42,19 @@ async function getBookmark(postId: string, userId: string) {
         return response;
     }
 }
+
+async function getLike(postId: string, userId: string) {
+    if (postId && userId) {
+        const likeData = {
+            id: postId,
+            user_id: userId,
+        };
+        const response = await GetLike(likeData);
+
+        return response;
+    }
+}
+
 async function getPost(params: { slug: string[] }) {
     const slug = params?.slug?.join('/');
 
@@ -124,15 +144,6 @@ export default async function PostPage({ params }: PostPageProps) {
     }
     // Set post views
     const slug = params?.slug?.join('/');
-    await setPostViews(slug);
-    const views = (await kv.get<number>(['views', 'post', slug].join(':'))) ?? 0;
-    // Get likes from KV
-    const likes = (await kv.get<number>(['likes', 'post', slug].join(':'))) ?? 0;
-
-    // Check if the user has already liked the post.
-    const raw = cookies().get('user-ip')?.value ?? '';
-    const hashed = getHash(raw);
-    const ip = await kv.get(['likedIp', hashed, slug].join(':'));
 
     // Check user logged in or not
     let username = null;
@@ -149,11 +160,14 @@ export default async function PostPage({ params }: PostPageProps) {
     // Get bookmark
     const bookmark = await getBookmark(post.id as string, session?.user.id as string);
 
-    console.log('Bookmark :', bookmark);
+    // Get likes
+    const liked = await getLike(post.id as string, session?.user.id as string);
+
+    // Get total likes
+    const totalLikes = await getTotalLikes(post.id as string);
 
     // Get comments
     const comments = await getComments(slug);
-    const totalComments = (await kv.get<number>(['comments', 'post', slug].join(':'))) ?? 0;
 
     return (
         <>
@@ -232,10 +246,9 @@ export default async function PostPage({ params }: PostPageProps) {
                                         text={post.description as string}
                                         url={`${getUrl()}${encodeURIComponent(`/posts/${post.slug}`)}`}
                                         slug={post.slug as string}
-                                        views={views}
-                                        likes={likes}
-                                        ip={ip as string}
-                                        totalComments={totalComments}
+                                        totalLikes={totalLikes?.length}
+                                        liked={liked}
+                                        totalComments={comments?.length}
                                         bookmarked={bookmark}
                                     />
                                 </div>
@@ -255,10 +268,9 @@ export default async function PostPage({ params }: PostPageProps) {
                                     text={post.description as string}
                                     url={`${getUrl()}${encodeURIComponent(`/posts/${post.slug}`)}`}
                                     slug={post.slug as string}
-                                    views={views}
-                                    likes={likes}
-                                    ip={ip as string}
-                                    totalComments={totalComments}
+                                    totalLikes={totalLikes?.length}
+                                    liked={liked}
+                                    totalComments={comments?.length}
                                     bookmarked={bookmark}
                                 />
                             </div>

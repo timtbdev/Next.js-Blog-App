@@ -49,6 +49,11 @@ export const bookmarkSchema = z.object({
     user_id: z.string(),
 });
 
+export const likeSchema = z.object({
+    id: z.string(),
+    user_id: z.string(),
+});
+
 export const postSlugSchema = z.object({
     slug: z.string(),
 });
