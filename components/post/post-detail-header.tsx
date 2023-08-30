@@ -1,6 +1,5 @@
 import BackButton from '@/components/buttons/back-button';
 import LoginMenu from '@/components/site/navigations/login-menu';
-import Balancer from 'react-wrap-balancer';
 
 interface DetailHeaderProps {
     title: string;
@@ -15,7 +14,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = ({ title }) => {
                 </div>
                 <div className="flex w-full max-w-3xl">
                     <h1 className="text-md justify-start px-4 font-semibold tracking-tight text-slate-900 sm:px-0 sm:text-xl">
-                        <Balancer>{title}</Balancer>
+                        {title}
                     </h1>
                 </div>
                 <div className="flex flex-1 items-center justify-end">

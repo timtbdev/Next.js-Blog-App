@@ -2,7 +2,6 @@
 
 import { commentSchema } from '@/lib/validations';
 import supabase from '@/utils/supabase-server-action';
-import { kv } from '@vercel/kv';
 import * as z from 'zod';
 
 export async function PostComment(context: z.infer<typeof commentSchema>) {
@@ -22,7 +21,6 @@ export async function PostComment(context: z.infer<typeof commentSchema>) {
             console.log(error);
             return false;
         }
-        await kv.incr(['comments', 'post', comment.slug].join(':'));
         return true;
     } catch (error) {
         if (error instanceof z.ZodError) {
