@@ -11,10 +11,11 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import z from 'zod';
 import Image from 'next/image';
+import { getUrl } from '@/lib/utils';
 
 const getLoginRedirectPath = (pathname?: string | null): string => {
     return (
-        process.env.NEXT_PUBLIC_APP_URL +
+        getUrl() +
         '/auth/callback' + // Required for PKCE authentication.
         '?redirect=' + // Passed to auth/route/callback to redirect after auth
         (pathname ? pathname : '/dashboard')

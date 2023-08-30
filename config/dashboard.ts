@@ -31,11 +31,6 @@ export const dashBoardMenus: DashBoardAttributes[] = [
         icon: BookMarkedIcon,
     },
     {
-        title: 'Liked Posts',
-        slug: 'liked-posts',
-        icon: LikeIcon,
-    },
-    {
         title: 'Sign out',
         slug: 'logout',
         icon: LogOut,

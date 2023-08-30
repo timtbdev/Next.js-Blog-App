@@ -1,5 +1,5 @@
 import { getMinutes } from '@/lib/utils';
-import { Comment, Like, PostWithCategoryWithAuthor } from '@/types/collection';
+import { Comment, PostWithCategoryWithAuthor } from '@/types/collection';
 import { format, parseISO } from 'date-fns';
 import { CalendarIcon, Clock10Icon, HeartIcon, MessageCircleIcon } from 'lucide-react';
 import Link from 'next/link';
@@ -9,15 +9,6 @@ import Image from 'next/image';
 import supabase from '@/utils/supabase-server';
 
 export const dynamic = 'force-dynamic';
-
-async function getLikes(id: string) {
-    const { data: likes, error } = await supabase.from('likes').select().eq('id', id).returns<Like[]>();
-
-    if (error) {
-        console.error(error.message);
-    }
-    return likes;
-}
 
 async function getComments(slug: string) {
     const { data: comments, error } = await supabase
@@ -40,7 +31,6 @@ interface PostItemProps {
 const PostItem: React.FC<PostItemProps> = async ({ post }) => {
     const readTime = readingTime(post.content ? post.content : '');
     const comments = await getComments(post.slug ? post.slug : '');
-    const likes = await getLikes(post.id ? post.id : '');
 
     return (
         <>
@@ -98,10 +88,6 @@ const PostItem: React.FC<PostItemProps> = async ({ post }) => {
                                             <MessageCircleIcon className="h-4 w-4" />
                                             <span className="ml-1">{comments?.length}</span>
                                         </div>
-                                        <div className="inline-flex items-center text-gray-500">
-                                            <HeartIcon className="h-4 w-4" />
-                                            <span className="ml-1 text-sm">{likes?.length}</span>
-                                        </div>
                                     </div>
                                     <p className="mt-3 text-sm leading-6 text-gray-600">{post.description}</p>
                                     {/* Desktop toolbar view */}
@@ -119,10 +105,6 @@ const PostItem: React.FC<PostItemProps> = async ({ post }) => {
                                         <div className="inline-flex items-center text-gray-500">
                                             <MessageCircleIcon className="h-4 w-4" />
                                             <span className="ml-1">{comments?.length}</span>
-                                        </div>
-                                        <div className="inline-flex items-center text-gray-500">
-                                            <HeartIcon className="h-4 w-4" />
-                                            <span className="ml-1">{likes?.length}</span>
                                         </div>
                                     </div>
                                 </div>

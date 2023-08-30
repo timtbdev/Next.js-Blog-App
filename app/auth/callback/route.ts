@@ -1,3 +1,4 @@
+import { getUrl } from '@/lib/utils';
 import type { Database } from '@/types/supabase';
 import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
@@ -10,7 +11,7 @@ export async function GET(request: NextRequest) {
     const requestUrl = new URL(request.url);
     const code = requestUrl.searchParams.get('code');
     const redirectPath = requestUrl.searchParams.get('redirect');
-    const redirect = process.env.NEXT_PUBLIC_APP_URL! + redirectPath;
+    const redirect = getUrl() + redirectPath;
 
     if (code) {
         const supabase = createRouteHandlerClient<Database>({ cookies });

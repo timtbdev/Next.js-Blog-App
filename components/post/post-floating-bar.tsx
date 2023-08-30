@@ -24,7 +24,7 @@ const PostFloatingBar: React.FC<PostFloatingBarProps> = ({
 }) => {
     return (
         <>
-            <div className="grid w-full grid-cols-2 justify-start gap-4 rounded-md md:grid-cols-2 lg:grid-cols-4">
+            <div className="grid w-full grid-cols-3 justify-start gap-4 rounded-md">
                 <CommentButton totalComments={totalComments} />
                 <BoomarkButton id={id} bookmarked={bookmarked} />
                 <ShareButton title={title} text={text} url={url} />
