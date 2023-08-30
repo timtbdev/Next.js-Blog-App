@@ -31,6 +31,11 @@ export const dashBoardMenus: DashBoardAttributes[] = [
         icon: BookMarkedIcon,
     },
     {
+        title: 'Settings',
+        slug: 'settings',
+        icon: SettingsIcon,
+    },
+    {
         title: 'Sign out',
         slug: 'logout',
         icon: LogOut,

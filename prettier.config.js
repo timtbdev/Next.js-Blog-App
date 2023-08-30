@@ -5,5 +5,5 @@ module.exports = {
     tabWidth: 4,
     trailingComma: 'es5',
     endOfLine: 'auto',
-    plugins: ['prettier-plugin-tailwindcss']
+    plugins: ['@ianvs/prettier-plugin-sort-imports', 'prettier-plugin-tailwindcss'],
 };

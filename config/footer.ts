@@ -6,6 +6,20 @@ import { FooterAttributes } from 'types';
 
 export const footerConfig: FooterAttributes = {
     copyright: '2023 Tim. All rights reserved. No Cookies.',
+    menus: [
+        {
+            name: 'Home',
+            href: '/',
+        },
+        {
+            name: 'About',
+            href: '/about',
+        },
+        {
+            name: 'Contact',
+            href: '/contact',
+        },
+    ],
     socials: [
         {
             name: 'Twitter',
@@ -16,11 +30,6 @@ export const footerConfig: FooterAttributes = {
             name: 'GitHub',
             href: 'https://github.com/timtbdev/projects',
             icon: GithubIcon,
-        },
-        {
-            name: 'Contact',
-            href: '/contact',
-            icon: ContactIcon,
         },
     ],
 };

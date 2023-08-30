@@ -77,10 +77,16 @@ export interface PostKvDataAttributes {
 interface FooterAttributes {
     socials: Social[];
     copyright: string;
+    menus: FooterMenu[];
 }
 
 export type Social = {
     name: string;
     href: string;
     icon: Icon;
+};
+
+export type FooterMenu = {
+    name: string;
+    href: string;
 };
