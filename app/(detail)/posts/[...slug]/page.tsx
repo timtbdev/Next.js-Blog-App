@@ -1,5 +1,4 @@
 import { GetBookmark } from '@/actions/get-bookmark';
-import { GetLike } from '@/actions/get-like';
 import ScrollUpButton from '@/components/buttons/scroll-up-button';
 import PostComment from '@/components/post/post-comment';
 import PostDetailProgressBar from '@/components/post/post-detail-progressbar';
@@ -22,15 +21,6 @@ interface PostPageProps {
     };
 }
 
-async function getTotalLikes(id: string) {
-    const { data: likes, error } = await supabase.from('likes').select().eq('id', id).returns<Like[]>();
-
-    if (error) {
-        console.error(error.message);
-    }
-    return likes;
-}
-
 async function getBookmark(postId: string, userId: string) {
     if (postId && userId) {
         const bookmarkData = {
@@ -38,18 +28,6 @@ async function getBookmark(postId: string, userId: string) {
             user_id: userId,
         };
         const response = await GetBookmark(bookmarkData);
-
-        return response;
-    }
-}
-
-async function getLike(postId: string, userId: string) {
-    if (postId && userId) {
-        const likeData = {
-            id: postId,
-            user_id: userId,
-        };
-        const response = await GetLike(likeData);
 
         return response;
     }
@@ -160,12 +138,6 @@ export default async function PostPage({ params }: PostPageProps) {
     // Get bookmark
     const bookmark = await getBookmark(post.id as string, session?.user.id as string);
 
-    // Get likes
-    const liked = await getLike(post.id as string, session?.user.id as string);
-
-    // Get total likes
-    const totalLikes = await getTotalLikes(post.id as string);
-
     // Get comments
     const comments = await getComments(slug);
 
@@ -245,9 +217,6 @@ export default async function PostPage({ params }: PostPageProps) {
                                         title={post.title as string}
                                         text={post.description as string}
                                         url={`${getUrl()}${encodeURIComponent(`/posts/${post.slug}`)}`}
-                                        slug={post.slug as string}
-                                        totalLikes={totalLikes?.length}
-                                        liked={liked}
                                         totalComments={comments?.length}
                                         bookmarked={bookmark}
                                     />
@@ -267,9 +236,6 @@ export default async function PostPage({ params }: PostPageProps) {
                                     title={post.title as string}
                                     text={post.description as string}
                                     url={`${getUrl()}${encodeURIComponent(`/posts/${post.slug}`)}`}
-                                    slug={post.slug as string}
-                                    totalLikes={totalLikes?.length}
-                                    liked={liked}
                                     totalComments={comments?.length}
                                     bookmarked={bookmark}
                                 />

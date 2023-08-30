@@ -32,7 +32,8 @@ export const OgImage: FC<OgImageProps> = ({ title, subTitle, tags, slug }) => {
                             tw="flex leading-[1.1] text-[40px] font-bold text-gray-500"
                             style={{
                                 fontFamily: 'Inter',
-                                fontWeight: 'bolder',
+                                fontWeight: 'bold',
+                                fontSize: 36,
                                 marginBottom: 16,
                             }}
                         >

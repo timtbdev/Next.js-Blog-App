@@ -6,13 +6,34 @@ import {
     FilePlus2Icon as NewIcon,
     FileTextIcon as PostIcon,
     SettingsIcon,
+    HeartIcon as LikeIcon,
 } from 'lucide-react';
 
 export const dashBoardMenus: DashBoardAttributes[] = [
     {
+        title: 'Dashboard',
+        slug: 'dashboard',
+        icon: DashBoardIcon,
+    },
+    {
+        title: 'Posts',
+        slug: 'posts',
+        icon: PostIcon,
+    },
+    {
+        title: 'New Post',
+        slug: 'new-post',
+        icon: NewIcon,
+    },
+    {
         title: 'Saved Posts',
         slug: 'saved-posts',
         icon: BookMarkedIcon,
+    },
+    {
+        title: 'Liked Posts',
+        slug: 'liked-posts',
+        icon: LikeIcon,
     },
     {
         title: 'Sign out',
