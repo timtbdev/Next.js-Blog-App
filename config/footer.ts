@@ -1,6 +1,5 @@
 import TwitterIcon from '@/components/icons/twitter-contact-icon';
 import GithubIcon from '@/components/icons/github-contact-icon';
-import ContactIcon from '@/components/icons/contact-icon';
 
 import { FooterAttributes } from 'types';
 

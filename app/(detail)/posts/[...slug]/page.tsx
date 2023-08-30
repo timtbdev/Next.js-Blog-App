@@ -4,7 +4,7 @@ import PostComment from '@/components/post/post-comment';
 import PostDetailProgressBar from '@/components/post/post-detail-progressbar';
 import PostFloatingBar from '@/components/post/post-floating-bar';
 import { metaData } from '@/config/meta';
-import { getOgImagePostUrl, getUrl } from '@/lib/utils';
+import { getOgImageUrl, getUrl } from '@/lib/utils';
 import { Comment, Like, PostWithCategoryWithAuthor } from '@/types/collection';
 import supabase from '@/utils/supabase-server';
 import { Metadata } from 'next';
@@ -51,6 +51,8 @@ async function getPost(params: { slug: string[] }) {
 
 export async function generateMetadata({ params }: PostPageProps): Promise<Metadata> {
     const post = await getPost(params);
+    const truncateDescription = post?.description?.slice(0, 100) + ('...' as string);
+    const slug = '/posts/' + post?.slug;
 
     if (!post) {
         return {};
@@ -67,15 +69,14 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
             title: post.title as string,
             description: post.description as string,
             type: 'article',
-            url: `${getUrl()}${post.slug}`,
+            url: getUrl() + slug,
             images: [
                 {
-                    url: getOgImagePostUrl(
+                    url: getOgImageUrl(
                         post.title as string,
-                        post.image as string,
-                        post.authors?.name as string,
-                        post.authors?.image as string,
-                        post.authors?.title as string
+                        truncateDescription as string,
+                        [post.categories?.title as string] as string[],
+                        slug as string
                     ),
                     width: 1200,
                     height: 630,
@@ -88,12 +89,11 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
             title: post.title as string,
             description: post.description as string,
             images: [
-                getOgImagePostUrl(
+                getOgImageUrl(
                     post.title as string,
-                    post.image as string,
-                    post.authors?.name as string,
-                    post.authors?.image as string,
-                    post.authors?.title as string
+                    truncateDescription as string,
+                    [post.categories?.title as string] as string[],
+                    slug as string
                 ),
             ],
         },

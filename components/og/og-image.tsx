@@ -18,18 +18,18 @@ export const OgImage: FC<OgImageProps> = ({ title, subTitle, tags, slug }) => {
                 <div tw="flex relative flex-col p-12 w-full h-full items-start">
                     <div tw="flex flex-col flex-1 py-10">
                         <div
-                            tw="flex text-xl font-bold text-gray-900 tracking-tight"
+                            tw="flex text-xl font-bold text-gray-900"
                             style={{
                                 fontFamily: 'Inter',
                                 fontWeight: 'bold',
                                 fontSize: 46,
-                                marginBottom: 8,
+                                marginBottom: 16,
                             }}
                         >
-                            {subTitle}
+                            {title}
                         </div>
                         <div
-                            tw="flex leading-[1.1] text-[40px] font-bold text-gray-500"
+                            tw="flex text-[40px] font-bold text-gray-500"
                             style={{
                                 fontFamily: 'Inter',
                                 fontWeight: 'bold',
@@ -37,7 +37,7 @@ export const OgImage: FC<OgImageProps> = ({ title, subTitle, tags, slug }) => {
                                 marginBottom: 16,
                             }}
                         >
-                            {title}
+                            {subTitle}
                         </div>
                         <div tw="flex">
                             {tags.slice(0, 3).map((tag) => (
@@ -51,6 +51,7 @@ export const OgImage: FC<OgImageProps> = ({ title, subTitle, tags, slug }) => {
                                         display: 'flex',
                                         height: 48,
                                         marginRight: 16,
+                                        marginTop: 16,
                                         paddingLeft: 16,
                                         paddingRight: 20,
                                     }}
