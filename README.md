@@ -93,7 +93,7 @@ Want to get up and running quickly? Follow these steps:
 
 That's it! You should now be able to access the app at http://localhost:3000
 
-Admin dashboard will also be available on `http://localhost:300/dashboard`.
+Admin dashboard will also be available on http://localhost:300/dashboard
 
 ## 🙇 Author
 
