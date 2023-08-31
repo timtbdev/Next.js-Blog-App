@@ -31,49 +31,66 @@
 -   App Router,
 -   Server Actions
 -   Server and Client Components
--   Data Fetching, Insertion using <b>Supabase-JS-Client</b>
+-   Data Fetching, Insertion using [Supabase-JS-Client](https://supabase.com/docs/reference/javascript/introduction)
 -   API Routes and Middlewares
--   Cookie based Authentication using <b>Supabase Auth</b>
--   CMS using <b>Supabase Database</b>
+-   Cookie based Authentication using [Supabase Auth](https://supabase.com/docs/guides/auth/auth-helpers/nextjs)
+-   CMS using [Supabase Database](https://supabase.com/docs/guides/database)
 -   Metadata files
--   Open Graph Image Generation
--   UI Components using TailwindCSS, HeadlessUI, Radix-UI, Shadcn-UI
+-   Open Graph Image Generation using [Vercel/Og](https://vercel.com/docs/concepts/functions/edge-functions/og-image-generation)
+-   Image Upload using [ReactDropZone](https://react-dropzone.js.org/) and [Supabase Storage](https://supabase.com/docs/guides/storage/uploads)
+-   Styled using [Tailwind CSS](https://tailwindcss.com/)
+-   UI Components using [HeadlessUI](https://headlessui.com), [Radix-UI](https://radix-ui.com), [Shadcn-UI](https://ui.shadcn.com/)
 -   Loading, Error, NotFound, Empty pages
--   Sending email using <b>NodeMailer</b>
--   Forms using <b>React-Hook-Forms</b>
--   Validations using <b>Zod</b>
--   Icons using <b>HeroIcons</b> & <b>Lucide-Icon</b>
--   Written in <b>TypeScript</b>
+-   Sending emails using [NodeMailer](https://nodemailer.com) and [React Email](https://https://react.email/), [Gmail](https://gmail.com)
+-   Forms using [React-Hook-Forms](https://www.react-hook-form.com/)
+-   Validations using [Zod](https://zod.dev)
+-   Icons using [HeroIcons](https://heroicons.com/) & [Lucide-Icon](https://lucide.dev/icons/)
+-   Newsletter using [ConvertKit](https://convertkit.com/)
+-   Written in [TypeScript](https://www.typescriptlang.org/)
 
 ## ⌨️ Code Quality
 
--   TypeScript
--   Prettier
--   Eslint
+-   [TypeScript](https://www.typescriptlang.org/)
+-   [Prettier](https://prettier.io/)
+-   [ESLint](https://eslint.org/)
 
 ## 📈 Miscellaneous
 
 -   [Vercel Analytics](https://vercel.com/analytics)
 
-## ⚙️ Running Locally
+# ⚙️ Getting Started
 
-1. Install dependencies using pnpm:
+## Requirements
 
-```sh
-pnpm install
-```
+To run this app locally you need
 
-2. Copy `.env.example` to `.env.local` and update the variables.
+-   [Node.js (Version: >=18.x)](https://nodejs.org/en/download/)
+-   Node Package Manager NPM - included in Node.js
+-   [PostgreSQL (local or remote)](https://www.postgresql.org/download/)
 
-```sh
-cp .env.example .env.local
-```
+## Developer Quickstart
 
-3. Start the development server:
+Want to get up and running quickly? Follow these steps:
 
-```sh
-pnpm dev
-```
+-   [Clone the repository](https://help.github.com/articles/cloning-a-repository/) it to your local device.
+
+    ```sh
+    git clone https://github.com/timtbdev/Next.js-Blog-App.git
+    ```
+
+-   Set up your [Supabase Database](https://supabase.com/docs/guides/database) and Auth wit with [Social Logins](https://supabase.com/docs/guides/auth/social-login)
+-   Set up your [ConverKit](https://ihatetomatoes-nextjs-101.vercel.app/post/convertkit-api-variables)
+-   Set up your `.env` file using the recommendations in the `.env.example` file.
+-   Run `npm installation --legacy-peer-deps`
+-   Run `npm run dev` in the root directory
+-   Want it even faster? Just use
+    ```sh
+    npm run d
+    ```
+
+That's it! You should now be able to access the app at http://localhost:3000
+
+Admin dashboard will also be available on `http://localhost:300/dashboard`.
 
 ## 🙇 Author
 
