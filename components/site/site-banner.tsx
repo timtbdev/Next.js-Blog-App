@@ -29,26 +29,27 @@ const SiteBanner = () => {
                     }}
                 />
             </div>
-            <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-                <p className="text-sm leading-6 text-gray-900">
-                    <strong className="font-semibold">{bannerConfig.title}</strong>
-                    <svg viewBox="0 0 2 2" className="mx-2 inline h-0.5 w-0.5 fill-current" aria-hidden="true">
-                        <circle cx={1} cy={1} r={1} />
-                    </svg>
-                    {bannerConfig.description}
-                </p>
+            <div className="mx-auto hidden w-full items-center justify-center gap-x-2 md:flex">
+                <p className="text-sm font-semibold leading-6 text-gray-900">{bannerConfig.title}</p>
+                <p className="text-sm leading-6 text-gray-900">{bannerConfig.description}</p>
                 <a
                     href={bannerConfig.link}
                     target="_blank"
-                    className="flex-none rounded-full bg-gray-900 px-3.5 py-1 text-sm text-white shadow-sm hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900"
+                    className="rounded-full bg-gray-900 px-3.5 py-1 text-sm text-white shadow-sm hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900"
                 >
                     {bannerConfig.button} <span aria-hidden="true">&rarr;</span>
                 </a>
             </div>
-            <div className="flex flex-1 justify-end">
-                <button type="button" className="-m-3 p-3 focus-visible:outline-offset-[-4px]">
-                    <span className="sr-only">{bannerConfig.button}</span>
-                </button>
+            <div className="mx-auto w-full gap-2 text-center md:hidden">
+                <p className="text-sm font-semibold leading-6 text-gray-900">{bannerConfig.title}</p>
+                <p className="text-sm leading-6 text-gray-900">{bannerConfig.description}</p>
+                <a
+                    href={bannerConfig.link}
+                    target="_blank"
+                    className="rounded-full bg-gray-900 px-3.5 py-1 text-sm text-white shadow-sm hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900"
+                >
+                    {bannerConfig.button} <span aria-hidden="true">&rarr;</span>
+                </a>
             </div>
         </div>
     );

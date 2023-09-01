@@ -5,7 +5,7 @@ export default function SiteFooter() {
     return (
         <footer className="border-t border-gray-900/10 bg-white">
             <div className="mx-auto max-w-7xl overflow-hidden px-6 py-5 lg:px-8">
-                <nav className="flex justify-center space-x-12" aria-label="Footer">
+                <nav className="flex justify-center space-x-4 sm:space-x-12" aria-label="Footer">
                     {footerConfig.menus.map((item) => (
                         <div key={item.name}>
                             <a
