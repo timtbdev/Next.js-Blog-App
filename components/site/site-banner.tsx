@@ -1,6 +1,6 @@
 import React from 'react';
 import { bannerConfig } from '@/config/site';
-import { GithubIcon } from 'lucide-react';
+import { ArrowRightIcon } from 'lucide-react';
 
 const SiteBanner = () => {
     return (
@@ -37,7 +37,7 @@ const SiteBanner = () => {
                     target="_blank"
                     className="rounded-full bg-gray-900 px-3.5 py-1 text-sm text-white shadow-sm hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900"
                 >
-                    {bannerConfig.button} <span aria-hidden="true">&rarr;</span>
+                    {bannerConfig.button} <ArrowRightIcon className="-mr-1 inline-block h-3 w-3" />
                 </a>
             </div>
             <div className="mx-auto w-full gap-2 text-center md:hidden">
@@ -46,9 +46,9 @@ const SiteBanner = () => {
                 <a
                     href={bannerConfig.link}
                     target="_blank"
-                    className="rounded-full bg-gray-900 px-3.5 py-1 text-sm text-white shadow-sm hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900"
+                    className="items-center rounded-full bg-gray-900 px-3.5 py-1 text-sm text-white shadow-sm hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900"
                 >
-                    {bannerConfig.button} <span aria-hidden="true">&rarr;</span>
+                    {bannerConfig.button} <ArrowRightIcon className="-mr-1 inline-block h-3 w-3" />
                 </a>
             </div>
         </div>
