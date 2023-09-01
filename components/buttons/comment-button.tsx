@@ -21,7 +21,7 @@ const CommentButton: React.FC<CommentButtonProps> = ({ totalComments = 0 }) => {
                 type="button"
                 onMouseEnter={onMouseEnter}
                 onMouseLeave={onMouseLeave}
-                className="group relative mx-auto inline-flex w-full items-center justify-center rounded-md border border-black/5 bg-gray-50 p-2 hover:bg-white hover:shadow-sm"
+                className="group relative mx-auto inline-flex w-full items-center justify-center rounded-md border border-black/5 bg-white p-2 hover:bg-gray-50 hover:shadow-sm"
             >
                 {isHovering ? (
                     <MessageSolid className="-ml-0.5 h-5 w-5 text-gray-900" />

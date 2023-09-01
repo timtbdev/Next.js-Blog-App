@@ -57,7 +57,7 @@ const ShareButton: React.FC<ShareButtonProps> = ({ title = '', text = '', url = 
                         type="button"
                         onMouseEnter={onMouseEnter}
                         onMouseLeave={onMouseLeave}
-                        className="group relative mx-auto inline-flex w-full items-center justify-center rounded-md border border-black/5 bg-gray-50 py-2 hover:bg-white hover:shadow-sm"
+                        className="group relative mx-auto inline-flex w-full items-center justify-center rounded-md border border-black/5 bg-white py-2 hover:bg-gray-50 hover:shadow-sm"
                     >
                         {isHovering ? (
                             <ShareSolid className="-ml-0.5 h-5 w-5 text-gray-900" />
