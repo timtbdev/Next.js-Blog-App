@@ -21,11 +21,6 @@ export const dashBoardMenus: DashBoardAttributes[] = [
         icon: PostIcon,
     },
     {
-        title: 'New Post',
-        slug: 'new-post',
-        icon: NewIcon,
-    },
-    {
         title: 'Saved Posts',
         slug: 'saved-posts',
         icon: BookMarkedIcon,

@@ -45,6 +45,7 @@ const PostComment: React.FC<PostCommentProps> = ({ postId = '', comments = [] })
                         image={comment.profiles.avatar_url as string}
                         comment={comment.comment as string}
                         date={comment.created_at as string}
+                        userId={comment.user_id as string}
                     />
                 ))}
             </div>

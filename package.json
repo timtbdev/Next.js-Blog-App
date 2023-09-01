@@ -43,6 +43,7 @@
     "framer-motion": "^10.16.2",
     "lodash": "^4.17.21",
     "lucide-react": "^0.274.0",
+    "moment": "^2.29.4",
     "next": "13.4.19",
     "nodemailer": "^6.9.4",
     "nodemailer-smtp-transport": "^2.7.4",

@@ -1,5 +1,3 @@
-import { de } from 'date-fns/locale';
-
 export const footer = {
     copyright: '© 2023 Tim All Rights Reserved.',
 };

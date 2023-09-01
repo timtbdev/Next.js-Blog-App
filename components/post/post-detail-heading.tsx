@@ -44,7 +44,7 @@ const PostDetailHeading: FC<PostDetailHeadingProps> = ({ title, image, authorNam
                             blurDataURL={shimmer(24, 24)}
                         />
                         <div className="ml-2 flex flex-col">
-                            <span className="flex text-sm font-semibold text-gray-500">{authorName}</span>
+                            <span className="text-md flex font-semibold text-gray-900">{authorName}</span>
                         </div>
                     </div>
                     {/* Date */}

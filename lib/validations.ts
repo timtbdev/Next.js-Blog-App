@@ -35,6 +35,11 @@ export const commentSchema = z.object({
     comment: z.string(),
 });
 
+export const commentDeleteSchema = z.object({
+    id: z.string(),
+    userId: z.string(),
+});
+
 export const commentFormSchema = z.object({
     comment: z
         .string()
