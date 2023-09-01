@@ -1,4 +1,4 @@
-import { getMinutes } from '@/lib/utils';
+import { getMinutes, shimmer } from '@/lib/utils';
 import { Comment, PostWithCategoryWithAuthor } from '@/types/collection';
 import { format, parseISO } from 'date-fns';
 import { CalendarIcon, Clock10Icon, HeartIcon, MessageCircleIcon } from 'lucide-react';
@@ -10,11 +10,11 @@ import supabase from '@/utils/supabase-server';
 
 export const dynamic = 'force-dynamic';
 
-async function getComments(slug: string) {
+async function getComments(postId: string) {
     const { data: comments, error } = await supabase
         .from('comments')
         .select()
-        .eq('post_slug', slug)
+        .eq('post_id', postId)
         .order('created_at', { ascending: true })
         .returns<Comment[]>();
 
@@ -30,7 +30,7 @@ interface PostItemProps {
 
 const PostItem: React.FC<PostItemProps> = async ({ post }) => {
     const readTime = readingTime(post.content ? post.content : '');
-    const comments = await getComments(post.slug ? post.slug : '');
+    const comments = await getComments(post.id ? post.id : '');
 
     return (
         <>
@@ -46,6 +46,8 @@ const PostItem: React.FC<PostItemProps> = async ({ post }) => {
                                     height={256}
                                     width={256}
                                     priority
+                                    placeholder="blur"
+                                    blurDataURL={shimmer(256, 256)}
                                     className="absolute inset-0 h-full w-full rounded-2xl bg-gray-50 object-cover"
                                 />
                                 <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-gray-900/10" />
@@ -63,7 +65,7 @@ const PostItem: React.FC<PostItemProps> = async ({ post }) => {
                                         <span className="absolute inset-0" />
                                         {post.title}
                                     </h3>
-                                    {/* Mobile toobar view*/}
+                                    {/* Mobile category and toolbar view*/}
                                     <div className="mt-2 flex items-center gap-x-3 text-xs sm:hidden">
                                         <div className="inline-flex items-center text-gray-500">
                                             <span className="relative z-10 rounded-full bg-gray-100 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-200">
@@ -76,8 +78,6 @@ const PostItem: React.FC<PostItemProps> = async ({ post }) => {
                                                 {format(parseISO(post.updated_at!), 'MM/dd/yyyy')}
                                             </span>
                                         </div>
-                                    </div>
-                                    <div className="mt-2 flex items-center gap-x-3 text-xs sm:hidden">
                                         <div className="inline-flex items-center text-gray-500">
                                             <Clock10Icon className="h-4 w-4" />
                                             <span className="ml-1">
@@ -117,6 +117,8 @@ const PostItem: React.FC<PostItemProps> = async ({ post }) => {
                                             height={40}
                                             width={40}
                                             priority
+                                            placeholder="blur"
+                                            blurDataURL={shimmer(40, 40)}
                                             className="h-[40px] w-[40px] rounded-full bg-gray-50 object-cover"
                                         />
                                         <div className="text-sm">

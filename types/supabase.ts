@@ -121,60 +121,32 @@ export interface Database {
           comment: string | null
           created_at: string | null
           id: string
-          image: string | null
-          post_slug: string | null
-          username: string | null
-        }
-        Insert: {
-          comment?: string | null
-          created_at?: string | null
-          id?: string
-          image?: string | null
-          post_slug?: string | null
-          username?: string | null
-        }
-        Update: {
-          comment?: string | null
-          created_at?: string | null
-          id?: string
-          image?: string | null
-          post_slug?: string | null
-          username?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "comments_post_slug_fkey"
-            columns: ["post_slug"]
-            referencedRelation: "posts"
-            referencedColumns: ["slug"]
-          }
-        ]
-      }
-      likes: {
-        Row: {
-          created_at: string
-          id: string
+          post_id: string | null
           user_id: string | null
         }
         Insert: {
-          created_at?: string
-          id: string
+          comment?: string | null
+          created_at?: string | null
+          id?: string
+          post_id?: string | null
           user_id?: string | null
         }
         Update: {
-          created_at?: string
+          comment?: string | null
+          created_at?: string | null
           id?: string
+          post_id?: string | null
           user_id?: string | null
         }
         Relationships: [
           {
-            foreignKeyName: "likes_id_fkey"
-            columns: ["id"]
+            foreignKeyName: "comments_post_id_fkey"
+            columns: ["post_id"]
             referencedRelation: "posts"
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "likes_user_id_fkey"
+            foreignKeyName: "comments_user_id_fkey"
             columns: ["user_id"]
             referencedRelation: "profiles"
             referencedColumns: ["id"]

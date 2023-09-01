@@ -30,14 +30,12 @@ export const postClapsSchema = z.object({
 });
 
 export const commentSchema = z.object({
-    username: z.string().optional(),
-    image: z.string().optional(),
-    slug: z.string(),
+    postId: z.string(),
+    userId: z.string(),
     comment: z.string(),
 });
 
 export const commentFormSchema = z.object({
-    name: z.string().optional(),
     comment: z
         .string()
         .min(3, { message: 'Comment must be at least 3 characters long.' })

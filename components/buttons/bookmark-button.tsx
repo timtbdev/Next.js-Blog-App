@@ -105,7 +105,7 @@ const BoomarkButton: React.FC<BoomarkButtonProps> = ({ id, bookmarked }) => {
                         onClick={deleteBookmark}
                         onMouseEnter={onMouseEnter}
                         onMouseLeave={onMouseLeave}
-                        className="group relative mx-auto inline-flex w-full items-center justify-center rounded-md border border-black/5 bg-white py-2 hover:bg-gray-50 hover:shadow-sm"
+                        className="group relative mx-auto inline-flex w-full items-center justify-center rounded-md border border-black/5 bg-gray-50 py-2 hover:bg-white hover:shadow-sm"
                     >
                         {isLoading ? (
                             <SpinnerIcon className="-ml-0.5 h-5 w-5 animate-spin" />
@@ -114,7 +114,7 @@ const BoomarkButton: React.FC<BoomarkButtonProps> = ({ id, bookmarked }) => {
                         ) : (
                             <BookMarkSolid className="-ml-0.5 h-5 w-5 text-gray-900" />
                         )}
-                        <span className="ml-2 text-sm text-gray-400">
+                        <span className="ml-2 hidden text-sm text-gray-400 md:flex">
                             {isHovering ? toolbarConfig.unsave : toolbarConfig.saved}
                         </span>
                     </button>
@@ -125,7 +125,7 @@ const BoomarkButton: React.FC<BoomarkButtonProps> = ({ id, bookmarked }) => {
                         onClick={addBookmark}
                         onMouseEnter={onMouseEnter}
                         onMouseLeave={onMouseLeave}
-                        className="group relative mx-auto inline-flex w-full items-center justify-center rounded-md border border-black/5 bg-white py-2 hover:bg-gray-50 hover:shadow-sm"
+                        className="group relative mx-auto inline-flex w-full items-center justify-center rounded-md border border-black/5 bg-gray-50 py-2 hover:bg-white hover:shadow-sm"
                     >
                         {isLoading ? (
                             <SpinnerIcon className="-ml-0.5 h-5 w-5 animate-spin" />
@@ -134,7 +134,7 @@ const BoomarkButton: React.FC<BoomarkButtonProps> = ({ id, bookmarked }) => {
                         ) : (
                             <BookMarkOutline className="-ml-0.5 h-5 w-5 text-gray-400" />
                         )}
-                        <span className="ml-2 text-sm text-gray-400 group-hover:text-gray-900">
+                        <span className="ml-2 hidden text-sm text-gray-400 group-hover:text-gray-900 md:flex">
                             {toolbarConfig.save}
                         </span>
                     </button>
@@ -147,14 +147,14 @@ const BoomarkButton: React.FC<BoomarkButtonProps> = ({ id, bookmarked }) => {
                             disabled={isLoading}
                             onMouseEnter={onMouseEnter}
                             onMouseLeave={onMouseLeave}
-                            className="group relative mx-auto inline-flex w-full items-center justify-center rounded-md border border-black/5 bg-white py-2 hover:bg-gray-50 hover:shadow-sm"
+                            className="group relative mx-auto inline-flex w-full items-center justify-center rounded-md border border-black/5 bg-gray-50 py-2 hover:bg-white hover:shadow-sm"
                         >
                             {isHovering ? (
                                 <BookMarkSolid className="-ml-0.5 h-5 w-5 text-gray-900" />
                             ) : (
                                 <BookMarkOutline className="-ml-0.5 h-5 w-5 text-gray-400" />
                             )}
-                            <span className="ml-2 text-sm text-gray-400 group-hover:text-gray-900">
+                            <span className="ml-2 hidden text-sm text-gray-400 group-hover:text-gray-900 md:flex">
                                 {toolbarConfig.save}
                             </span>
                         </button>

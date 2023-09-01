@@ -1,40 +1,54 @@
 'use client';
 import React from 'react';
 import CommentItem from '@/components/post/comment/comment-item';
+import SignInToComment from '@/components/post/comment/sign-in-to-comment';
+import CommentWrapper from '@/components/post/comment/comment-wrapper';
 import { v4 } from 'uuid';
 import CommentForm from '@/components/post/comment/comment-form';
-import { Comment } from '@/types/collection';
+import { CommentWithProfile } from '@/types/collection';
+import { supabase } from '@/utils/supabase-client';
+import { Session } from '@supabase/auth-helpers-nextjs';
+
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 interface PostCommentProps {
-    slug?: string;
-    username?: string;
-    profileImage?: string;
-    comments: Comment[];
+    postId: string;
+    comments: CommentWithProfile[];
 }
 
-const PostComment: React.FC<PostCommentProps> = ({ slug = '', username, profileImage, comments = [] }) => {
+const PostComment: React.FC<PostCommentProps> = ({ postId = '', comments = [] }) => {
+    const [session, setSession] = React.useState<Session | null>(null);
+    // Check authentitication and bookmark states
+    React.useEffect(() => {
+        supabase.auth.getSession().then(({ data: { session } }) => {
+            setSession(session);
+        });
+
+        const {
+            data: { subscription },
+        } = supabase.auth.onAuthStateChange((_event, session) => {
+            setSession(session);
+        });
+
+        return () => subscription.unsubscribe();
+    }, [session?.user.id]);
     return (
-        <div
-            id="comments"
-            className="mx-auto max-w-4xl bg-gray-50 py-5 px-7 rounded-md shadow-sm ring-1 ring-black/5 my-5"
-        >
-            <div>
-                <CommentForm slug={slug} username={username} profileImage={profileImage} />
-                <div className="py-5">
-                    {comments?.map((comment) => (
-                        <CommentItem
-                            key={v4()}
-                            id={comment.id.toString()}
-                            slug={slug}
-                            name={comment.username as string}
-                            image={comment.image as string}
-                            comment={comment.comment as string}
-                            date={comment.created_at as string}
-                        />
-                    ))}
-                </div>
+        <CommentWrapper>
+            {session ? <CommentForm postId={postId} userId={session?.user.id} /> : <SignInToComment />}
+            <div className="py-5">
+                {comments?.map((comment) => (
+                    <CommentItem
+                        key={v4()}
+                        id={comment.id.toString()}
+                        name={comment.profiles.full_name as string}
+                        image={comment.profiles.avatar_url as string}
+                        comment={comment.comment as string}
+                        date={comment.created_at as string}
+                    />
+                ))}
             </div>
-        </div>
+        </CommentWrapper>
     );
 };
 

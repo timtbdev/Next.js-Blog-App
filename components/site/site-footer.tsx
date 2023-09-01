@@ -8,7 +8,10 @@ export default function SiteFooter() {
                 <nav className="flex justify-center space-x-12" aria-label="Footer">
                     {footerConfig.menus.map((item) => (
                         <div key={item.name}>
-                            <a href={item.href} className="text-md leading-6 text-gray-600 hover:text-gray-900">
+                            <a
+                                href={item.href}
+                                className="text-md leading-6 text-gray-500 hover:text-gray-900 hover:underline"
+                            >
                                 {item.name}
                             </a>
                         </div>

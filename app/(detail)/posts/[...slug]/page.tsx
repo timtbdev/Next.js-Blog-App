@@ -1,11 +1,10 @@
 import { GetBookmark } from '@/actions/get-bookmark';
 import ScrollUpButton from '@/components/buttons/scroll-up-button';
 import PostComment from '@/components/post/post-comment';
-import PostDetailProgressBar from '@/components/post/post-detail-progressbar';
 import PostFloatingBar from '@/components/post/post-floating-bar';
 import { metaData } from '@/config/meta';
-import { getOgImageUrl, getUrl } from '@/lib/utils';
-import { Comment, Like, PostWithCategoryWithAuthor } from '@/types/collection';
+import { getOgImageUrl, getUrl, shimmer } from '@/lib/utils';
+import { CommentWithProfile, PostWithCategoryWithAuthor } from '@/types/collection';
 import supabase from '@/utils/supabase-server';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
@@ -100,13 +99,13 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
     };
 }
 
-async function getComments(slug: string) {
+async function getComments(postId: string) {
     const { data: comments, error } = await supabase
         .from('comments')
-        .select()
-        .eq('post_slug', slug)
+        .select('*, profiles(*)')
+        .eq('post_id', postId)
         .order('created_at', { ascending: true })
-        .returns<Comment[]>();
+        .returns<CommentWithProfile[]>();
 
     if (error) {
         console.error(error.message);
@@ -139,11 +138,10 @@ export default async function PostPage({ params }: PostPageProps) {
     const bookmark = await getBookmark(post.id as string, session?.user.id as string);
 
     // Get comments
-    const comments = await getComments(slug);
+    const comments = await getComments(post.id as string);
 
     return (
         <>
-            <PostDetailProgressBar />
             <div className="min-h-full bg-gray-100 py-3">
                 <div className="mx-auto max-w-7xl px-0 sm:px-8">
                     <div className="mx-auto max-w-4xl">
@@ -185,6 +183,8 @@ export default async function PostPage({ params }: PostPageProps) {
                                                     className="rounded-xl bg-gray-50 lg:rounded-3xl"
                                                     alt={post.title || 'Cover'}
                                                     priority
+                                                    placeholder="blur"
+                                                    blurDataURL={shimmer(288, 288)}
                                                 />
                                             </div>
                                             <figcaption className="text-base lg:col-start-1 lg:row-start-3">
@@ -196,6 +196,8 @@ export default async function PostPage({ params }: PostPageProps) {
                                                         alt={(post.authors?.name as string) || 'Avatar'}
                                                         className="flex h-[40px] w-[40px] rounded-full object-cover shadow-sm"
                                                         priority
+                                                        placeholder="blur"
+                                                        blurDataURL={shimmer(40, 40)}
                                                     />
                                                     <div className="ml-2 flex flex-col">
                                                         <span className="flex text-sm font-semibold text-gray-900">
@@ -242,12 +244,7 @@ export default async function PostPage({ params }: PostPageProps) {
                             </div>
                         </div>
                     </div>
-                    <PostComment
-                        slug={post.slug as string}
-                        username={username}
-                        profileImage={profileImage}
-                        comments={comments as Comment[]}
-                    />
+                    <PostComment postId={post.id as string} comments={comments as CommentWithProfile[]} />
                 </div>
                 <ScrollUpButton />
             </div>

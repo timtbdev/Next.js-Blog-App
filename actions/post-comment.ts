@@ -10,9 +10,8 @@ export async function PostComment(context: z.infer<typeof commentSchema>) {
         const { data, error } = await supabase
             .from('comments')
             .insert({
-                username: comment.username,
-                image: comment.image,
-                post_slug: comment.slug,
+                post_id: comment.postId,
+                user_id: comment.userId,
                 comment: comment.comment,
             })
             .single();

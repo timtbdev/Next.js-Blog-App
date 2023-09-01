@@ -1,3 +1,5 @@
+import { de } from 'date-fns/locale';
+
 export const footer = {
     copyright: '© 2023 Tim All Rights Reserved.',
 };
@@ -10,4 +12,11 @@ export const form = {
     error: 'Error occured.',
     emailRequiredError: 'Email is required.',
     emailAddress: 'Email address',
+};
+
+export const bannerConfig = {
+    title: 'Blog App',
+    description: 'A fully open source blog app built with Next.js and Supabase.',
+    link: 'https://github.com/timtbdev/Next.js-Blog-App',
+    button: 'Github',
 };

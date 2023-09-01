@@ -1,4 +1,5 @@
 import { Icon } from 'lucide-react';
+import { string } from 'zod';
 
 export type MetaAttributes = {
     title: string;
@@ -89,4 +90,31 @@ export type Social = {
 export type FooterMenu = {
     name: string;
     href: string;
+};
+
+export type PolicyAttributes = {
+    title: string;
+    description: string;
+    paragraphs: ParagraphWithTitle[];
+};
+
+export type TermsAttributes = {
+    title: string;
+    description: string;
+    paragraphs: ParagraphWithoutTitle[];
+};
+
+export type AboutAttributes = {
+    title: string;
+    subTitle: string;
+    description: string;
+    paragraphs: ParagraphWithOutTitle[];
+};
+
+export type ParagraphWithTitle = {
+    title: string;
+    description: string;
+};
+export type ParagraphWithoutTitle = {
+    description: string;
 };

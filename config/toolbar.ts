@@ -27,4 +27,5 @@ export const toolbarConfig = {
     // Guest info
     guest: 'Guest',
     name: 'Name',
+    leaveComment: 'Leave a comment',
 };
