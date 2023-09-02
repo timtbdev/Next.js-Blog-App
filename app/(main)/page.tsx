@@ -1,6 +1,6 @@
 import PostItem from '@/components/post/post-item';
 import Pagination from '@/components/shared/pagination';
-import { PostWithCategoryWithAuthor } from '@/types/collection';
+import { PostWithCategoryWithProfile } from '@/types/collection';
 import supabase from '@/utils/supabase-server';
 import { notFound } from 'next/navigation';
 import { v4 } from 'uuid';
@@ -26,10 +26,11 @@ export default async function HomePage({ searchParams }: HomePageProps) {
     // Fetch posts
     const { data, error } = await supabase
         .from('posts')
-        .select(`*, categories(*), authors(*)`)
+        .select(`*, categories(*), profiles(*)`)
+        .eq('published', true)
         .order('created_at', { ascending: false })
         .range(from, to)
-        .returns<PostWithCategoryWithAuthor[]>();
+        .returns<PostWithCategoryWithProfile[]>();
 
     if (!data || error || !data.length) {
         notFound;

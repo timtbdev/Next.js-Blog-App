@@ -1,5 +1,5 @@
 import { getMinutes, shimmer } from '@/lib/utils';
-import { Comment, PostWithCategoryWithAuthor } from '@/types/collection';
+import { Comment, PostWithCategoryWithProfile } from '@/types/collection';
 import { format, parseISO } from 'date-fns';
 import { CalendarIcon, Clock10Icon, HeartIcon, MessageCircleIcon } from 'lucide-react';
 import Link from 'next/link';
@@ -7,6 +7,7 @@ import React from 'react';
 import readingTime from 'reading-time';
 import Image from 'next/image';
 import supabase from '@/utils/supabase-server';
+import { postConfig } from '@/config/post';
 
 export const dynamic = 'force-dynamic';
 
@@ -25,7 +26,7 @@ async function getComments(postId: string) {
 }
 
 interface PostItemProps {
-    post: PostWithCategoryWithAuthor;
+    post: PostWithCategoryWithProfile;
 }
 
 const PostItem: React.FC<PostItemProps> = async ({ post }) => {
@@ -112,8 +113,8 @@ const PostItem: React.FC<PostItemProps> = async ({ post }) => {
                                 <div className="mt-3 flex border-t border-gray-900/5 pt-2">
                                     <div className="relative flex items-center gap-x-2">
                                         <Image
-                                            src={post.authors?.image ? post.authors.image : ''}
-                                            alt={post.authors?.name ?? 'Avatar'}
+                                            src={post.profiles?.avatar_url ?? '/images/avatar.png'}
+                                            alt={post.profiles?.full_name ?? 'Avatar'}
                                             height={40}
                                             width={40}
                                             priority
@@ -122,8 +123,8 @@ const PostItem: React.FC<PostItemProps> = async ({ post }) => {
                                             className="h-[40px] w-[40px] rounded-full bg-gray-50 object-cover"
                                         />
                                         <div className="text-sm">
-                                            <p className="font-semibold text-gray-900">{post.authors?.name}</p>
-                                            <p className="text-gray-600">{post.authors?.title}</p>
+                                            <p className="font-semibold text-gray-900">{post.profiles.full_name}</p>
+                                            <p className="text-gray-600">{postConfig.author}</p>
                                         </div>
                                     </div>
                                 </div>

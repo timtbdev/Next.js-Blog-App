@@ -1,6 +1,6 @@
 import PostDetailHeader from '@/components/post/post-detail-header';
 import supabase from '@/utils/supabase-server';
-import { PostWithCategoryWithAuthor } from '@/types/collection';
+import { PostWithCategoryWithProfile } from '@/types/collection';
 
 import { notFound } from 'next/navigation';
 
@@ -13,9 +13,9 @@ async function getPost(params: { slug: string[] }) {
 
     const response = await supabase
         .from('posts')
-        .select(`*, categories(*), authors(*)`)
-        .eq('slug', slug)
-        .single<PostWithCategoryWithAuthor>();
+        .select(`*, categories(*), profiles(*)`)
+        .match({ slug: slug, published: true })
+        .single<PostWithCategoryWithProfile>();
 
     if (!response.data) {
         notFound;
@@ -41,7 +41,7 @@ export default async function MainLayout({
     return (
         <>
             <PostDetailHeader title={post.title as string} />
-            <div className="bg-gray-100 py-3 min-h-full">
+            <div className="min-h-full bg-gray-100 py-3">
                 <div className="mx-auto max-w-7xl px-6 lg:px-8">
                     <div className="mx-auto max-w-4xl">{children}</div>
                 </div>

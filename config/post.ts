@@ -17,4 +17,5 @@ export const postConfig = {
     errorAdd: "Couldn't add this post.",
     errorDelete: "Couldn't delete post.",
     errorUpdate: "Couldn't update post.",
+    author: 'Author',
 };

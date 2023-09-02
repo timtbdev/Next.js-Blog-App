@@ -153,58 +153,6 @@ export interface Database {
           }
         ]
       }
-      drafts: {
-        Row: {
-          category_id: string | null
-          created_at: string
-          id: string
-          image: string | null
-          published: boolean | null
-          slug: string | null
-          text: string | null
-          title: string | null
-          updated_at: string | null
-          user_id: string | null
-        }
-        Insert: {
-          category_id?: string | null
-          created_at?: string
-          id?: string
-          image?: string | null
-          published?: boolean | null
-          slug?: string | null
-          text?: string | null
-          title?: string | null
-          updated_at?: string | null
-          user_id?: string | null
-        }
-        Update: {
-          category_id?: string | null
-          created_at?: string
-          id?: string
-          image?: string | null
-          published?: boolean | null
-          slug?: string | null
-          text?: string | null
-          title?: string | null
-          updated_at?: string | null
-          user_id?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "drafts_category_id_fkey"
-            columns: ["category_id"]
-            referencedRelation: "categories"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "drafts_user_id_fkey"
-            columns: ["user_id"]
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          }
-        ]
-      }
       posts: {
         Row: {
           author_id: string | null
@@ -214,6 +162,7 @@ export interface Database {
           description: string | null
           id: string
           image: string | null
+          published: boolean | null
           slug: string | null
           title: string | null
           updated_at: string | null
@@ -226,6 +175,7 @@ export interface Database {
           description?: string | null
           id?: string
           image?: string | null
+          published?: boolean | null
           slug?: string | null
           title?: string | null
           updated_at?: string | null
@@ -238,6 +188,7 @@ export interface Database {
           description?: string | null
           id?: string
           image?: string | null
+          published?: boolean | null
           slug?: string | null
           title?: string | null
           updated_at?: string | null
@@ -246,7 +197,7 @@ export interface Database {
           {
             foreignKeyName: "posts_author_id_fkey"
             columns: ["author_id"]
-            referencedRelation: "authors"
+            referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
           {

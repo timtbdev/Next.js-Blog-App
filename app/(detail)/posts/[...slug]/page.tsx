@@ -3,8 +3,8 @@ import ScrollUpButton from '@/components/buttons/scroll-up-button';
 import PostComment from '@/components/post/post-comment';
 import PostFloatingBar from '@/components/post/post-floating-bar';
 import { metaData } from '@/config/meta';
-import { getOgImageUrl, getUrl, shimmer } from '@/lib/utils';
-import { CommentWithProfile, PostWithCategoryWithAuthor } from '@/types/collection';
+import { getOgImageUrl, getUrl } from '@/lib/utils';
+import { CommentWithProfile, PostWithCategoryWithProfile } from '@/types/collection';
 import supabase from '@/utils/supabase-server';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
@@ -36,9 +36,9 @@ async function getPost(params: { slug: string[] }) {
 
     const response = await supabase
         .from('posts')
-        .select(`*, categories(*), authors(*)`)
-        .eq('slug', slug)
-        .single<PostWithCategoryWithAuthor>();
+        .select(`*, categories(*), profiles(*)`)
+        .match({ slug: slug, published: true })
+        .single<PostWithCategoryWithProfile>();
 
     if (!response.data) {
         notFound;
@@ -150,8 +150,8 @@ export default async function PostPage({ params }: PostPageProps) {
                                 <PostDetailHeading
                                     title={post.title as string}
                                     image={post.image as string}
-                                    authorName={post.authors?.name as string}
-                                    authorImage={post.authors?.image as string}
+                                    authorName={post.profiles.full_name as string}
+                                    authorImage={post.profiles.avatar_url as string}
                                     date={format(parseISO(post.updated_at!), 'MM/dd/yyyy')}
                                     category={post.categories?.title as string}
                                 />

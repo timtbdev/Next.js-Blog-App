@@ -4,7 +4,7 @@ import { SiteEmpty } from '@/components/site/site-empty';
 import { menus } from '@/config/menu';
 import { metaData } from '@/config/meta';
 import { getOgImageUrl, getUrl } from '@/lib/utils';
-import { PostWithCategoryWithAuthor } from '@/types/collection';
+import { PostWithCategoryWithProfile } from '@/types/collection';
 import supabase from '@/utils/supabase-server';
 import { Metadata } from 'next';
 import notFound from 'next/navigation';
@@ -84,11 +84,11 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
 
     const { data, error } = await supabase
         .from('posts')
-        .select(`*, categories(*), authors(*)`)
-        .eq('category_id', category?.id ? category?.id : '')
+        .select(`*, categories(*), profiles(*)`)
+        .match({ category_id: category?.id, published: true })
         .order('created_at', { ascending: false })
         .range(from, to)
-        .returns<PostWithCategoryWithAuthor[]>();
+        .returns<PostWithCategoryWithProfile[]>();
 
     if (!data || error || !data.length) {
         notFound;
