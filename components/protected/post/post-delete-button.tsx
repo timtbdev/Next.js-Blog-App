@@ -1,4 +1,4 @@
-import { DeleteMyPost } from '@/actions/delete-my-post';
+import { DeletePost } from '@/actions/post/delete-post';
 import {
     AlertDialog,
     AlertDialogAction,
@@ -9,23 +9,22 @@ import {
     AlertDialogHeader,
     AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
-import { myPostConfig } from '@/config/my-post';
-import { toolbarConfig } from '@/config/toolbar';
+import { postConfig } from '@/config/post';
 import { supabase } from '@/utils/supabase-client';
 import { Session } from '@supabase/auth-helpers-nextjs';
 import { Loader2 as SpinnerIcon, Trash as TrashIcon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import React, { useState } from 'react';
+import React, { useState, FC } from 'react';
 import toast from 'react-hot-toast';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
-interface MyPostsDeleteButtonProps {
+interface PostDeleteButtonProps {
     id?: string;
 }
 
-const MyPostsDeleteButton: React.FC<MyPostsDeleteButtonProps> = ({ id }) => {
+const PostDeleteButton: FC<PostDeleteButtonProps> = ({ id }) => {
     const router = useRouter();
     const [showDeleteAlert, setShowDeleteAlert] = useState<boolean>(false);
     const [isDeleteLoading, setIsDeleteLoading] = useState<boolean>(false);
@@ -54,18 +53,18 @@ const MyPostsDeleteButton: React.FC<MyPostsDeleteButtonProps> = ({ id }) => {
                 id: id,
                 user_id: session?.user.id,
             };
-            const response = await DeleteMyPost(myPostData);
+            const response = await DeletePost(myPostData);
             if (response) {
                 setIsDeleteLoading(false);
-                toast.success(myPostConfig.deleted);
+                toast.success(postConfig.successDelete);
                 router.refresh();
             } else {
                 setIsDeleteLoading(false);
-                toast.error(myPostConfig.errorDelete);
+                toast.error(postConfig.errorDelete);
             }
         } else {
             setIsDeleteLoading(false);
-            toast.error(myPostConfig.errorDelete);
+            toast.error(postConfig.errorDelete);
         }
     }
 
@@ -76,23 +75,23 @@ const MyPostsDeleteButton: React.FC<MyPostsDeleteButtonProps> = ({ id }) => {
                 onClick={() => setShowDeleteAlert(true)}
                 className="rounded-md border bg-gray-50 px-3 py-2 text-gray-900 hover:bg-gray-100"
             >
-                {myPostConfig.delete}
+                {postConfig.delete}
             </button>
             <AlertDialog open={showDeleteAlert} onOpenChange={setShowDeleteAlert}>
                 <AlertDialogContent className="text-md font-sans">
                     <AlertDialogHeader>
-                        <AlertDialogTitle>{myPostConfig.question}</AlertDialogTitle>
-                        <AlertDialogDescription>{myPostConfig.warning}</AlertDialogDescription>
+                        <AlertDialogTitle>{postConfig.questionDelete}</AlertDialogTitle>
+                        <AlertDialogDescription>{postConfig.warning}</AlertDialogDescription>
                     </AlertDialogHeader>
                     <AlertDialogFooter>
-                        <AlertDialogCancel>{myPostConfig.cancel}</AlertDialogCancel>
+                        <AlertDialogCancel>{postConfig.cancel}</AlertDialogCancel>
                         <AlertDialogAction onClick={deleteMyPost}>
                             {isDeleteLoading ? (
                                 <SpinnerIcon className="mr-2 h-4 w-4 animate-spin" />
                             ) : (
                                 <TrashIcon className="mr-2 h-4 w-4" />
                             )}
-                            <span>{myPostConfig.confirm}</span>
+                            <span>{postConfig.confirm}</span>
                         </AlertDialogAction>
                     </AlertDialogFooter>
                 </AlertDialogContent>
@@ -101,4 +100,4 @@ const MyPostsDeleteButton: React.FC<MyPostsDeleteButtonProps> = ({ id }) => {
     );
 };
 
-export default MyPostsDeleteButton;
+export default PostDeleteButton;

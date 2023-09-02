@@ -7,7 +7,7 @@ import { supabase } from '@/utils/supabase-client';
 import { Session } from '@supabase/auth-helpers-nextjs';
 import { Loader2 as SpinnerIcon, Trash as TrashIcon } from 'lucide-react';
 import { commentConfig } from '@/config/comment';
-import { DeleteComment } from '@/actions/delete-comment';
+import { DeleteComment } from '@/actions/comment/delete-comment';
 import {
     AlertDialog,
     AlertDialogAction,
@@ -59,15 +59,15 @@ const CommentDeleteButton: FC<CommentDeleteButtonProps> = ({ id = '', userId = '
             const response = await DeleteComment(commentData);
             if (response) {
                 setIsDeleteLoading(false);
-                toast.success(commentConfig.deleted);
+                toast.success(commentConfig.successDeleted);
                 router.refresh();
             } else {
                 setIsDeleteLoading(false);
-                toast.error(commentConfig.error);
+                toast.error(commentConfig.errorDeleted);
             }
         } else {
             setIsDeleteLoading(false);
-            toast.error(commentConfig.error);
+            toast.error(commentConfig.errorDeleted);
         }
     }
 
@@ -90,8 +90,8 @@ const CommentDeleteButton: FC<CommentDeleteButtonProps> = ({ id = '', userId = '
                     <AlertDialog open={showDeleteAlert} onOpenChange={setShowDeleteAlert}>
                         <AlertDialogContent className="text-md font-sans">
                             <AlertDialogHeader>
-                                <AlertDialogTitle>{commentConfig.title}</AlertDialogTitle>
-                                <AlertDialogDescription>{commentConfig.description}</AlertDialogDescription>
+                                <AlertDialogTitle>{commentConfig.questionDelete}</AlertDialogTitle>
+                                <AlertDialogDescription>{commentConfig.warning}</AlertDialogDescription>
                             </AlertDialogHeader>
                             <AlertDialogFooter>
                                 <AlertDialogCancel>{commentConfig.cancel}</AlertDialogCancel>

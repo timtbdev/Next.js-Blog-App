@@ -1,12 +1,12 @@
 import { cn } from '@/lib/utils';
-import React from 'react';
+import React, { FC } from 'react';
 import { v4 } from 'uuid';
 
-interface SavedPostsTableHeaderProps {
+interface PostTableHeaderProps {
     titles?: string[];
 }
 
-const SavedPostsTableHeader: React.FC<SavedPostsTableHeaderProps> = ({ titles = [] }) => {
+const PostTableHeader: FC<PostTableHeaderProps> = ({ titles = [] }) => {
     return (
         <thead className="bg-gray-50">
             <tr>
@@ -28,4 +28,4 @@ const SavedPostsTableHeader: React.FC<SavedPostsTableHeaderProps> = ({ titles = 
     );
 };
 
-export default SavedPostsTableHeader;
+export default PostTableHeader;

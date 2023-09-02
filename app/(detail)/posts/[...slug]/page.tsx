@@ -1,4 +1,4 @@
-import { GetSavedPost } from '@/actions/get-saved-posts';
+import { GetBookmark } from '@/actions/bookmark/get-bookmark';
 import ScrollUpButton from '@/components/buttons/scroll-up-button';
 import PostComment from '@/components/post/post-comment';
 import PostFloatingBar from '@/components/post/post-floating-bar';
@@ -19,13 +19,13 @@ interface PostPageProps {
     };
 }
 
-async function getSavedPost(postId: string, userId: string) {
+async function getBookmark(postId: string, userId: string) {
     if (postId && userId) {
-        const savedPostData = {
+        const bookmark = {
             id: postId,
             user_id: userId,
         };
-        const response = await GetSavedPost(savedPostData);
+        const response = await GetBookmark(bookmark);
 
         return response;
     }
@@ -133,8 +133,8 @@ export default async function PostPage({ params }: PostPageProps) {
         profileImage = session?.user?.user_metadata.picture || session?.user?.user_metadata.avatar_url;
     }
 
-    // Get saved post
-    const isPostSaved = await getSavedPost(post.id as string, session?.user.id as string);
+    // Get bookmark status
+    const isBookmarked = await getBookmark(post.id as string, session?.user.id as string);
 
     // Get comments
     const comments = await getComments(post.id as string);
@@ -163,7 +163,7 @@ export default async function PostPage({ params }: PostPageProps) {
                                         text={post.description as string}
                                         url={`${getUrl()}${encodeURIComponent(`/posts/${post.slug}`)}`}
                                         totalComments={comments?.length}
-                                        saved={isPostSaved}
+                                        isBookmarked={isBookmarked}
                                     />
                                 </div>
                             </div>
@@ -182,7 +182,7 @@ export default async function PostPage({ params }: PostPageProps) {
                                     text={post.description as string}
                                     url={`${getUrl()}${encodeURIComponent(`/posts/${post.slug}`)}`}
                                     totalComments={comments?.length}
-                                    saved={isPostSaved}
+                                    isBookmarked={isBookmarked}
                                 />
                             </div>
                         </div>

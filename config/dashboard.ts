@@ -17,12 +17,12 @@ export const dashBoardMenus: DashBoardAttributes[] = [
     },
     {
         title: 'Posts',
-        slug: 'my-posts',
+        slug: 'editor/posts',
         icon: PostIcon,
     },
     {
-        title: 'Saved Posts',
-        slug: 'saved-posts',
+        title: 'Bookmarks',
+        slug: 'bookmarks',
         icon: BookMarkedIcon,
     },
     {
@@ -41,9 +41,4 @@ export const dashBoardConfig = {
     title: 'Dashboard',
     description: 'Dashboard',
     slug: 'dashboard',
-};
-
-export const dashBoardBookmarkTableEmpty = {
-    title: 'Empty',
-    description: 'There is no bookmark yet',
 };

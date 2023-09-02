@@ -1,33 +1,30 @@
 import ProtectedTitle from '@/components/protected/protected-title';
 import Pagination from '@/components/shared/pagination';
-import { myPostConfig } from '@/config/my-post';
-import { emptyConfig } from '@/config/empty';
+import { postConfig } from '@/config/post';
 import { Post } from '@/types/collection';
 import supabase from '@/utils/supabase-server';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import React from 'react';
+import React, { FC } from 'react';
 import TableWrapper from '@/components/protected/table/table-wrapper';
-import MyPostsTableHeader from '@/components/protected/my-posts/my-posts-table-header';
-import MyPostsTable from '@/components/protected/my-posts/my-posts-table';
-import TableEmpty from '@/components/protected/table/table-empty';
+import PostTableHeader from '@/components/protected/post/post-table-header';
+import PostTable from '@/components/protected/post/post-table';
+import PostTableEmpty from '@/components/protected/post/post-emtpy-table';
 
 export const metadata: Metadata = {
-    title: myPostConfig.title,
-    description: myPostConfig.description,
+    title: postConfig.title,
+    description: postConfig.description,
 };
 
-interface MyPostsPageProps {
+interface PostsPageProps {
     searchParams: { [key: string]: string | string[] | undefined };
 }
 
-const MyPostsPage: React.FC<MyPostsPageProps> = async ({ searchParams }) => {
+const PostsPage: FC<PostsPageProps> = async ({ searchParams }) => {
     // Fetch user data
     const {
         data: { user },
     } = await supabase.auth.getUser();
-
-    console.log('User Id : ', user?.id);
 
     // Fetch total pages
     const { count } = await supabase
@@ -48,7 +45,7 @@ const MyPostsPage: React.FC<MyPostsPageProps> = async ({ searchParams }) => {
     // Fetch posts
     const { data, error } = await supabase
         .from('posts')
-        .select(`*`)
+        .select(`*, categories(*)`)
         .order('created_at', { ascending: false })
         .match({ author_id: user?.id })
         .range(from, to)
@@ -62,10 +59,10 @@ const MyPostsPage: React.FC<MyPostsPageProps> = async ({ searchParams }) => {
             <div className="mx-auto max-w-5xl p-4 sm:p-6 lg:p-8">
                 {data?.length && data?.length > 0 ? (
                     <>
-                        <ProtectedTitle title={myPostConfig.title} description={myPostConfig.description} />
+                        <ProtectedTitle title={postConfig.title} description={postConfig.description} />
                         <TableWrapper>
-                            <MyPostsTableHeader titles={myPostConfig.tableHeader} />
-                            <MyPostsTable myPosts={data ? data : []} />
+                            <PostTableHeader titles={postConfig.tableHeader} />
+                            <PostTable posts={data ? data : []} />
                         </TableWrapper>
                         {/* Pagination */}
                         {totalPages > 1 && (
@@ -80,11 +77,11 @@ const MyPostsPage: React.FC<MyPostsPageProps> = async ({ searchParams }) => {
                         )}
                     </>
                 ) : (
-                    <TableEmpty emptyTitle={emptyConfig.empty} emptyDescription={emptyConfig.description} />
+                    <PostTableEmpty />
                 )}
             </div>
         </>
     );
 };
 
-export default MyPostsPage;
+export default PostsPage;

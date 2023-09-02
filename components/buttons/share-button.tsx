@@ -2,7 +2,7 @@
 
 import ShareOutline from '@/components/icons/share-outline';
 import ShareSolid from '@/components/icons/share-solid';
-import { toolbarConfig } from '@/config/toolbar';
+import { shareConfig } from '@/config/share';
 import { CheckIcon, CopyIcon, FacebookIcon, LinkedinIcon, MailIcon, TwitterIcon } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 import { Drawer } from 'vaul';
@@ -65,7 +65,7 @@ const ShareButton: React.FC<ShareButtonProps> = ({ title = '', text = '', url = 
                             <ShareOutline className="-ml-0.5 h-5 w-5 text-gray-400" />
                         )}
                         <span className="ml-2 hidden text-sm text-gray-400 group-hover:text-gray-900 md:flex">
-                            {toolbarConfig.share}
+                            {shareConfig.title}
                         </span>
                     </button>
                 </Drawer.Trigger>
@@ -76,7 +76,7 @@ const ShareButton: React.FC<ShareButtonProps> = ({ title = '', text = '', url = 
                             <div className="mx-auto mb-8 h-1.5 w-12 flex-shrink-0 rounded-full bg-zinc-300" />
                             <div className="mx-auto max-w-md">
                                 <Drawer.Title className="mx-auto mb-4 text-center font-sans text-lg font-semibold text-gray-600">
-                                    {toolbarConfig.share}
+                                    {shareConfig.title}
                                 </Drawer.Title>
                                 <div className="mx-auto my-6 grid grid-cols-3 justify-center gap-8">
                                     <div className="mx-auto flex ">

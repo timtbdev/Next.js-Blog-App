@@ -1,10 +1,10 @@
 'use client';
 
-import { PostComment } from '@/actions/post-comment';
+import { PostComment } from '@/actions/comment/post-comment';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Textarea } from '@/components/ui/textarea';
-import { toolbarConfig } from '@/config/toolbar';
+import { commentConfig } from '@/config/comment';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { SendIcon, Loader2 as SpinnerIcon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
@@ -49,11 +49,11 @@ const CommentForm: React.FC<CommentFormProps> = ({ postId, userId }) => {
 
         if (response) {
             setIsLoading(false);
-            toast.success(toolbarConfig.success);
+            toast.success(commentConfig.successAdd);
             router.refresh();
         } else {
             setIsLoading(false);
-            toast.error(toolbarConfig.error);
+            toast.error(commentConfig.errorAdd);
         }
     }
 
@@ -65,7 +65,7 @@ const CommentForm: React.FC<CommentFormProps> = ({ postId, userId }) => {
                     name="comment"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>{toolbarConfig.comment}</FormLabel>
+                            <FormLabel>{commentConfig.title}</FormLabel>
                             <FormControl>
                                 <Textarea {...field} className="bg-white" />
                             </FormControl>
@@ -84,7 +84,7 @@ const CommentForm: React.FC<CommentFormProps> = ({ postId, userId }) => {
                     ) : (
                         <SendIcon className="mr-2 h-4 w-4 text-gray-600" />
                     )}
-                    <span className="text-gray-600">{toolbarConfig.send}</span>
+                    <span className="text-gray-600">{commentConfig.submit}</span>
                 </Button>
             </form>
         </Form>

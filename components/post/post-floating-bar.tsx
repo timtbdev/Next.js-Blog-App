@@ -1,6 +1,6 @@
 'use client';
 
-import SavePostButton from '@/components/buttons/save-post-button';
+import BookmarkButton from '@/components/buttons/bookmark-button';
 import CommentButton from '@/components/buttons/comment-button';
 import ShareButton from '@/components/buttons/share-button';
 import React from 'react';
@@ -11,7 +11,7 @@ interface PostFloatingBarProps {
     text?: string;
     url?: string;
     totalComments?: number;
-    saved?: boolean;
+    isBookmarked?: boolean;
 }
 
 const PostFloatingBar: React.FC<PostFloatingBarProps> = ({
@@ -20,13 +20,13 @@ const PostFloatingBar: React.FC<PostFloatingBarProps> = ({
     text = '',
     url = window.location.href,
     totalComments = 0,
-    saved = false,
+    isBookmarked = false,
 }) => {
     return (
         <>
             <div className="grid w-full grid-cols-3 justify-start gap-4 rounded-md">
                 <CommentButton totalComments={totalComments} />
-                <SavePostButton id={id} saved={saved} />
+                <BookmarkButton id={id} isBookmarked={isBookmarked} />
                 <ShareButton title={title} text={text} url={url} />
             </div>
         </>

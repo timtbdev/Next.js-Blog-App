@@ -2,7 +2,7 @@
 
 import MessageOutline from '@/components/icons/message-outline';
 import MessageSolid from '@/components/icons/message-solid';
-import { toolbarConfig } from '@/config/toolbar';
+import { commentConfig } from '@/config/comment';
 import React from 'react';
 import ScrollIntoView from 'react-scroll-into-view';
 
@@ -32,7 +32,7 @@ const CommentButton: React.FC<CommentButtonProps> = ({ totalComments = 0 }) => {
                     {totalComments}
                 </span>
                 <span className="ml-2 hidden text-sm text-gray-400 group-hover:text-gray-900 md:flex">
-                    {toolbarConfig.comment}
+                    {commentConfig.comments}
                 </span>
             </button>
         </ScrollIntoView>

@@ -1,6 +1,6 @@
 import ProtectedTitle from '@/components/protected/protected-title';
 import Pagination from '@/components/shared/pagination';
-import { savedPostConfig } from '@/config/saved-post';
+import { bookmarkConfig } from '@/config/bookmark';
 import { emptyConfig } from '@/config/empty';
 import { BookMarkWithPost } from '@/types/collection';
 import supabase from '@/utils/supabase-server';
@@ -8,20 +8,20 @@ import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import React from 'react';
 import TableWrapper from '@/components/protected/table/table-wrapper';
-import SavedPostsTableHeader from '@/components/protected/saved-posts/saved-posts-table-header';
-import SavedPostsTable from '@/components/protected/saved-posts/saved-posts-table';
+import BookmarkTableHeader from '@/components/protected/bookmark/bookmark-table-header';
+import BookmarkTable from '@/components/protected/bookmark/bookmark-table';
 import TableEmpty from '@/components/protected/table/table-empty';
 
 export const metadata: Metadata = {
-    title: savedPostConfig.title,
-    description: savedPostConfig.description,
+    title: bookmarkConfig.title,
+    description: bookmarkConfig.description,
 };
 
-interface SavedPostPageProps {
+interface BookmarksPageProps {
     searchParams: { [key: string]: string | string[] | undefined };
 }
 
-const SavedPostPage: React.FC<SavedPostPageProps> = async ({ searchParams }) => {
+const BookmarksPage: React.FC<BookmarksPageProps> = async ({ searchParams }) => {
     // Fetch total pages
     const { count } = await supabase.from('bookmarks').select('*', { count: 'exact', head: true });
 
@@ -57,10 +57,10 @@ const SavedPostPage: React.FC<SavedPostPageProps> = async ({ searchParams }) => 
             <div className="mx-auto max-w-5xl p-4 sm:p-6 lg:p-8">
                 {data?.length && data?.length > 0 ? (
                     <>
-                        <ProtectedTitle title={savedPostConfig.title} description={savedPostConfig.description} />
+                        <ProtectedTitle title={bookmarkConfig.title} description={bookmarkConfig.description} />
                         <TableWrapper>
-                            <SavedPostsTableHeader titles={savedPostConfig.tableHeader} />
-                            <SavedPostsTable savedPosts={data ? data : []} />
+                            <BookmarkTableHeader titles={bookmarkConfig.tableHeader} />
+                            <BookmarkTable bookmarks={data ? data : []} />
                         </TableWrapper>
                         {/* Pagination */}
                         {totalPages > 1 && (
@@ -69,17 +69,17 @@ const SavedPostPage: React.FC<SavedPostPageProps> = async ({ searchParams }) => 
                                 perPage={limit}
                                 totalItems={count ? count : 0}
                                 totalPages={totalPages}
-                                baseUrl="/saved-posts"
+                                baseUrl="/bookmarks"
                                 pageUrl="?page="
                             />
                         )}
                     </>
                 ) : (
-                    <TableEmpty emptyTitle={emptyConfig.empty} emptyDescription={emptyConfig.description} />
+                    <TableEmpty emptyTitle={emptyConfig.title} emptyDescription={emptyConfig.description} />
                 )}
             </div>
         </>
     );
 };
 
-export default SavedPostPage;
+export default BookmarksPage;

@@ -1,28 +1,28 @@
 'use client';
 
-import { AddSavedPost } from '@/actions/add-saved-post';
-import { DeleteSavedPost } from '@/actions/delete-saved-post';
-import SavedPostOutline from '@/components/icons/saved-post-outline';
-import SavedPostSolid from '@/components/icons/saved-post-solid';
+import { AddBookmark } from '@/actions/bookmark/add-bookmark';
+import { DeleteBookmark } from '@/actions/bookmark/delete-bookmark';
+import BookmarkOutline from '@/components/icons/bookmark-outline';
+import BookmarkSolid from '@/components/icons/bookmark-solid';
 import LoginSection from '@/components/login/login-section';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
-import { toolbarConfig } from '@/config/toolbar';
+import { bookmarkConfig } from '@/config/bookmark';
 import { supabase } from '@/utils/supabase-client';
 import { Session } from '@supabase/auth-helpers-nextjs';
 import { Loader2 as SpinnerIcon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import React from 'react';
+import React, { FC } from 'react';
 import toast from 'react-hot-toast';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
-interface SavePostButtonProps {
+interface BookmarkButtonProps {
     id: string;
-    saved?: boolean;
+    isBookmarked?: boolean;
 }
 
-const SavePostButton: React.FC<SavePostButtonProps> = ({ id, saved }) => {
+const BookmarkButton: FC<BookmarkButtonProps> = ({ id, isBookmarked }) => {
     const [isHovering, setIsHovered] = React.useState(false);
     const onMouseEnter = () => setIsHovered(true);
     const onMouseLeave = () => setIsHovered(false);
@@ -45,64 +45,64 @@ const SavePostButton: React.FC<SavePostButtonProps> = ({ id, saved }) => {
         return () => subscription.unsubscribe();
     }, [id, session?.user.id]);
 
-    // Add saved post
-    async function addSavedPost() {
+    // Add a bookmark
+    async function addBookmark() {
         setIsLoading(true);
 
         if (id && session?.user.id) {
-            const savedPostData = {
+            const bookmark = {
                 id: id,
                 user_id: session?.user.id,
             };
 
-            const response = await AddSavedPost(savedPostData);
+            const response = await AddBookmark(bookmark);
             if (response) {
-                toast.success(toolbarConfig.saved);
+                toast.success(bookmarkConfig.successAdd);
                 router.refresh();
                 setIsLoading(false);
             } else {
                 setIsLoading(false);
-                toast.error(toolbarConfig.error);
+                toast.error(bookmarkConfig.errorAdd);
             }
         } else {
             setIsLoading(false);
-            toast.error(toolbarConfig.error);
+            toast.error(bookmarkConfig.errorAdd);
         }
     }
 
-    // Delete saved post
-    async function deleteSavedPost() {
+    // Delete a bookmark
+    async function deleteBookmark() {
         setIsLoading(true);
 
         if (id && session?.user.id) {
-            const savedPostData = {
+            const bookmark = {
                 id: id,
                 user_id: session?.user.id,
             };
 
-            const response = await DeleteSavedPost(savedPostData);
+            const response = await DeleteBookmark(bookmark);
             if (response) {
                 setIsLoading(false);
-                toast.success(toolbarConfig.unsaved);
+                toast.success(bookmarkConfig.successDelete);
                 router.refresh();
             } else {
                 setIsLoading(false);
-                toast.error(toolbarConfig.error);
+                toast.error(bookmarkConfig.errorDelete);
             }
         } else {
             setIsLoading(false);
-            toast.error(toolbarConfig.error);
+            toast.error(bookmarkConfig.errorDelete);
         }
     }
 
     return (
         <>
             {session &&
-                (saved ? (
+                (isBookmarked ? (
                     <button
                         type="button"
                         disabled={isLoading}
-                        onClick={deleteSavedPost}
+                        onClick={deleteBookmark}
                         onMouseEnter={onMouseEnter}
                         onMouseLeave={onMouseLeave}
                         className="group relative mx-auto inline-flex w-full items-center justify-center rounded-md border border-black/5 bg-white py-2 hover:bg-gray-50 hover:shadow-sm"
@@ -110,19 +110,19 @@ const SavePostButton: React.FC<SavePostButtonProps> = ({ id, saved }) => {
                         {isLoading ? (
                             <SpinnerIcon className="-ml-0.5 h-5 w-5 animate-spin" />
                         ) : isHovering ? (
-                            <SavedPostOutline className="-ml-0.5 h-5 w-5 text-gray-400" />
+                            <BookmarkOutline className="-ml-0.5 h-5 w-5 text-gray-400" />
                         ) : (
-                            <SavedPostSolid className="-ml-0.5 h-5 w-5 text-gray-900" />
+                            <BookmarkSolid className="-ml-0.5 h-5 w-5 text-gray-900" />
                         )}
                         <span className="ml-2 hidden text-sm text-gray-400 md:flex">
-                            {isHovering ? toolbarConfig.unsave : toolbarConfig.saved}
+                            {isHovering ? bookmarkConfig.unBookmark : bookmarkConfig.bookmarked}
                         </span>
                     </button>
                 ) : (
                     <button
                         type="button"
                         disabled={isLoading}
-                        onClick={addSavedPost}
+                        onClick={addBookmark}
                         onMouseEnter={onMouseEnter}
                         onMouseLeave={onMouseLeave}
                         className="group relative mx-auto inline-flex w-full items-center justify-center rounded-md border border-black/5 bg-white py-2 hover:bg-gray-50 hover:shadow-sm"
@@ -130,12 +130,12 @@ const SavePostButton: React.FC<SavePostButtonProps> = ({ id, saved }) => {
                         {isLoading ? (
                             <SpinnerIcon className="-ml-0.5 h-5 w-5 animate-spin" />
                         ) : isHovering ? (
-                            <SavedPostSolid className="-ml-0.5 h-5 w-5 text-gray-900" />
+                            <BookmarkSolid className="-ml-0.5 h-5 w-5 text-gray-900" />
                         ) : (
-                            <SavedPostOutline className="-ml-0.5 h-5 w-5 text-gray-400" />
+                            <BookmarkOutline className="-ml-0.5 h-5 w-5 text-gray-400" />
                         )}
                         <span className="ml-2 hidden text-sm text-gray-400 group-hover:text-gray-900 md:flex">
-                            {toolbarConfig.save}
+                            {bookmarkConfig.bookmark}
                         </span>
                     </button>
                 ))}
@@ -150,12 +150,12 @@ const SavePostButton: React.FC<SavePostButtonProps> = ({ id, saved }) => {
                             className="group relative mx-auto inline-flex w-full items-center justify-center rounded-md border border-black/5 bg-white py-2 hover:bg-gray-50 hover:shadow-sm"
                         >
                             {isHovering ? (
-                                <SavedPostSolid className="-ml-0.5 h-5 w-5 text-gray-900" />
+                                <BookmarkSolid className="-ml-0.5 h-5 w-5 text-gray-900" />
                             ) : (
-                                <SavedPostOutline className="-ml-0.5 h-5 w-5 text-gray-400" />
+                                <BookmarkOutline className="-ml-0.5 h-5 w-5 text-gray-400" />
                             )}
                             <span className="ml-2 hidden text-sm text-gray-400 group-hover:text-gray-900 md:flex">
-                                {toolbarConfig.save}
+                                {bookmarkConfig.bookmark}
                             </span>
                         </button>
                     </DialogTrigger>
@@ -168,4 +168,4 @@ const SavePostButton: React.FC<SavePostButtonProps> = ({ id, saved }) => {
     );
 };
 
-export default SavePostButton;
+export default BookmarkButton;

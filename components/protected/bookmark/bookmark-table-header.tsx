@@ -2,11 +2,11 @@ import { cn } from '@/lib/utils';
 import React from 'react';
 import { v4 } from 'uuid';
 
-interface MyPostsTableHeaderProps {
+interface BookmarkTableHeaderProps {
     titles?: string[];
 }
 
-const MyPostsTableHeader: React.FC<MyPostsTableHeaderProps> = ({ titles = [] }) => {
+const BookmarkTableHeader: React.FC<BookmarkTableHeaderProps> = ({ titles = [] }) => {
     return (
         <thead className="bg-gray-50">
             <tr>
@@ -28,4 +28,4 @@ const MyPostsTableHeader: React.FC<MyPostsTableHeaderProps> = ({ titles = [] }) 
     );
 };
 
-export default MyPostsTableHeader;
+export default BookmarkTableHeader;

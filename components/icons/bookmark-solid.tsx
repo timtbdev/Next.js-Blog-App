@@ -1,10 +1,10 @@
 import React from 'react';
 
-interface SavedPostSolidProps {
+interface BookmarkSolidProps {
     className: string;
 }
 
-const SavedPostSolid: React.FC<SavedPostSolidProps> = ({ className = '' }) => {
+const BookmarkSolid: React.FC<BookmarkSolidProps> = ({ className = '' }) => {
     return (
         <>
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className={className}>
@@ -19,4 +19,4 @@ const SavedPostSolid: React.FC<SavedPostSolidProps> = ({ className = '' }) => {
     );
 };
 
-export default SavedPostSolid;
+export default BookmarkSolid;

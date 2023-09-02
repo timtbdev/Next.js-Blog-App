@@ -1,10 +1,10 @@
 import React from 'react';
 
-interface SavedPostOutlineProps {
+interface BookmarkOutlineProps {
     className: string;
 }
 
-const SavedPostOutline: React.FC<SavedPostOutlineProps> = ({ className = '' }) => {
+const BookmarkOutline: React.FC<BookmarkOutlineProps> = ({ className = '' }) => {
     return (
         <>
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className={className}>
@@ -23,4 +23,4 @@ const SavedPostOutline: React.FC<SavedPostOutlineProps> = ({ className = '' }) =
     );
 };
 
-export default SavedPostOutline;
+export default BookmarkOutline;

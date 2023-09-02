@@ -1,5 +1,5 @@
 export const emptyConfig = {
-    empty: 'Empty',
+    title: 'Empty',
     description: 'No data to display',
     error: 'Something went wrong',
     tryAgain: 'Try again',

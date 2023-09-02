@@ -1,17 +1,18 @@
 'use server';
 
-import { savedPostSchema } from '@/lib/validations';
+import { postDeleteSchema } from '@/lib/validations';
 import supabase from '@/utils/supabase-server-action';
 import * as z from 'zod';
 
-export async function GetSavedPost(context: z.infer<typeof savedPostSchema>) {
+export async function DeletePost(context: z.infer<typeof postDeleteSchema>) {
     try {
-        const savedPost = savedPostSchema.parse(context);
+        const post = postDeleteSchema.parse(context);
 
         const { data, error } = await supabase
-            .from('bookmarks')
-            .select('*')
-            .match({ id: savedPost.id, user_id: savedPost.user_id });
+            .from('posts')
+            .delete()
+            .match({ id: post.id, author_id: post.user_id })
+            .select();
 
         if (error) {
             console.log(error);
