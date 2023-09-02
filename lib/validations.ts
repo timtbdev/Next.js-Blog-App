@@ -52,6 +52,11 @@ export const savedPostSchema = z.object({
     user_id: z.string(),
 });
 
+export const myPostSchema = z.object({
+    id: z.string(),
+    user_id: z.string(),
+});
+
 export const likeSchema = z.object({
     id: z.string(),
     user_id: z.string(),

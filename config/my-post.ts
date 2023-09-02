@@ -1,6 +1,6 @@
-export const savedPostConfig = {
-    title: 'Saved Posts',
-    description: 'Manage your saved posts',
+export const myPostConfig = {
+    title: 'Posts',
+    description: 'Manage your posts',
     delete: 'Delete',
     deleted: 'Deleted',
     edit: 'Edit',

@@ -1,4 +1,4 @@
-import { DeleteSavedPost } from '@/actions/delete-saved-post';
+import { DeleteMyPost } from '@/actions/delete-my-post';
 import {
     AlertDialog,
     AlertDialogAction,
@@ -9,7 +9,7 @@ import {
     AlertDialogHeader,
     AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
-import { savedPostConfig } from '@/config/saved-post';
+import { myPostConfig } from '@/config/my-post';
 import { toolbarConfig } from '@/config/toolbar';
 import { supabase } from '@/utils/supabase-client';
 import { Session } from '@supabase/auth-helpers-nextjs';
@@ -21,11 +21,11 @@ import toast from 'react-hot-toast';
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
-interface SavedPostsDeleteButtonProps {
+interface MyPostsDeleteButtonProps {
     id?: string;
 }
 
-const SavedPostsDeleteButton: React.FC<SavedPostsDeleteButtonProps> = ({ id }) => {
+const MyPostsDeleteButton: React.FC<MyPostsDeleteButtonProps> = ({ id }) => {
     const router = useRouter();
     const [showDeleteAlert, setShowDeleteAlert] = useState<boolean>(false);
     const [isDeleteLoading, setIsDeleteLoading] = useState<boolean>(false);
@@ -46,26 +46,26 @@ const SavedPostsDeleteButton: React.FC<SavedPostsDeleteButtonProps> = ({ id }) =
         return () => subscription.unsubscribe();
     }, [id, session?.user.id]);
 
-    // Delete saved post
-    async function deleteSavedPost() {
+    // Delete post
+    async function deleteMyPost() {
         setIsDeleteLoading(true);
         if (id && session?.user.id) {
-            const savedPostData = {
+            const myPostData = {
                 id: id,
                 user_id: session?.user.id,
             };
-            const response = await DeleteSavedPost(savedPostData);
+            const response = await DeleteMyPost(myPostData);
             if (response) {
                 setIsDeleteLoading(false);
-                toast.success(savedPostConfig.deleted);
+                toast.success(myPostConfig.deleted);
                 router.refresh();
             } else {
                 setIsDeleteLoading(false);
-                toast.error(savedPostConfig.errorDelete);
+                toast.error(myPostConfig.errorDelete);
             }
         } else {
             setIsDeleteLoading(false);
-            toast.error(savedPostConfig.errorDelete);
+            toast.error(myPostConfig.errorDelete);
         }
     }
 
@@ -76,23 +76,23 @@ const SavedPostsDeleteButton: React.FC<SavedPostsDeleteButtonProps> = ({ id }) =
                 onClick={() => setShowDeleteAlert(true)}
                 className="rounded-md border bg-gray-50 px-3 py-2 text-gray-900 hover:bg-gray-100"
             >
-                {savedPostConfig.delete}
+                {myPostConfig.delete}
             </button>
             <AlertDialog open={showDeleteAlert} onOpenChange={setShowDeleteAlert}>
                 <AlertDialogContent className="text-md font-sans">
                     <AlertDialogHeader>
-                        <AlertDialogTitle>{savedPostConfig.question}</AlertDialogTitle>
-                        <AlertDialogDescription>{savedPostConfig.warning}</AlertDialogDescription>
+                        <AlertDialogTitle>{myPostConfig.question}</AlertDialogTitle>
+                        <AlertDialogDescription>{myPostConfig.warning}</AlertDialogDescription>
                     </AlertDialogHeader>
                     <AlertDialogFooter>
-                        <AlertDialogCancel>{savedPostConfig.cancel}</AlertDialogCancel>
-                        <AlertDialogAction onClick={deleteSavedPost}>
+                        <AlertDialogCancel>{myPostConfig.cancel}</AlertDialogCancel>
+                        <AlertDialogAction onClick={deleteMyPost}>
                             {isDeleteLoading ? (
                                 <SpinnerIcon className="mr-2 h-4 w-4 animate-spin" />
                             ) : (
                                 <TrashIcon className="mr-2 h-4 w-4" />
                             )}
-                            <span>{savedPostConfig.confirm}</span>
+                            <span>{myPostConfig.confirm}</span>
                         </AlertDialogAction>
                     </AlertDialogFooter>
                 </AlertDialogContent>
@@ -101,4 +101,4 @@ const SavedPostsDeleteButton: React.FC<SavedPostsDeleteButtonProps> = ({ id }) =
     );
 };
 
-export default SavedPostsDeleteButton;
+export default MyPostsDeleteButton;

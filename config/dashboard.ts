@@ -17,7 +17,7 @@ export const dashBoardMenus: DashBoardAttributes[] = [
     },
     {
         title: 'Posts',
-        slug: 'posts',
+        slug: 'my-posts',
         icon: PostIcon,
     },
     {
