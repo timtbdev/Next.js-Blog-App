@@ -122,7 +122,7 @@ export const dynamic = 'force-dynamic';
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
         <html lang="en" suppressHydrationWarning>
-            <body className={cn('layout', fontSans.variable)}>
+            <body className={fontSans.variable}>
                 <div className="bg-white font-sans">
                     {children}
                     <VercelAnalytics />

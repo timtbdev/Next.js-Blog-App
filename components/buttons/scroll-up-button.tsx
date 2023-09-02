@@ -2,6 +2,7 @@
 
 import React from 'react';
 import ScrollToTop from 'react-scroll-to-top';
+import ScrollToTopOpening from '../shared/scroll-to-top';
 
 const ScrollUpButton = () => {
     return (
@@ -28,6 +29,7 @@ const ScrollUpButton = () => {
                     </svg>
                 }
             />
+            <ScrollToTopOpening />
         </>
     );
 };

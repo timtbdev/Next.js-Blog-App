@@ -15,11 +15,7 @@ const BackButton: React.FC<BackButtonProps> = ({ className = '', url = '/' }) =>
             type="button"
             className="group relative z-10 inline-flex items-center justify-center space-x-3"
             onClick={() => {
-                if (window.history.state && window.history.state.idx > 0) {
-                    router.back();
-                } else {
-                    router.push(url);
-                }
+                router.back();
             }}
         >
             <div className="rounded-full border border-slate-300 bg-slate-50 p-2.5 shadow-sm">
