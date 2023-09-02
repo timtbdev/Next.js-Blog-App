@@ -1,17 +1,17 @@
 'use server';
 
-import { bookmarkSchema } from '@/lib/validations';
+import { savedPostSchema } from '@/lib/validations';
 import supabase from '@/utils/supabase-server-action';
 import * as z from 'zod';
 
-export async function GetBookmark(context: z.infer<typeof bookmarkSchema>) {
+export async function GetSavedPost(context: z.infer<typeof savedPostSchema>) {
     try {
-        const bookmark = bookmarkSchema.parse(context);
+        const savedPost = savedPostSchema.parse(context);
 
         const { data, error } = await supabase
             .from('bookmarks')
             .select('*')
-            .match({ id: bookmark.id, user_id: bookmark.user_id });
+            .match({ id: savedPost.id, user_id: savedPost.user_id });
 
         if (error) {
             console.log(error);

@@ -4,11 +4,6 @@ export const toolbarConfig = {
     saved: 'Saved',
     unsave: 'Unsave',
     unsaved: 'Unsaved',
-    // Like button
-    like: 'Like',
-    liked: 'Liked',
-    unlike: 'Unlike',
-    unliked: 'Unliked',
     // Share button
     share: 'Share',
     // View button
@@ -21,11 +16,9 @@ export const toolbarConfig = {
     error: 'Error occured',
     // Cancel button
     cancel: 'Cancel',
-    canceled: 'Canceled',
+    deleted: 'Deleted',
     // Send button
     send: 'Submit',
-    // Guest info
-    guest: 'Guest',
     name: 'Name',
     leaveComment: 'Leave a comment',
 };

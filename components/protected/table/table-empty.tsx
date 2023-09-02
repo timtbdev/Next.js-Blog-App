@@ -3,12 +3,12 @@
 import { useRouter } from 'next/navigation';
 import { FC } from 'react';
 
-interface DashBoardTableEmpty {
+interface TableEmpty {
     emptyTitle: string;
     emptyDescription: string;
 }
 
-const DashBoardTableEmpty: FC<DashBoardTableEmpty> = ({ emptyTitle, emptyDescription }) => {
+const TableEmpty: FC<TableEmpty> = ({ emptyTitle, emptyDescription }) => {
     const router = useRouter();
     return (
         <>
@@ -29,7 +29,7 @@ const DashBoardTableEmpty: FC<DashBoardTableEmpty> = ({ emptyTitle, emptyDescrip
                             }}
                             className="rounded-md bg-gray-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                         >
-                            Буцах
+                            Back
                         </button>
                     </div>
                 </div>
@@ -38,4 +38,4 @@ const DashBoardTableEmpty: FC<DashBoardTableEmpty> = ({ emptyTitle, emptyDescrip
     );
 };
 
-export default DashBoardTableEmpty;
+export default TableEmpty;

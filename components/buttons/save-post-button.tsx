@@ -1,9 +1,9 @@
 'use client';
 
-import { AddBookmark } from '@/actions/add-bookmark';
-import { DeleteBookmark } from '@/actions/delete-bookmark';
-import BookMarkOutline from '@/components/icons/bookmark-outline';
-import BookMarkSolid from '@/components/icons/bookmark-solid';
+import { AddSavedPost } from '@/actions/add-saved-post';
+import { DeleteSavedPost } from '@/actions/delete-saved-post';
+import SavedPostOutline from '@/components/icons/saved-post-outline';
+import SavedPostSolid from '@/components/icons/saved-post-solid';
 import LoginSection from '@/components/login/login-section';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { toolbarConfig } from '@/config/toolbar';
@@ -17,12 +17,12 @@ import toast from 'react-hot-toast';
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
-interface BoomarkButtonProps {
+interface SavePostButtonProps {
     id: string;
-    bookmarked?: boolean;
+    saved?: boolean;
 }
 
-const BoomarkButton: React.FC<BoomarkButtonProps> = ({ id, bookmarked }) => {
+const SavePostButton: React.FC<SavePostButtonProps> = ({ id, saved }) => {
     const [isHovering, setIsHovered] = React.useState(false);
     const onMouseEnter = () => setIsHovered(true);
     const onMouseLeave = () => setIsHovered(false);
@@ -45,17 +45,17 @@ const BoomarkButton: React.FC<BoomarkButtonProps> = ({ id, bookmarked }) => {
         return () => subscription.unsubscribe();
     }, [id, session?.user.id]);
 
-    // Add bookmark
-    async function addBookmark() {
+    // Add saved post
+    async function addSavedPost() {
         setIsLoading(true);
 
         if (id && session?.user.id) {
-            const bookmarkData = {
+            const savedPostData = {
                 id: id,
                 user_id: session?.user.id,
             };
 
-            const response = await AddBookmark(bookmarkData);
+            const response = await AddSavedPost(savedPostData);
             if (response) {
                 toast.success(toolbarConfig.saved);
                 router.refresh();
@@ -70,17 +70,17 @@ const BoomarkButton: React.FC<BoomarkButtonProps> = ({ id, bookmarked }) => {
         }
     }
 
-    // Delete bookmark
-    async function deleteBookmark() {
+    // Delete saved post
+    async function deleteSavedPost() {
         setIsLoading(true);
 
         if (id && session?.user.id) {
-            const bookmarkData = {
+            const savedPostData = {
                 id: id,
                 user_id: session?.user.id,
             };
 
-            const response = await DeleteBookmark(bookmarkData);
+            const response = await DeleteSavedPost(savedPostData);
             if (response) {
                 setIsLoading(false);
                 toast.success(toolbarConfig.unsaved);
@@ -98,11 +98,11 @@ const BoomarkButton: React.FC<BoomarkButtonProps> = ({ id, bookmarked }) => {
     return (
         <>
             {session &&
-                (bookmarked ? (
+                (saved ? (
                     <button
                         type="button"
                         disabled={isLoading}
-                        onClick={deleteBookmark}
+                        onClick={deleteSavedPost}
                         onMouseEnter={onMouseEnter}
                         onMouseLeave={onMouseLeave}
                         className="group relative mx-auto inline-flex w-full items-center justify-center rounded-md border border-black/5 bg-white py-2 hover:bg-gray-50 hover:shadow-sm"
@@ -110,9 +110,9 @@ const BoomarkButton: React.FC<BoomarkButtonProps> = ({ id, bookmarked }) => {
                         {isLoading ? (
                             <SpinnerIcon className="-ml-0.5 h-5 w-5 animate-spin" />
                         ) : isHovering ? (
-                            <BookMarkOutline className="-ml-0.5 h-5 w-5 text-gray-400" />
+                            <SavedPostOutline className="-ml-0.5 h-5 w-5 text-gray-400" />
                         ) : (
-                            <BookMarkSolid className="-ml-0.5 h-5 w-5 text-gray-900" />
+                            <SavedPostSolid className="-ml-0.5 h-5 w-5 text-gray-900" />
                         )}
                         <span className="ml-2 hidden text-sm text-gray-400 md:flex">
                             {isHovering ? toolbarConfig.unsave : toolbarConfig.saved}
@@ -122,7 +122,7 @@ const BoomarkButton: React.FC<BoomarkButtonProps> = ({ id, bookmarked }) => {
                     <button
                         type="button"
                         disabled={isLoading}
-                        onClick={addBookmark}
+                        onClick={addSavedPost}
                         onMouseEnter={onMouseEnter}
                         onMouseLeave={onMouseLeave}
                         className="group relative mx-auto inline-flex w-full items-center justify-center rounded-md border border-black/5 bg-white py-2 hover:bg-gray-50 hover:shadow-sm"
@@ -130,9 +130,9 @@ const BoomarkButton: React.FC<BoomarkButtonProps> = ({ id, bookmarked }) => {
                         {isLoading ? (
                             <SpinnerIcon className="-ml-0.5 h-5 w-5 animate-spin" />
                         ) : isHovering ? (
-                            <BookMarkSolid className="-ml-0.5 h-5 w-5 text-gray-900" />
+                            <SavedPostSolid className="-ml-0.5 h-5 w-5 text-gray-900" />
                         ) : (
-                            <BookMarkOutline className="-ml-0.5 h-5 w-5 text-gray-400" />
+                            <SavedPostOutline className="-ml-0.5 h-5 w-5 text-gray-400" />
                         )}
                         <span className="ml-2 hidden text-sm text-gray-400 group-hover:text-gray-900 md:flex">
                             {toolbarConfig.save}
@@ -150,9 +150,9 @@ const BoomarkButton: React.FC<BoomarkButtonProps> = ({ id, bookmarked }) => {
                             className="group relative mx-auto inline-flex w-full items-center justify-center rounded-md border border-black/5 bg-white py-2 hover:bg-gray-50 hover:shadow-sm"
                         >
                             {isHovering ? (
-                                <BookMarkSolid className="-ml-0.5 h-5 w-5 text-gray-900" />
+                                <SavedPostSolid className="-ml-0.5 h-5 w-5 text-gray-900" />
                             ) : (
-                                <BookMarkOutline className="-ml-0.5 h-5 w-5 text-gray-400" />
+                                <SavedPostOutline className="-ml-0.5 h-5 w-5 text-gray-400" />
                             )}
                             <span className="ml-2 hidden text-sm text-gray-400 group-hover:text-gray-900 md:flex">
                                 {toolbarConfig.save}
@@ -168,4 +168,4 @@ const BoomarkButton: React.FC<BoomarkButtonProps> = ({ id, bookmarked }) => {
     );
 };
 
-export default BoomarkButton;
+export default SavePostButton;

@@ -51,7 +51,7 @@ const ProfileButton: FC<ProfileButtonProps> = ({ email, profileImageUrl }) => {
                             <>
                                 <DropdownMenuItem
                                     key={v4()}
-                                    onClick={() => router.push(`/dashboard/${menu.slug ? menu.slug : ''}`)}
+                                    onClick={() => router.push(`/${menu.slug ? menu.slug : ''}`)}
                                 >
                                     <menu.icon className="mr-2 h-4 w-4 text-gray-500" />
                                     <span className="text-md text-gray-500">{menu.title}</span>

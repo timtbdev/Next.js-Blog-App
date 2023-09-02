@@ -12,7 +12,7 @@ import {
 export const dashBoardMenus: DashBoardAttributes[] = [
     {
         title: 'Dashboard',
-        slug: '/',
+        slug: 'dashboard',
         icon: DashBoardIcon,
     },
     {

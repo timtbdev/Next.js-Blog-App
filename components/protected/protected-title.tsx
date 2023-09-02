@@ -1,10 +1,10 @@
 import React from 'react';
 
-interface DashBoardTitleProps {
+interface ProtectedTitleProps {
     title?: string;
 }
 
-const DashBoardTitle: React.FC<DashBoardTitleProps> = ({ title = '' }) => {
+const ProtectedTitle: React.FC<ProtectedTitleProps> = ({ title = '' }) => {
     return (
         <>
             <div className="sm:flex sm:items-center">
@@ -16,4 +16,4 @@ const DashBoardTitle: React.FC<DashBoardTitleProps> = ({ title = '' }) => {
     );
 };
 
-export default DashBoardTitle;
+export default ProtectedTitle;

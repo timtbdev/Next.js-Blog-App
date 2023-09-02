@@ -1,3 +1,4 @@
+import ProtectedFooter from '@/components/protected/protected-footer';
 import ProtectedHeader from '@/components/protected/protected-header';
 import supabase from '@/utils/supabase-server';
 import { redirect } from 'next/navigation';
@@ -22,6 +23,7 @@ const ProtectedLayout: React.FC<ProtectedLayoutProps> = async ({ children }) => 
         <>
             <ProtectedHeader />
             {children}
+            <ProtectedFooter />
         </>
     );
 };

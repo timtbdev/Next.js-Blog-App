@@ -1,4 +1,4 @@
-import { DeleteBookmark } from '@/actions/delete-bookmark';
+import { DeleteSavedPost } from '@/actions/delete-saved-post';
 import {
     AlertDialog,
     AlertDialogAction,
@@ -9,7 +9,7 @@ import {
     AlertDialogHeader,
     AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
-import { bookMarkConfig } from '@/config/bookmark';
+import { savedPostConfig } from '@/config/saved-post';
 import { toolbarConfig } from '@/config/toolbar';
 import { supabase } from '@/utils/supabase-client';
 import { Session } from '@supabase/auth-helpers-nextjs';
@@ -21,11 +21,11 @@ import toast from 'react-hot-toast';
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
-interface BookMarkDeleteButtonProps {
+interface SavedPostsDeleteButtonProps {
     id?: string;
 }
 
-const BookMarkDeleteButton: React.FC<BookMarkDeleteButtonProps> = ({ id }) => {
+const SavedPostsDeleteButton: React.FC<SavedPostsDeleteButtonProps> = ({ id }) => {
     const router = useRouter();
     const [showDeleteAlert, setShowDeleteAlert] = useState<boolean>(false);
     const [isDeleteLoading, setIsDeleteLoading] = useState<boolean>(false);
@@ -46,18 +46,18 @@ const BookMarkDeleteButton: React.FC<BookMarkDeleteButtonProps> = ({ id }) => {
         return () => subscription.unsubscribe();
     }, [id, session?.user.id]);
 
-    // Delete bookmark
-    async function deleteBookmark() {
+    // Delete saved post
+    async function deleteSavedPost() {
         setIsDeleteLoading(true);
         if (id && session?.user.id) {
-            const bookmarkData = {
+            const savedPostData = {
                 id: id,
                 user_id: session?.user.id,
             };
-            const response = await DeleteBookmark(bookmarkData);
+            const response = await DeleteSavedPost(savedPostData);
             if (response) {
                 setIsDeleteLoading(false);
-                toast.success(toolbarConfig.canceled);
+                toast.success(toolbarConfig.deleted);
                 router.refresh();
             } else {
                 setIsDeleteLoading(false);
@@ -76,23 +76,23 @@ const BookMarkDeleteButton: React.FC<BookMarkDeleteButtonProps> = ({ id }) => {
                 onClick={() => setShowDeleteAlert(true)}
                 className="rounded-md border bg-gray-50 px-3 py-2 text-gray-900 hover:bg-gray-100"
             >
-                {bookMarkConfig.actionDelete}
+                {savedPostConfig.actionDelete}
             </button>
             <AlertDialog open={showDeleteAlert} onOpenChange={setShowDeleteAlert}>
                 <AlertDialogContent className="text-md font-sans">
                     <AlertDialogHeader>
-                        <AlertDialogTitle>{bookMarkConfig.actionDeleteTitle}</AlertDialogTitle>
-                        <AlertDialogDescription>{bookMarkConfig.actionDeleteDescription}</AlertDialogDescription>
+                        <AlertDialogTitle>{savedPostConfig.actionDeleteTitle}</AlertDialogTitle>
+                        <AlertDialogDescription>{savedPostConfig.actionDeleteDescription}</AlertDialogDescription>
                     </AlertDialogHeader>
                     <AlertDialogFooter>
-                        <AlertDialogCancel>{bookMarkConfig.cancel}</AlertDialogCancel>
-                        <AlertDialogAction onClick={deleteBookmark}>
+                        <AlertDialogCancel>{savedPostConfig.cancel}</AlertDialogCancel>
+                        <AlertDialogAction onClick={deleteSavedPost}>
                             {isDeleteLoading ? (
                                 <SpinnerIcon className="mr-2 h-4 w-4 animate-spin" />
                             ) : (
                                 <TrashIcon className="mr-2 h-4 w-4" />
                             )}
-                            <span>{bookMarkConfig.confirm}</span>
+                            <span>{savedPostConfig.confirm}</span>
                         </AlertDialogAction>
                     </AlertDialogFooter>
                 </AlertDialogContent>
@@ -101,4 +101,4 @@ const BookMarkDeleteButton: React.FC<BookMarkDeleteButtonProps> = ({ id }) => {
     );
 };
 
-export default BookMarkDeleteButton;
+export default SavedPostsDeleteButton;

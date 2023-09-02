@@ -1,27 +1,27 @@
-import BookMarkTable from '@/components/dashboard/bookmark/bookmark-table';
-import BookMarkTableHeader from '@/components/dashboard/bookmark/bookmark-table-header';
-import DashBoardTableEmpty from '@/components/dashboard/dashboard-table-empty';
-import DashBoardTableWrapper from '@/components/dashboard/dashboard-table-wrapper';
-import DashBoardTitle from '@/components/dashboard/dashboard-title';
+import ProtectedTitle from '@/components/protected/protected-title';
 import Pagination from '@/components/shared/pagination';
-import { bookMarkConfig } from '@/config/bookmark';
+import { savedPostConfig } from '@/config/saved-post';
 import { dashBoardBookmarkTableEmpty as empty } from '@/config/dashboard';
 import { BookMarkWithPost } from '@/types/collection';
 import supabase from '@/utils/supabase-server';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import React from 'react';
+import TableWrapper from '@/components/protected/table/table-wrapper';
+import SavedPostsTableHeader from '@/components/protected/saved-posts/saved-posts-table-header';
+import SavedPostsTable from '@/components/protected/saved-posts/saved-posts-table';
+import TableEmpty from '@/components/protected/table/table-empty';
 
 export const metadata: Metadata = {
-    title: bookMarkConfig.title,
-    description: bookMarkConfig.description,
+    title: savedPostConfig.title,
+    description: savedPostConfig.description,
 };
 
-interface BookMarkProps {
+interface SavedPostPageProps {
     searchParams: { [key: string]: string | string[] | undefined };
 }
 
-const BookMarkPage: React.FC<BookMarkProps> = async ({ searchParams }) => {
+const SavedPostPage: React.FC<SavedPostPageProps> = async ({ searchParams }) => {
     // Fetch total pages
     const { count } = await supabase.from('bookmarks').select('*', { count: 'exact', head: true });
 
@@ -57,11 +57,11 @@ const BookMarkPage: React.FC<BookMarkProps> = async ({ searchParams }) => {
             <div className="mx-auto max-w-5xl p-4 sm:p-6 lg:p-8">
                 {data?.length && data?.length > 0 ? (
                     <>
-                        <DashBoardTitle title={bookMarkConfig.title} />
-                        <DashBoardTableWrapper>
-                            <BookMarkTableHeader titles={bookMarkConfig.tableHeader} />
-                            <BookMarkTable bookmarks={data ? data : []} />
-                        </DashBoardTableWrapper>
+                        <ProtectedTitle title={savedPostConfig.title} />
+                        <TableWrapper>
+                            <SavedPostsTableHeader titles={savedPostConfig.tableHeader} />
+                            <SavedPostsTable savedPosts={data ? data : []} />
+                        </TableWrapper>
                         {/* Pagination */}
                         {totalPages > 1 && (
                             <Pagination
@@ -69,17 +69,17 @@ const BookMarkPage: React.FC<BookMarkProps> = async ({ searchParams }) => {
                                 perPage={limit}
                                 totalItems={count ? count : 0}
                                 totalPages={totalPages}
-                                baseUrl="/dashboard/bookmarks"
+                                baseUrl="/saved-posts"
                                 pageUrl="?page="
                             />
                         )}
                     </>
                 ) : (
-                    <DashBoardTableEmpty emptyTitle={empty.title} emptyDescription={empty.description} />
+                    <TableEmpty emptyTitle={empty.title} emptyDescription={empty.description} />
                 )}
             </div>
         </>
     );
 };
 
-export default BookMarkPage;
+export default SavedPostPage;

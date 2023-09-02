@@ -1,10 +1,10 @@
 import React from 'react';
 
-interface DashBoardTableWrapperProps {
+interface TableWrapperProps {
     children?: React.ReactNode;
 }
 
-const DashBoardTableWrapper: React.FC<DashBoardTableWrapperProps> = ({ children }) => {
+const TableWrapper: React.FC<TableWrapperProps> = ({ children }) => {
     return (
         <div className="mt-8 flow-root">
             <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -18,4 +18,4 @@ const DashBoardTableWrapper: React.FC<DashBoardTableWrapperProps> = ({ children 
     );
 };
 
-export default DashBoardTableWrapper;
+export default TableWrapper;
