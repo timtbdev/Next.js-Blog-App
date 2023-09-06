@@ -157,7 +157,7 @@ export interface Database {
         Row: {
           author_id: string | null
           category_id: string | null
-          content: Json | null
+          content: string | null
           created_at: string
           description: string | null
           id: string
@@ -170,7 +170,7 @@ export interface Database {
         Insert: {
           author_id?: string | null
           category_id?: string | null
-          content?: Json | null
+          content?: string | null
           created_at?: string
           description?: string | null
           id?: string
@@ -183,7 +183,7 @@ export interface Database {
         Update: {
           author_id?: string | null
           category_id?: string | null
-          content?: Json | null
+          content?: string | null
           created_at?: string
           description?: string | null
           id?: string

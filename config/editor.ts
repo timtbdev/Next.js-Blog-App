@@ -17,6 +17,7 @@ export const editorConfig = {
   errorMessagesDeleteImage: "Error deleting image",
   errorMessageImageUpload: "Error uploading image",
   successMessagesDeleteImage: "Image deleted",
+  successMessageImageUpload: "Image uploaded",
   placeholderDescription:
     "Please provide a short description of your blog post",
   placeholderCategory: "Please choose a category",
@@ -24,4 +25,8 @@ export const editorConfig = {
   defaultCategoryId: "4db30a13-2797-4c7d-a0ce-e0c127287a39", // Science
   successMessage: "Your post has been updated",
   errorMessage: "Error updating your post",
+  chooseFile: "Choose a file",
+  thumbnail: "Thumbnail",
+  coverPhoto: "Cover photo",
+  uploadDescription: "PNG, JPG, GIF up to 10MB",
 };

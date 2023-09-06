@@ -1,4 +1,8 @@
+import PostTableEmpty from "@/components/protected/post/post-emtpy-table";
+import PostTable from "@/components/protected/post/post-table";
+import PostTableHeader from "@/components/protected/post/post-table-header";
 import ProtectedTitle from "@/components/protected/protected-title";
+import TableWrapper from "@/components/protected/table/table-wrapper";
 import Pagination from "@/components/shared/pagination";
 import { postConfig } from "@/config/post";
 import { Draft, Post } from "@/types/collection";
@@ -6,10 +10,8 @@ import supabase from "@/utils/supabase-server";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import React, { FC } from "react";
-import TableWrapper from "@/components/protected/table/table-wrapper";
-import PostTableHeader from "@/components/protected/post/post-table-header";
-import PostTable from "@/components/protected/post/post-table";
-import PostTableEmpty from "@/components/protected/post/post-emtpy-table";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: postConfig.title,

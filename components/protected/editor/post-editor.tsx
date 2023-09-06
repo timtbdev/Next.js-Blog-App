@@ -1,7 +1,14 @@
 "use client";
 
-import { FC, useState } from "react";
-import { useRouter } from "next/navigation";
+import { UpdatePost } from "@/actions/post/update-post";
+import FormTitle from "@/components/protected/editor/post-title";
+import {
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -12,15 +19,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import FormTitle from "@/components/protected/editor/post-title";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { toast } from "react-hot-toast";
-import { postEditFormSchema } from "@/lib/validation/post";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Loader2 as SpinnerIcon, SaveIcon as UpdateIcon } from "lucide-react";
-import * as z from "zod";
-import { Draft } from "@/types/collection";
 import {
   Select,
   SelectContent,
@@ -29,33 +28,31 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
-import { UpdatePost } from "@/actions/post/update-post";
+import { Textarea } from "@/components/ui/textarea";
 import { categories } from "@/config/categories";
-import { useForm } from "react-hook-form";
-import { cn, shimmer } from "@/lib/utils";
 import { editorConfig } from "@/config/editor";
-import { v4 } from "uuid";
-import slugify from "react-slugify";
-import Uppy from "@uppy/core";
-import { Dashboard } from "@uppy/react";
-
-import "@uppy/core/dist/style.min.css";
-import "@uppy/dashboard/dist/style.min.css";
-import "@uppy/status-bar/dist/style.min.css";
-import "@uppy/progress-bar/dist/style.min.css";
-import Tus from "@uppy/tus";
-import Image from "next/image";
-import { supabase } from "@/utils/supabase-client";
-import { TrashIcon, SparklesIcon } from "lucide-react";
-import { Editor } from "novel";
-import {
-  AlertDialog,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
 import { postConfig } from "@/config/post";
+import { cn, getUrl, shimmer } from "@/lib/utils";
+import { postEditFormSchema } from "@/lib/validation/post";
+import { Draft } from "@/types/collection";
+import { supabase } from "@/utils/supabase-client";
+import { PhotoIcon } from "@heroicons/react/24/solid";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  SparklesIcon,
+  Loader2 as SpinnerIcon,
+  TrashIcon,
+  SaveIcon as UpdateIcon,
+} from "lucide-react";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { Editor } from "novel";
+import { FC, useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "react-hot-toast";
+import slugify from "react-slugify";
+import { v4 } from "uuid";
+import * as z from "zod";
 
 export const dynamic = "force-dynamic";
 
@@ -85,91 +82,75 @@ async function deleteImage(
   }
 }
 
-// Download image from Supabase Storage
-async function downloadImage(
-  bucketName: string,
-  folderName: string,
-  fileName: string,
-) {
-  const { data } = await supabase.storage
-    .from(bucketName)
-    .getPublicUrl(`${folderName}/${fileName}`);
-
-  if (data) {
-    return data.publicUrl;
-  } else {
-    return "images/not-found.jpg";
-  }
-}
-
 type EditorFormValues = z.infer<typeof postEditFormSchema>;
 
 const PostEditor: FC<PostEditorProps> = ({ post }) => {
   const router = useRouter();
+
+  // These are the values that will be used to upload the image
+  const fileTypes = ["JPG", "PNG", "GIF"];
+  const [userId, setUserId] = useState<string>("");
+  const [fileName, setFileName] = useState<string | null>(null);
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
   // States
   const [isSaving, setIsSaving] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [showLoadingAlert, setShowLoadingAlert] = useState(false);
-  const [imageUrl, setImageUrl] = useState<string>(post?.image || "");
-  const [fileName, setFileName] = useState<string>("");
-  const [jsonContent, setJsonContent] = useState<string>("");
-  const [showImage, setShowImage] = useState<boolean>(
-    post?.image ? true : false,
-  );
 
-  // Setup Uppy
-  const token = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-  const projectId = process.env.NEXT_PUBLIC_SUPABASE_PROJECT_ID;
-  const bucketName = "posts";
-  const folderName = "images";
-  const supabaseUploadURL = `https://${projectId}.supabase.co/storage/v1/upload/resumable`;
+  const [content, setContent] = useState<string | null>(post?.content || null);
 
-  var uppy = new Uppy({
-    id: "image-upload",
-    autoProceed: true,
-    debug: true,
-    allowMultipleUploadBatches: false,
-    restrictions: { maxFileSize: 6000000, maxNumberOfFiles: 1 },
-  }).use(Tus, {
-    endpoint: supabaseUploadURL,
-    headers: {
-      authorization: `Bearer ${token}`,
-    },
-    chunkSize: 6 * 1024 * 1024,
-    allowedMetaFields: [
-      "bucketName",
-      "objectName",
-      "contentType",
-      "cacheControl",
-    ],
-  });
+  // These functions are used to upload the image
 
-  uppy.on("file-added", (file) => {
-    file.meta = {
-      ...file.meta,
-      bucketName: bucketName,
-      objectName: folderName ? `${folderName}/${file.name}` : file.name,
-      contentType: file.type,
-    };
-  });
+  const getUserId = async () => {
+    try {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (user !== null) {
+        setUserId(user.id);
+      } else {
+        setUserId("");
+      }
+    } catch (e) {}
+  };
 
-  uppy.on("complete", async (result) => {
-    if (result.successful.length != 0) {
-      setFileName(result.successful[0].name);
-      await downloadImage(
-        bucketName,
-        folderName,
-        result.successful[0].name,
-      ).then((url) => {
-        console.log("URL : ", url);
-        setImageUrl(url);
-        form.setValue("image", url);
-        setShowImage(true);
-      });
+  useEffect(() => {
+    getUserId();
+    setImageUrl(post?.image ?? null);
+  }, [userId, post?.image]);
+
+  const setImagePublicUrl = async (filePath: string) => {
+    const { data } = await supabase.storage
+      .from("posts")
+      .getPublicUrl(filePath);
+    if (data) {
+      const url = data.publicUrl;
+      setImageUrl(url);
+      form.setValue("image", url);
     } else {
-      toast.error(editorConfig.errorMessageImageUpload);
+      console.log("Error getting a publich image url : ", data);
     }
-  });
+  };
+
+  const uploadImage = async (e) => {
+    let file = e.target.files[0];
+    const fileName = file.name;
+    const { data, error } = await supabase.storage
+      .from("posts")
+      .upload(userId + "/" + post.id + "/" + fileName, file, {
+        cacheControl: "3600",
+        upsert: true,
+      });
+
+    if (data) {
+      setFileName(fileName);
+      setImagePublicUrl(data.path);
+    } else {
+      console.log(error);
+    }
+  };
+
+  // Image uploader powered
 
   // Default values for the form
   const defaultValues: Partial<EditorFormValues> = {
@@ -178,7 +159,7 @@ const PostEditor: FC<PostEditorProps> = ({ post }) => {
     image: post.image ?? "",
     categoryId: post.category_id ?? editorConfig.defaultCategoryId,
     description: post.description ?? "Post description",
-    content: post.content ?? "",
+    content: content ?? editorConfig.placeholderContent,
   };
 
   const form = useForm<EditorFormValues>({
@@ -197,7 +178,7 @@ const PostEditor: FC<PostEditorProps> = ({ post }) => {
       slug: data.slug,
       image: data.image,
       description: data.description,
-      content: jsonContent,
+      content: content,
       categoryId: data.categoryId,
     });
 
@@ -316,31 +297,24 @@ const PostEditor: FC<PostEditorProps> = ({ post }) => {
                     className="bg-gray-50"
                   />
                 </FormControl>
-                <FormDescription>
-                  {showImage && (
+                {/* Uploader */}
+                <FormTitle title={editorConfig.formImage} />
+                <div className="col-span-full">
+                  <label
+                    htmlFor="photo"
+                    className="block text-sm font-medium leading-6 text-gray-900"
+                  >
+                    {editorConfig.thumbnail}
+                  </label>
+
+                  {imageUrl ? (
+                    // Delete button
                     <Button
                       type="button"
                       variant="outline"
                       size="sm"
                       disabled={isDeleting}
                       className="mt-2"
-                      onClick={async () => {
-                        const response = await deleteImage(
-                          bucketName,
-                          folderName,
-                          fileName,
-                        );
-                        if (response != null) {
-                          setImageUrl("");
-                          setShowImage(false);
-                          form.setValue("image", "");
-                          toast.success(
-                            editorConfig.successMessagesDeleteImage,
-                          );
-                        } else {
-                          toast.error(editorConfig.errorMessagesDeleteImage);
-                        }
-                      }}
                     >
                       {isDeleting ? (
                         <SpinnerIcon className="mr-2 h-4 w-4" />
@@ -350,24 +324,60 @@ const PostEditor: FC<PostEditorProps> = ({ post }) => {
 
                       {editorConfig.deleteImage}
                     </Button>
+                  ) : (
+                    // Choose a file button
+                    <div className="mt-2 flex items-center gap-x-3">
+                      <Input
+                        className="max-w-xs rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                        type="file"
+                        onChange={(e) => uploadImage(e)}
+                      />
+                    </div>
                   )}
-                </FormDescription>
-                {/* Uploader */}
-                {showImage ? (
-                  <div className="flex w-full justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
-                    <Image
-                      src={imageUrl == "" ? shimmer(570, 350) : imageUrl}
-                      width={570}
-                      height={350}
-                      alt="icon"
-                      priority
-                      placeholder="blur"
-                      blurDataURL={shimmer(570, 350)}
-                      className="h-full w-[570] rounded-lg object-cover"
-                    />
+                </div>
+
+                {/* Image Upload Preview */}
+                {imageUrl ? (
+                  <div className="col-span-full">
+                    <label
+                      htmlFor="cover-photo"
+                      className="block text-sm font-medium leading-6 text-gray-900"
+                    >
+                      {editorConfig.coverPhoto}
+                    </label>
+                    <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
+                      <Image
+                        src={imageUrl ?? `${getUrl()}/images/not-found.png`}
+                        alt={editorConfig.coverPhoto}
+                        width={500}
+                        height={500}
+                        priority={true}
+                        placeholder="blur"
+                        blurDataURL={shimmer(500, 500)}
+                      />
+                    </div>
                   </div>
                 ) : (
-                  <Dashboard uppy={uppy} />
+                  <div className="col-span-full">
+                    <label
+                      htmlFor="cover-photo"
+                      className="block text-sm font-medium leading-6 text-gray-900"
+                    >
+                      {editorConfig.coverPhoto}
+                    </label>
+                    <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
+                      <div className="text-center">
+                        <PhotoIcon
+                          className="mx-auto h-12 w-12 text-gray-300"
+                          aria-hidden="true"
+                        />
+                        <div className="mt-4 flex text-sm leading-6 text-gray-600"></div>
+                        <p className="text-xs leading-5 text-gray-600">
+                          {editorConfig.uploadDescription}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
                 )}
 
                 <FormMessage />
@@ -395,10 +405,9 @@ const PostEditor: FC<PostEditorProps> = ({ post }) => {
           <FormTitle title={editorConfig.formContent} />
           <Editor
             storageKey={post.id}
-            defaultValue={JSON.parse(JSON.stringify(post.content))}
+            defaultValue={JSON.parse(content ?? "{}")}
             onDebouncedUpdate={(editor) => {
-              console.log("Editor : ", editor?.getJSON());
-              setJsonContent(JSON.stringify(editor?.getJSON()));
+              setContent(JSON.stringify(editor?.getJSON()));
             }}
           />
           <Button

@@ -65,8 +65,7 @@ const PostCreateButton = () => {
 
   return (
     <>
-      <button
-        type="button"
+      <div
         onClick={createPost}
         className="flex flex-row items-center rounded-md bg-gray-900 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-gray-600"
       >
@@ -76,7 +75,7 @@ const PostCreateButton = () => {
           <AddIcon className="mr-2 h-4 w-4" />
         )}
         {postConfig.newPost}
-      </button>
+      </div>
       <AlertDialog open={isLoading} onOpenChange={setIsLoading}>
         <AlertDialogContent className="font-sans">
           <AlertDialogHeader>
