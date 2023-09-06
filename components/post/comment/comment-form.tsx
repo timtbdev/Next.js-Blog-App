@@ -12,7 +12,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
 import * as z from 'zod';
-import { commentFormSchema, commentSchema } from '@/lib/validations';
+import { commentFormSchema } from '@/lib/validation/comment';
 
 type FormValues = z.infer<typeof commentFormSchema>;
 

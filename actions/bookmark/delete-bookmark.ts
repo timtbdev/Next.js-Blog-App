@@ -1,6 +1,6 @@
 'use server';
 
-import { bookmarkSchema } from '@/lib/validations';
+import { bookmarkSchema } from '@/lib/validation/bookmark';
 import supabase from '@/utils/supabase-server-action';
 import * as z from 'zod';
 

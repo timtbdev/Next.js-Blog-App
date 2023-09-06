@@ -1,5 +1,5 @@
 import * as z from 'zod';
-import { emailSchema } from '@/lib/validations';
+import { emailSchema } from '@/lib/validation/contact';
 
 const FORM_ID = process.env.CONVERTKIT_FORM_ID;
 const API_KEY = process.env.CONVERTKIT_API_KEY;

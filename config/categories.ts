@@ -1,6 +1,6 @@
-import { MenuAttributes } from '@/types';
+import { CategoryAttributes } from '@/types';
 
-export const menus: MenuAttributes[] = [
+export const categories: CategoryAttributes[] = [
     {
         id: '',
         title: 'Home',
@@ -28,7 +28,7 @@ export const menus: MenuAttributes[] = [
     },
 ];
 
-export const loginMenu: MenuAttributes = {
+export const loginMenu: CategoryAttributes = {
     id: '962f860d-ab0d-4650-ae93-8171c8b47169',
     title: 'Sign in',
     slug: 'login',

@@ -1,7 +1,7 @@
 import PostItem from '@/components/post/post-item';
 import Pagination from '@/components/shared/pagination';
 import { SiteEmpty } from '@/components/site/site-empty';
-import { menus } from '@/config/menu';
+import { categories } from '@/config/categories';
 import { metaData } from '@/config/meta';
 import { getOgImageUrl, getUrl } from '@/lib/utils';
 import { PostWithCategoryWithProfile } from '@/types/collection';
@@ -20,7 +20,7 @@ interface CategoryPageProps {
 
 export async function generateMetadata({ params }: CategoryPageProps): Promise<Metadata> {
     const slug = params?.slug?.join('/');
-    const category = menus.find((menu) => menu.slug === slug);
+    const category = categories.find((category) => category.slug === slug);
 
     if (!category) {
         return {};
@@ -59,7 +59,7 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
 export default async function CategoryPage({ params, searchParams }: CategoryPageProps) {
     // Get category by slug
     const slug = params?.slug?.join('/');
-    const category = menus.find((menu) => menu.slug === slug);
+    const category = categories.find((category) => category.slug === slug);
     // Fetch total pages
     const { count } = await supabase
         .from('posts')

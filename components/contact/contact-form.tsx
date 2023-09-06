@@ -10,7 +10,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
 import * as z from 'zod';
-import { contactFormSchema } from '@/lib/validations';
+import { contactFormSchema } from '@/lib/validation/contact';
 import { contactConfig } from '@/config/contact';
 
 type ContactFormValues = z.infer<typeof contactFormSchema>;

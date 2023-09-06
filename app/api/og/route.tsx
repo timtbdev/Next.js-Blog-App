@@ -1,6 +1,6 @@
 import { OgImage } from '@/components/og/og-image';
 import { ImageResponse } from 'next/server';
-import { ogImageSchema } from '@/lib/validations';
+import { ogImageSchema } from '@/lib/validation/og';
 
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable @next/next/no-img-element */

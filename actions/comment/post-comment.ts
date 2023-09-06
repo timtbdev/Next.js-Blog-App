@@ -1,6 +1,6 @@
 'use server';
 
-import { commentSchema } from '@/lib/validations';
+import { commentSchema } from '@/lib/validation/comment';
 import supabase from '@/utils/supabase-server-action';
 import * as z from 'zod';
 

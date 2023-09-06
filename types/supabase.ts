@@ -153,6 +153,61 @@ export interface Database {
           }
         ]
       }
+      drafts: {
+        Row: {
+          author_id: string | null
+          category_id: string | null
+          content: Json | null
+          created_at: string
+          description: string | null
+          id: string
+          image: string | null
+          published: boolean | null
+          slug: string | null
+          title: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          author_id?: string | null
+          category_id?: string | null
+          content?: Json | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          image?: string | null
+          published?: boolean | null
+          slug?: string | null
+          title?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          author_id?: string | null
+          category_id?: string | null
+          content?: Json | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          image?: string | null
+          published?: boolean | null
+          slug?: string | null
+          title?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "drafts_author_id_fkey"
+            columns: ["author_id"]
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "drafts_category_id_fkey"
+            columns: ["category_id"]
+            referencedRelation: "categories"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       posts: {
         Row: {
           author_id: string | null

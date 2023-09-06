@@ -12,7 +12,7 @@ export type MetaAttributes = {
     tags: Array<string>;
 };
 
-export type MenuAttributes = {
+export type CategoryAttributes = {
     id: string;
     title: string;
     slug: string;

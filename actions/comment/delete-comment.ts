@@ -1,6 +1,6 @@
 'use server';
 
-import { commentDeleteSchema } from '@/lib/validations';
+import { commentDeleteSchema } from '@/lib/validation/comment';
 import supabase from '@/utils/supabase-server-action';
 import * as z from 'zod';
 

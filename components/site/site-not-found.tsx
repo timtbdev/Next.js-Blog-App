@@ -5,7 +5,7 @@ import Marketing from '@/components/icons/marketing';
 import Science from '@/components/icons/science';
 import Technology from '@/components/icons/technology';
 import SiteFooter from '@/components/site/site-footer';
-import { menus } from '@/config/menu';
+import { categories } from '@/config/categories';
 import { notFoundConfig } from '@/config/not-found';
 import { ChevronRightIcon } from '@heroicons/react/20/solid';
 import Link from 'next/link';
@@ -28,18 +28,22 @@ export default function SiteNotFound() {
                 <div className="mx-auto mt-5 flow-root max-w-lg sm:mt-10">
                     <h2 className="sr-only">{notFoundConfig.menu}</h2>
                     <ul role="list" className="divide-y divide-gray-900/5">
-                        {menus.map((menu) => (
-                            <Link key={v4()} href={menu.slug || ''}>
+                        {categories.map((category) => (
+                            <Link key={v4()} href={category.slug || ''}>
                                 <li className="relative flex gap-x-6 border-b border-black/5 py-6">
                                     <div className="flex h-10 w-10 flex-none items-center justify-center rounded-lg shadow-sm ring-1 ring-gray-900/10">
-                                        {menu.slug === '/' && <Home className="h-6 w-6 text-gray-600" />}
-                                        {menu.slug === 'health' && <Health className="h-6 w-6 text-gray-600" />}
-                                        {menu.slug === 'science' && <Science className="h-6 w-6 text-gray-600" />}
-                                        {menu.slug === 'technology' && <Technology className="h-6 w-6 text-gray-600" />}
-                                        {menu.slug === 'marketing' && <Marketing className="h-6 w-6 text-gray-600" />}
+                                        {category.slug === '/' && <Home className="h-6 w-6 text-gray-600" />}
+                                        {category.slug === 'health' && <Health className="h-6 w-6 text-gray-600" />}
+                                        {category.slug === 'science' && <Science className="h-6 w-6 text-gray-600" />}
+                                        {category.slug === 'technology' && (
+                                            <Technology className="h-6 w-6 text-gray-600" />
+                                        )}
+                                        {category.slug === 'marketing' && (
+                                            <Marketing className="h-6 w-6 text-gray-600" />
+                                        )}
                                     </div>
                                     <div className="my-auto flex-auto items-center text-sm font-semibold leading-6 text-gray-900">
-                                        {menu.title}
+                                        {category.title}
                                     </div>
                                     <div className="flex-none self-center">
                                         <ChevronRightIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />

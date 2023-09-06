@@ -2,8 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { emptyConfig } from '@/config/empty';
-import { postConfig } from '@/config/post';
-import { PlusIcon } from 'lucide-react';
+import PostCreateButton from './post-create-button';
 
 const PostTableEmpty = () => {
     const router = useRouter();
@@ -16,16 +15,7 @@ const PostTableEmpty = () => {
                     </h1>
                     <p className="mt-6 text-base leading-7 text-gray-600">{emptyConfig.description}.</p>
                     <div className="mt-10 flex items-center justify-center gap-x-6">
-                        <button
-                            type="button"
-                            onClick={() => {
-                                router.back();
-                            }}
-                            className="flex flex-row items-center rounded-md bg-gray-900 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-gray-600"
-                        >
-                            <PlusIcon className="mr-2 h-4 w-5" />
-                            {postConfig.newPost}
-                        </button>
+                        <PostCreateButton />
                     </div>
                 </div>
             </main>

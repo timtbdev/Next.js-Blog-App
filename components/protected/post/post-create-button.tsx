@@ -1,51 +1,96 @@
-// 'use client';
-// import React, { FC, useState } from 'react';
-// import { useRouter } from 'next/navigation';
-// import {
-//     AlertDialog,
-//     AlertDialogContent,
-//     AlertDialogDescription,
-//     AlertDialogHeader,
-//     AlertDialogTitle,
-// } from '@/components/ui/alert-dialog';
-// import { Plus as AddIcon, Loader2 as SpinnerIcon } from 'lucide-react';
-// import { toast } from 'react-hot-toast';
-// import { postConfig } from '@/config/post';
+"use client";
+import React, { FC, useState } from "react";
+import { useRouter } from "next/navigation";
+import {
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import { Plus as AddIcon, Loader2 as SpinnerIcon } from "lucide-react";
+import { toast } from "react-hot-toast";
+import { postConfig } from "@/config/post";
+import { CreatePost } from "@/actions/post/create-post";
+import { supabase } from "@/utils/supabase-client";
+import { Session } from "@supabase/auth-helpers-nextjs";
 
-// const PostCreateButton = () => {
-//     const router = useRouter();
-//     const [isLoading, setIsLoading] = useState<boolean>(false);
+const PostCreateButton = () => {
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [session, setSession] = useState<Session | null>(null);
 
-//     async function createPost() {
-//         setIsLoading(true);
+  // Check authentitication and bookmark states
+  React.useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+    });
 
-//         //    const response = await fetch(apiUrl, {
-//         //        method: 'POST',
-//         //        headers: {
-//         //            'Content-Type': 'application/json',
-//         //        },
-//         //        body: JSON.stringify({
-//         //            title: `Untitled ${title}`,
-//         //        }),
-//         //    });
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+    });
 
-//         setIsLoading(false);
+    return () => subscription.unsubscribe();
+  }, [session?.user.id]);
 
-//         if (!response?.ok) {
-//             toast.success(myPostConfig.errorCreate);
-//         }
+  async function createPost() {
+    setIsLoading(true);
 
-//         toast.success(myPostConfig.successCreate);
+    if (session?.user.id) {
+      const post = {
+        title: postConfig.untitled,
+        user_id: session?.user.id,
+      };
 
-//         const item = await response.json();
+      const response = await CreatePost(post);
 
-//         // This forces a cache invalidation.
-//         router.refresh();
+      if (response) {
+        toast.success(postConfig.successCreate);
+        // This forces a cache invalidation.
+        router.refresh();
+        // Redirect to the new post
+        router.push("/editor/posts/" + response.id);
+        setIsLoading(false);
+      } else {
+        setIsLoading(false);
+        toast.error(postConfig.errorCreate);
+      }
+    } else {
+      setIsLoading(false);
+      toast.error(postConfig.errorCreate);
+    }
+  }
 
-//         router.push('/editor/posts/' + item.id);
-//     }
+  return (
+    <>
+      <button
+        type="button"
+        onClick={createPost}
+        className="flex flex-row items-center rounded-md bg-gray-900 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-gray-600"
+      >
+        {isLoading ? (
+          <SpinnerIcon className="mr-2 h-4 w-4 animate-spin" />
+        ) : (
+          <AddIcon className="mr-2 h-4 w-4" />
+        )}
+        {postConfig.newPost}
+      </button>
+      <AlertDialog open={isLoading} onOpenChange={setIsLoading}>
+        <AlertDialogContent className="font-sans">
+          <AlertDialogHeader>
+            <AlertDialogTitle className="text-center">
+              {postConfig.pleaseWait}
+            </AlertDialogTitle>
+            <AlertDialogDescription className="mx-auto text-center">
+              <SpinnerIcon className="h-6 w-6 animate-spin" />
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+        </AlertDialogContent>
+      </AlertDialog>
+    </>
+  );
+};
 
-//     return <div>my-posts-create-button</div>;
-// };
-
-// export default PostCreateButton;
+export default PostCreateButton;
