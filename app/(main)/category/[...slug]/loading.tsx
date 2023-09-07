@@ -1,14 +1,15 @@
-import SiteLoadingItem from '@/components/site/site-loading-item';
-import React from 'react';
+import LoadingPostItemDesktop from "@/components/loading/post/post-item-desktop";
+import LoadingPostItemMobile from "@/components/loading/post/post-item-mobile";
+import React from "react";
 
 const Loading = () => {
-    return (
-        <>
-            <SiteLoadingItem />
-            <SiteLoadingItem />
-            <SiteLoadingItem />
-        </>
-    );
+  return (
+    <>
+      {/* LoadingItems */}
+      <LoadingPostItemDesktop />
+      <LoadingPostItemMobile />
+    </>
+  );
 };
 
 export default Loading;

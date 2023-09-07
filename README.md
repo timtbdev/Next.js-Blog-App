@@ -1,13 +1,14 @@
 <p align="center" style="margin-top: 120px">
   <a href="https://ub.cafe">
-   <img src="https://github.com/timtbdev/Next.js-Blog-App/assets/25026241/62ce2197-9ac7-44f9-be35-45f87a1cd356" width="100px" alt="Blog App Logo">
+   <img src="https://github.com/timtbdev/sign-dictionary/assets/25026241/2038fd10-f9e7-4035-8c14-28bef92729f9" width="100px" alt="Blog App Logo">
   </a>
 </p>
 
   <p align="center">
-  Blogging app built with Next.js 13 & Supabase Auth & Database
+  Fullstack Blog app built with Next.js 13 & Supabase
   <br>
-    <a href="https://ub.cafe"><strong>Visit Demo</strong></a>
+    <a href="https://ub.cafe"><strong>Demo</strong></a>
+    <a href="https://ub.cafe"><strong>Documentation</strong></a>
   </p>
 
 ## 💻 Desktop

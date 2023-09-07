@@ -4,7 +4,7 @@ const LoadingPostItemDesktop = () => {
   return (
     <div
       role="status"
-      className="mx-auto hidden max-w-7xl flex-col items-center justify-center space-y-8 px-10 py-10 md:flex"
+      className="mx-auto hidden max-w-7xl flex-col items-center justify-center space-y-8 md:flex"
     >
       <div className="mx-auto flex max-w-3xl animate-pulse flex-row space-x-6 rounded-md border border-gray-200 p-4 shadow dark:border-gray-700 md:p-6">
         <div className="mt-4 flex h-80 w-[280px] items-center justify-center rounded bg-gray-300 dark:bg-gray-700">

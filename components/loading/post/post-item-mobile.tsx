@@ -6,7 +6,7 @@ const LoadingPostItemMobile = () => {
       <div className="mx-auto flex max-w-7xl flex-col items-center justify-center space-y-8 px-5 py-10 md:hidden">
         <div
           role="status"
-          className="w-full max-w-sm animate-pulse rounded border border-gray-200 p-4 shadow dark:border-gray-700 md:p-6"
+          className="w-full max-w-md animate-pulse rounded border border-gray-200 p-4 shadow dark:border-gray-700 md:p-6"
         >
           <div className="mb-4 flex h-48 items-center justify-center rounded bg-gray-300 dark:bg-gray-700">
             <svg
@@ -43,7 +43,7 @@ const LoadingPostItemMobile = () => {
         </div>
         <div
           role="status"
-          className="w-full max-w-sm animate-pulse rounded border border-gray-200 p-4 shadow dark:border-gray-700 md:p-6"
+          className="w-full max-w-md animate-pulse rounded border border-gray-200 p-4 shadow dark:border-gray-700 md:p-6"
         >
           <div className="mb-4 flex h-48 items-center justify-center rounded bg-gray-300 dark:bg-gray-700">
             <svg
@@ -80,7 +80,7 @@ const LoadingPostItemMobile = () => {
         </div>
         <div
           role="status"
-          className="w-full max-w-sm animate-pulse rounded border border-gray-200 p-4 shadow dark:border-gray-700 md:p-6"
+          className="w-full max-w-md animate-pulse rounded border border-gray-200 p-4 shadow dark:border-gray-700 md:p-6"
         >
           <div className="mb-4 flex h-48 items-center justify-center rounded bg-gray-300 dark:bg-gray-700">
             <svg
