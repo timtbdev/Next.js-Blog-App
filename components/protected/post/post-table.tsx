@@ -25,7 +25,7 @@ const PostTable: FC<PostTableProps> = ({ posts }) => {
                   ? format(new Date(post.created_at), "yyyy-MM-dd")
                   : ""}
               </td>
-              <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-center text-sm font-medium sm:pr-6">
+              <td className="relative mx-auto flex items-center justify-center whitespace-nowrap py-4 pl-3 pr-4 text-center text-sm font-medium sm:pr-6">
                 <PostEditButton id={post.id} />
               </td>
             </tr>

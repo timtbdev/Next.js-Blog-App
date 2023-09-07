@@ -1,6 +1,7 @@
 "use client";
 
 import { UpdatePost } from "@/actions/post/update-post";
+import ScrollUpButton from "@/components/buttons/scroll-up-button";
 import FormTitle from "@/components/protected/editor/post-title";
 import {
   AlertDialog,
@@ -38,12 +39,7 @@ import { Draft } from "@/types/collection";
 import { supabase } from "@/utils/supabase-client";
 import { PhotoIcon } from "@heroicons/react/24/solid";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  SparklesIcon,
-  Loader2 as SpinnerIcon,
-  TrashIcon,
-  SaveIcon as UpdateIcon,
-} from "lucide-react";
+import { SparklesIcon, Loader2 as SpinnerIcon, TrashIcon } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Editor } from "novel";
@@ -288,17 +284,16 @@ const PostEditor: FC<PostEditorProps> = ({ post }) => {
             name="image"
             render={({ field }) => (
               <FormItem className="w-full max-w-xl">
-                <FormLabel>{editorConfig.formImage}</FormLabel>
                 <FormControl>
                   <Input
                     placeholder={editorConfig.placeholderImage}
                     {...field}
                     disabled={true}
-                    className="bg-gray-50"
+                    className="hiden bg-gray-50"
                   />
                 </FormControl>
                 {/* Uploader */}
-                <FormTitle title={editorConfig.formImage} />
+                <FormTitle title={editorConfig.coverPhoto} />
                 <div className="col-span-full">
                   <label
                     htmlFor="photo"
@@ -410,24 +405,29 @@ const PostEditor: FC<PostEditorProps> = ({ post }) => {
               setContent(JSON.stringify(editor?.getJSON()));
             }}
           />
-          <Button
-            type="submit"
-            className="!bg-gray-900 !text-white hover:!bg-gray-800"
-            disabled={isSaving}
-          >
-            {isSaving ? (
-              <SpinnerIcon className="mr-2 h-4 w-4 animate-spin" />
-            ) : (
-              <UpdateIcon className="mr-2 h-4 w-4" />
-            )}
-            {editorConfig.submit}
-          </Button>
+          <div className="infline-flex flex items-center justify-start space-x-3">
+            <Button
+              type="submit"
+              className="flex !bg-gray-900 px-10 !text-white hover:!bg-gray-800"
+              disabled={isSaving}
+            >
+              {editorConfig.submit}
+            </Button>
+            <Button
+              type="submit"
+              className="flex !bg-gray-100 px-10 !text-gray-900 hover:!bg-gray-200"
+              disabled={isSaving}
+            >
+              {editorConfig.cancel}
+            </Button>
+          </div>
         </form>
       </Form>
       <AlertDialog open={showLoadingAlert} onOpenChange={setShowLoadingAlert}>
         <AlertDialogContent className="font-sans">
           <AlertDialogHeader>
             <AlertDialogTitle className="text-center">
+              <SpinnerIcon className="ml-2 h-4 w-4" />
               {postConfig.pleaseWait}
             </AlertDialogTitle>
             <AlertDialogDescription className="mx-auto text-center">
@@ -436,6 +436,7 @@ const PostEditor: FC<PostEditorProps> = ({ post }) => {
           </AlertDialogHeader>
         </AlertDialogContent>
       </AlertDialog>
+      <ScrollUpButton />
     </>
   );
 };
