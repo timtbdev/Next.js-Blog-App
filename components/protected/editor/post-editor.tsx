@@ -46,6 +46,7 @@ import { Editor } from "novel";
 import { FC, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
+import ScrollToTop from "react-scroll-to-top";
 import slugify from "react-slugify";
 import { v4 } from "uuid";
 import * as z from "zod";
@@ -437,6 +438,7 @@ const PostEditor: FC<PostEditorProps> = ({ post }) => {
         </AlertDialogContent>
       </AlertDialog>
       <ScrollUpButton />
+      <ScrollToTop />
     </>
   );
 };
