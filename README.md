@@ -11,9 +11,11 @@
     <a href="https://ub.cafe"><strong>Documentation</strong></a>
   </p>
 
+<img width="1040" alt="Cover" src="https://github.com/timtbdev/sign-dictionary/assets/25026241/537b830a-4ea0-40cb-bb26-7b3b744a4fce">
+
 ## 💻 Desktop
 
-<img width="1040" alt="Cover" src="https://github.com/timtbdev/sign-dictionary/assets/25026241/83388130-9906-4c41-adb6-4663e6cee81c">
+<img width="1040" alt="Cover" src="https://github.com/timtbdev/sign-dictionary/assets/25026241/537b830a-4ea0-40cb-bb26-7b3b744a4fce">
 
 ## 📱 Mobile
 
