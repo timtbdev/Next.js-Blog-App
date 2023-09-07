@@ -47,6 +47,7 @@
 - Validations using [Zod](https://zod.dev)
 - Icons using [HeroIcons](https://heroicons.com/) & [Lucide-Icon](https://lucide.dev/icons/)
 - Newsletter using [ConvertKit](https://convertkit.com/)
+- Drawer using [Vaul](https://vaul.emilkowal.ski/)
 - Written in [TypeScript](https://www.typescriptlang.org/)
 
 ## ⌨️ Code Quality
