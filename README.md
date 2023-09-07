@@ -5,21 +5,17 @@
 </p>
 
   <p align="center">
-  Fullstack Blog app built with Next.js 13 & Supabase
+  Fullstack Blog built with Next.js 13 & Supabase
   <br>
-    <a href="https://ub.cafe"><strong>Demo</strong></a>
+    <a href="https://ub.cafe"><strong>Demo</strong></a> | 
     <a href="https://ub.cafe"><strong>Documentation</strong></a>
   </p>
 
 <img width="1040" alt="Cover" src="https://github.com/timtbdev/sign-dictionary/assets/25026241/537b830a-4ea0-40cb-bb26-7b3b744a4fce">
 
-## 💻 Desktop
+## 💻 Preview
 
 <img width="1040" alt="Cover" src="https://github.com/timtbdev/sign-dictionary/assets/25026241/537b830a-4ea0-40cb-bb26-7b3b744a4fce">
-
-## 📱 Mobile
-
-<img width="1040" alt="Screenshot 2023-06-10 at 10 40 32 PM" src="https://github.com/timtbdev/Next.js-Blog-App/assets/25026241/fd923f60-9d05-4e39-88c1-b378efada9c4">
 
 ## 💾 Database Schema
 
@@ -40,12 +36,14 @@
 - CMS using [Supabase Database](https://supabase.com/docs/guides/database)
 - Metadata files
 - Open Graph Image Generation using [Vercel/Og](https://vercel.com/docs/concepts/functions/edge-functions/og-image-generation)
-- Image Upload using [ReactDropZone](https://react-dropzone.js.org/) and [Supabase Storage](https://supabase.com/docs/guides/storage/uploads)
+- Image Upload using [Supabase-JS-Client](https://supabase.com/docs/reference/javascript/introduction) and [Supabase Storage](https://supabase.com/docs/guides/storage/uploads)
 - Styled using [Tailwind CSS](https://tailwindcss.com/)
 - UI Components using [HeadlessUI](https://headlessui.com), [Radix-UI](https://radix-ui.com), [Shadcn-UI](https://ui.shadcn.com/)
+- WYSIWYG editor using [Novel](https://novel.sh/)
 - Loading, Error, NotFound, Empty pages
 - Sending emails using [NodeMailer](https://nodemailer.com) and [React Email](https://https://react.email/), [Gmail](https://gmail.com)
 - Forms using [React-Hook-Forms](https://www.react-hook-form.com/)
+- Toasts using [React-Hot-Toast](https://react-hot-toast.com/)
 - Validations using [Zod](https://zod.dev)
 - Icons using [HeroIcons](https://heroicons.com/) & [Lucide-Icon](https://lucide.dev/icons/)
 - Newsletter using [ConvertKit](https://convertkit.com/)
