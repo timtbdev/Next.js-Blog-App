@@ -12,7 +12,7 @@
 
 ## 💻 Desktop
 
-<img width="1040" alt="Cover" src="https://github.com/timtbdev/sign-dictionary/assets/25026241/e09271ae-5005-4921-b9a5-df2ad93ab954">
+<img width="1040" alt="Cover" src="https://github.com/timtbdev/sign-dictionary/assets/25026241/83388130-9906-4c41-adb6-4663e6cee81c">
 
 ## 📱 Mobile
 
