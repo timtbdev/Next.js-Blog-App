@@ -15,7 +15,7 @@
 
 ## 💻 Preview
 
-<img width="1040" alt="Cover" src="https://github.com/timtbdev/sign-dictionary/assets/25026241/537b830a-4ea0-40cb-bb26-7b3b744a4fce">
+https://github.com/timtbdev/Next.js-Blog-App/assets/25026241/28c88539-ce40-4283-8239-10c0024bf349
 
 ## 💾 Database Schema
 
