@@ -19,7 +19,8 @@ https://github.com/timtbdev/Next.js-Blog-App/assets/25026241/28c88539-ce40-4283-
 
 ## 💾 Database Schema
 
-Database schema & dummy data: [here](./database_schema/)
+### Database schema & dummy data: [here](./database_schema/)
+
 <img width="992" alt="Screenshot 2023-06-10 at 10 00 18 PM" src="https://github.com/timtbdev/Next.js-Blog-App/assets/25026241/729e2d22-2467-4d5b-9c6c-e6a5ea58c717">
 
 ## 📊 Google Lighthouse performance statistics
