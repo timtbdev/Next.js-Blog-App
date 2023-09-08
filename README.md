@@ -25,7 +25,7 @@ https://github.com/timtbdev/Next.js-Blog-App/assets/25026241/28c88539-ce40-4283-
 
 ## 📊 Google Lighthouse performance statistics
 
-<img width="992" alt="Screenshot 2023-06-10 at 10 00 18 PM" src="https://github.com/timtbdev/Next.js-Portfolio-App/assets/25026241/d4494a8f-50ac-484c-b439-3a62cc87760e">
+<img width="992" alt="Screenshot 2023-06-10 at 10 00 18 PM" src="https://github.com/timtbdev/Next.js-Blog-App/assets/25026241/2a4f693b-5c0d-4647-8444-291e1f635ee7">
 
 ## 📚 Tech Stacks
 
