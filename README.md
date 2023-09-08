@@ -8,7 +8,7 @@
   Fullstack Blog built with Next.js 13 & Supabase
   <br>
     <a href="https://ub.cafe"><strong>Demo</strong></a> | 
-    <a href="https://ub.cafe"><strong>Documentation</strong></a>
+    <strong>Documentation(Coming soon)</strong></a>
   </p>
 
 <img width="1040" alt="Cover" src="https://github.com/timtbdev/sign-dictionary/assets/25026241/537b830a-4ea0-40cb-bb26-7b3b744a4fce">
