@@ -5,7 +5,7 @@
 </p>
 
   <p align="center">
-  Fullstack Blog built with Next.js 13 & Supabase
+  Fullstack Blog app built with Next.js 13 & Supabase
   <br>
     <a href="https://ub.cafe"><strong>Demo</strong></a> | 
     <strong>Documentation(Coming soon)</strong></a>
