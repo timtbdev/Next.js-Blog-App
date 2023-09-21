@@ -8,6 +8,7 @@ export const editorConfig = {
   formCategory: "Category",
   formDescription: "Description",
   formContent: "Content",
+  formImage: "Image",
   submit: "Update",
   cancel: "Cancel",
   placeHolderTitle: "Please provide a title for your blog post",
