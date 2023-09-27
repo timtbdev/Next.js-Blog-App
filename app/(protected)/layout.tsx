@@ -1,31 +1,33 @@
-import ProtectedFooter from '@/components/protected/protected-footer';
-import ProtectedHeader from '@/components/protected/protected-header';
-import supabase from '@/utils/supabase-server';
-import { redirect } from 'next/navigation';
-import React from 'react';
+import ProtectedMain from "@/components/protected/site/protected-main";
+import type { Database } from "@/types/supabase";
+import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+import React from "react";
 
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 
 interface ProtectedLayoutProps {
-    children: React.ReactNode;
+  children: React.ReactNode;
 }
 
-const ProtectedLayout: React.FC<ProtectedLayoutProps> = async ({ children }) => {
-    const {
-        data: { user },
-    } = await supabase.auth.getUser();
-    if (!user) {
-        // This route can only be accessed by authenticated users.
-        // Unauthenticated users will be redirected to the `/login` route.
-        redirect('/login');
-    }
-    return (
-        <>
-            <ProtectedHeader />
-            {children}
-            <ProtectedFooter />
-        </>
-    );
+const ProtectedLayout: React.FC<ProtectedLayoutProps> = async ({
+  children,
+}) => {
+  const supabase = createServerComponentClient<Database>({ cookies });
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+  if (!session?.user.id) {
+    // This route can only be accessed by authenticated users.
+    // Unauthenticated users will be redirected to the `/login` route.
+    redirect("/login");
+  }
+  return (
+    <>
+      <ProtectedMain>{children}</ProtectedMain>
+    </>
+  );
 };
 
 export default ProtectedLayout;

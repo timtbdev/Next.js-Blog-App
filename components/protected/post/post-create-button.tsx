@@ -1,6 +1,6 @@
 "use client";
-import React, { FC, useState } from "react";
-import { useRouter } from "next/navigation";
+
+import { CreatePost } from "@/actions/post/create-post";
 import {
   AlertDialog,
   AlertDialogContent,
@@ -8,12 +8,13 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { Plus as AddIcon, Loader2 as SpinnerIcon } from "lucide-react";
-import { toast } from "react-hot-toast";
 import { postConfig } from "@/config/post";
-import { CreatePost } from "@/actions/post/create-post";
 import { supabase } from "@/utils/supabase-client";
 import { Session } from "@supabase/auth-helpers-nextjs";
+import { Plus as AddIcon, Loader2 as SpinnerIcon } from "lucide-react";
+import { useRouter } from "next/navigation";
+import React, { FC, useState } from "react";
+import { toast } from "react-hot-toast";
 
 const PostCreateButton = () => {
   const router = useRouter();
@@ -65,17 +66,14 @@ const PostCreateButton = () => {
 
   return (
     <>
-      <div
+      <button
+        type="button"
         onClick={createPost}
-        className="flex flex-row items-center rounded-md bg-gray-900 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-gray-600"
+        className="flex items-center rounded-md bg-gray-900 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-gray-600"
       >
-        {isLoading ? (
-          <SpinnerIcon className="mr-2 h-4 w-4 animate-spin" />
-        ) : (
-          <AddIcon className="mr-2 h-4 w-4" />
-        )}
+        {isLoading && <SpinnerIcon className="mr-2 h-4 w-4 animate-spin" />}
         {postConfig.newPost}
-      </div>
+      </button>
       <AlertDialog open={isLoading} onOpenChange={setIsLoading}>
         <AlertDialogContent className="font-sans">
           <AlertDialogHeader>

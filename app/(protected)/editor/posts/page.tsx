@@ -1,13 +1,15 @@
 import PostTableEmpty from "@/components/protected/post/post-emtpy-table";
 import PostTable from "@/components/protected/post/post-table";
 import PostTableHeader from "@/components/protected/post/post-table-header";
-import ProtectedTitle from "@/components/protected/protected-title";
+import TableTitle from "@/components/protected/table/table-title";
 import TableWrapper from "@/components/protected/table/table-wrapper";
 import Pagination from "@/components/shared/pagination";
 import { postConfig } from "@/config/post";
 import { Draft, Post } from "@/types/collection";
-import supabase from "@/utils/supabase-server";
+import type { Database } from "@/types/supabase";
+import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { Metadata } from "next";
+import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import React, { FC } from "react";
 
@@ -23,6 +25,7 @@ interface PostsPageProps {
 }
 
 const PostsPage: FC<PostsPageProps> = async ({ searchParams }) => {
+  const supabase = createServerComponentClient<Database>({ cookies });
   // Fetch user data
   const {
     data: { user },
@@ -63,7 +66,7 @@ const PostsPage: FC<PostsPageProps> = async ({ searchParams }) => {
       <div className="mx-auto max-w-5xl p-4 sm:p-6 lg:p-8">
         {data?.length && data?.length > 0 ? (
           <>
-            <ProtectedTitle
+            <TableTitle
               title={postConfig.title}
               description={postConfig.description}
               isPost={true}

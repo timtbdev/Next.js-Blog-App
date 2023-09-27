@@ -1,10 +1,13 @@
 "use server";
 
 import { postDeleteSchema } from "@/lib/validation/post";
-import supabase from "@/utils/supabase-server-action";
+import type { Database } from "@/types/supabase";
+import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+import { cookies } from "next/headers";
 import * as z from "zod";
 
 export async function DeletePost(context: z.infer<typeof postDeleteSchema>) {
+  const supabase = createServerComponentClient<Database>({ cookies });
   try {
     const post = postDeleteSchema.parse(context);
 
