@@ -9,9 +9,10 @@ import SearchBar from "./sub-components/searchbar";
 
 interface ProtectedMainProps {
   children?: ReactNode;
+  avatarUrl?: string;
 }
 
-const ProtectedMain: FC<ProtectedMainProps> = ({ children }) => {
+const ProtectedMain: FC<ProtectedMainProps> = ({ children, avatarUrl }) => {
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
   return (
     <>
@@ -36,7 +37,7 @@ const ProtectedMain: FC<ProtectedMainProps> = ({ children }) => {
                 aria-hidden="true"
               />
 
-              <ProfileDropDown />
+              <ProfileDropDown avatarUrl={avatarUrl || ""} />
             </div>
           </div>
         </div>

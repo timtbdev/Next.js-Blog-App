@@ -13,12 +13,14 @@ import { supabase } from "@/utils/supabase-client";
 import { Session } from "@supabase/supabase-js";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 
-const ProfileDropDown = () => {
+interface ProfileDropDownProps {
+  avatarUrl: string;
+}
+
+const ProfileDropDown: FC<ProfileDropDownProps> = ({ avatarUrl }) => {
   const router = useRouter();
-  const [session, setSession] = useState<Session | null>(null);
-  const [avatarUrl, setAvatarUrl] = useState<string>("");
 
   const signOut = async () => {
     const { error } = await supabase.auth.signOut();
@@ -28,34 +30,6 @@ const ProfileDropDown = () => {
 
     router.refresh();
   };
-
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-    });
-
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
-    });
-
-    return () => subscription.unsubscribe();
-  }, []);
-
-  useEffect(() => {
-    async function fetchAvatar() {
-      const { data, error } = await supabase
-        .from("profiles")
-        .select("*")
-        .match({ id: session?.user.id })
-        .single<Profile>();
-      if (data) {
-        setAvatarUrl(data.avatar_url ? data.avatar_url : "");
-      }
-    }
-    fetchAvatar();
-  }, [session]);
 
   return (
     <>

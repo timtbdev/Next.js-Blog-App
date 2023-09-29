@@ -1,4 +1,5 @@
 import ProtectedMain from "@/components/protected/site/protected-main";
+import { Profile } from "@/types/collection";
 import type { Database } from "@/types/supabase";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
@@ -23,9 +24,21 @@ const ProtectedLayout: React.FC<ProtectedLayoutProps> = async ({
     // Unauthenticated users will be redirected to the `/login` route.
     redirect("/login");
   }
+  const { data, error } = await supabase
+    .from("profiles")
+    .select("*")
+    .match({ id: session.user.id })
+    .single<Profile>();
+
+  if (error) {
+    console.log(error);
+  }
+
   return (
     <>
-      <ProtectedMain>{children}</ProtectedMain>
+      <ProtectedMain avatarUrl={data?.avatar_url || ""}>
+        {children}
+      </ProtectedMain>
     </>
   );
 };
