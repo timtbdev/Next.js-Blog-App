@@ -82,6 +82,6 @@ export const dashBoardLogout: DashBoardAttributes = {
 };
 export const dashBoardProfile: DashBoardAttributes = {
   title: "Profile",
-  slug: "/profile",
+  slug: "/settings",
   icon: UserCircle,
 };

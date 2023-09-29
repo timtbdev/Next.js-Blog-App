@@ -1,8 +1,4 @@
-import {
-  dashBoardLogout,
-  dashBoardMenusLoop,
-  dashBoardPages,
-} from "@/config/dashboard";
+import { dashBoardLogout, dashBoardMenusLoop } from "@/config/dashboard";
 import { cn, getUrl } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
@@ -52,38 +48,6 @@ const DesktopSidebar = () => {
                           aria-hidden="true"
                         />
                         {menu.title}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </li>
-              <li>
-                <div className="text-md font border-b py-2 leading-6 text-gray-400">
-                  Pages
-                </div>
-                <ul role="list" className="-mx-2 mt-2 space-y-1">
-                  {dashBoardPages.map((page) => (
-                    <li key={v4()}>
-                      <Link
-                        href={page.slug || ""}
-                        className={cn(
-                          currentPath === page.slug
-                            ? "bg-gray-50 text-orange-600"
-                            : "text-gray-700 hover:bg-gray-50 hover:text-orange-600",
-                          "group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6",
-                        )}
-                      >
-                        <span
-                          className={cn(
-                            currentPath === page.slug
-                              ? "border-orange-600 text-orange-600"
-                              : "border-gray-200 text-gray-400 group-hover:border-orange-600 group-hover:text-orange-600",
-                            "flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border bg-white text-[0.625rem] font-medium",
-                          )}
-                        >
-                          {page.initial}
-                        </span>
-                        <span className="truncate">{page.title}</span>
                       </Link>
                     </li>
                   ))}

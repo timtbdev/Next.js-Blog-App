@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { editorConfig } from "@/config/editor";
+import { shimmer, toBase64 } from "@/lib/utils";
 import { Loader2 as SpinnerIcon, TrashIcon } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -63,7 +64,9 @@ const CoverImageItem: FC<CoverImageItemProps> = ({
           height={400}
           width={600}
           priority
-          placeholder="blur"
+          placeholder={`data:image/svg+xml;base64,${toBase64(
+            shimmer(400, 600),
+          )}`}
         />
       </div>
       <AlertDialog>

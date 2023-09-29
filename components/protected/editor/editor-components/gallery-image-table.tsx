@@ -20,19 +20,15 @@ const GalleryImageTable: FC<GalleryImageTableProps> = ({
     <div className="inline-block max-w-2xl rounded-lg border border-gray-200 p-5 align-middle">
       <div className="min-w-full divide-y divide-gray-300">
         <div className="space-y-5 bg-white">
-          {imageUrls.length > 0 ? (
-            imageUrls.map((url, idx) => (
-              <GalleryImageItem
-                key={v4()}
-                userId={userId}
-                postId={postId}
-                fileName={fileNames[idx]}
-                imageUrl={url}
-              />
-            ))
-          ) : (
-            <GalleryImageTableEmpty />
-          )}
+          {imageUrls.map((url, idx) => (
+            <GalleryImageItem
+              key={v4()}
+              userId={userId}
+              postId={postId}
+              fileName={fileNames[idx]}
+              imageUrl={url}
+            />
+          ))}
         </div>
       </div>
     </div>

@@ -1,10 +1,6 @@
 "use client";
 
-import {
-  dashBoardLogout,
-  dashBoardMenusLoop,
-  dashBoardPages,
-} from "@/config/dashboard";
+import { dashBoardLogout, dashBoardMenusLoop } from "@/config/dashboard";
 import { cn, getUrl } from "@/lib/utils";
 import { Dialog, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/20/solid";
@@ -125,36 +121,6 @@ const MobileSidebar: FC<MobileSidebarProps> = ({
                           ))}
                         </ul>
                       </li>
-                    </ul>
-                    <div className="text-md border-b py-2 font-sans leading-6 text-gray-400">
-                      Pages
-                    </div>
-                    <ul role="list" className="-mx-2 mt-2 space-y-1">
-                      {dashBoardPages.map((page) => (
-                        <li key={v4()}>
-                          <Link
-                            href={page.slug || ""}
-                            className={cn(
-                              currentPath === page.slug
-                                ? "bg-gray-50 text-orange-600"
-                                : "text-gray-700 hover:bg-gray-50 hover:text-orange-600",
-                              "group flex gap-x-3 rounded-md p-2 font-sans text-sm font-semibold leading-6",
-                            )}
-                          >
-                            <span
-                              className={cn(
-                                currentPath === page.slug
-                                  ? "border-orange-600 text-orange-600"
-                                  : "border-gray-200 text-gray-400 group-hover:border-orange-600 group-hover:text-orange-600",
-                                "flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border bg-white font-sans text-[0.625rem] font-medium",
-                              )}
-                            >
-                              {page.initial}
-                            </span>
-                            <span className="truncate">{page.title}</span>
-                          </Link>
-                        </li>
-                      ))}
                     </ul>
                     <Link
                       href={dashBoardLogout.slug || ""}

@@ -1,5 +1,5 @@
 import { postConfig } from "@/config/post";
-import { getMinutes, shimmer } from "@/lib/utils";
+import { getMinutes, shimmer, toBase64 } from "@/lib/utils";
 import { Comment, PostWithCategoryWithProfile } from "@/types/collection";
 import type { Database } from "@/types/supabase";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
@@ -50,8 +50,9 @@ const PostItem: React.FC<PostItemProps> = async ({ post }) => {
                   height={256}
                   width={256}
                   priority
-                  placeholder="blur"
-                  blurDataURL={shimmer(256, 256)}
+                  placeholder={`data:image/svg+xml;base64,${toBase64(
+                    shimmer(256, 256),
+                  )}`}
                   className="absolute inset-0 h-full w-full rounded-2xl bg-gray-50 object-cover"
                 />
                 <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-gray-900/10" />
@@ -125,8 +126,9 @@ const PostItem: React.FC<PostItemProps> = async ({ post }) => {
                       height={40}
                       width={40}
                       priority
-                      placeholder="blur"
-                      blurDataURL={shimmer(40, 40)}
+                      placeholder={`data:image/svg+xml;base64,${toBase64(
+                        shimmer(40, 40),
+                      )}`}
                       className="h-[40px] w-[40px] rounded-full bg-gray-50 object-cover"
                     />
                     <div className="text-sm">

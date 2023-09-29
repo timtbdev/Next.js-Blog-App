@@ -7,7 +7,9 @@ export const editorConfig = {
   formSlug: "Slug",
   formCategory: "Category",
   formDescription: "Description",
-  formContent: "Content",
+  formContentTitle: "Content",
+  formContentDescription:
+    "WYSIWYG Editor with a bubble menu, and drag and drop image upload.",
   formImage: "Image",
   formImageNote: "Only JPG, PNG and GIF files are allowed",
   formImageSize: "File size can't exceed 6MB.",

@@ -1,0 +1,24 @@
+:root {
+  --editor-black: rgb(0 0 0);
+  --editor-white: rgb(255 255 255);
+  --editor-stone-50: rgb(250 250 249);
+  --editor-stone-100: rgb(245 245 244);
+  --editor-stone-200: rgb(231 229 228);
+  --editor-stone-300: rgb(214 211 209);
+  --editor-stone-400: rgb(168 162 158);
+  --editor-stone-500: rgb(120 113 108);
+  --editor-stone-600: rgb(87 83 78);
+  --editor-stone-700: rgb(68 64 60);
+  --editor-stone-800: rgb(41 37 36);
+  --editor-stone-900: rgb(28 25 23);
+
+  --editor-highlight-default: #ffffff;
+  --editor-highlight-purple: #f6f3f8;
+  --editor-highlight-red: #fdebeb;
+  --editor-highlight-yellow: #fbf4a2;
+  --editor-highlight-blue: #c1ecf9;
+  --editor-highlight-green: #acf79f;
+  --editor-highlight-orange: #faebdd;
+  --editor-highlight-pink: #faf1f5;
+  --editor-highlight-gray: #f1f1ef;
+}

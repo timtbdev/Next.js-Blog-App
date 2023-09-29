@@ -1,7 +1,7 @@
 "use client";
 
 import { UpdatePost } from "@/actions/post/update-post";
-import FormTitle from "@/components/protected/editor/post-title";
+import FormTitle from "@/components/protected/editor/editor-components/post-title";
 import {
   AlertDialog,
   AlertDialogContent,
@@ -33,6 +33,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Uppy from "@uppy/core";
 import "@uppy/core/dist/style.min.css";
 import "@uppy/dashboard/dist/style.min.css";
+import Editor from "@/components/protected/editor/tip-tap-editor/editor";
 import { DashboardModal } from "@uppy/react";
 import Tus from "@uppy/tus";
 import { SparklesIcon, Loader2 as SpinnerIcon } from "lucide-react";
@@ -46,6 +47,8 @@ import * as z from "zod";
 import CoverImageItem from "./editor-components/cover-image-item";
 import CoverImagePlaceHolder from "./editor-components/cover-image-placeholder";
 import GalleryImageTable from "./editor-components/gallery-image-table";
+import GalleryImageTableEmpty from "./editor-components/gallery-image-table-empty";
+import { defaultEditorContent } from "./tip-tap-editor/default-content";
 
 export const dynamic = "force-dynamic";
 
@@ -79,6 +82,9 @@ const PostEditor: FC<PostEditorProps> = ({
   const [showLoadingAlert, setShowLoadingAlert] = useState<boolean>(false);
   const [showCoverModal, setShowCoverModal] = useState<boolean>(false);
   const [showGalleryModal, setShowGalleryModal] = useState<boolean>(false);
+
+  // Editor
+  const [saveStatus, setSaveStatus] = useState("Saved");
 
   const [content, setContent] = useState<string | null>(post?.content || null);
 
@@ -417,12 +423,16 @@ const PostEditor: FC<PostEditorProps> = ({
               </div>
             </div>
 
-            <GalleryImageTable
-              userId={userId}
-              postId={post.id}
-              fileNames={galleryImageFileNames}
-              imageUrls={galleryImagePublicUrls}
-            />
+            {galleryImagePublicUrls.length > 0 ? (
+              <GalleryImageTable
+                userId={userId}
+                postId={post.id}
+                fileNames={galleryImageFileNames}
+                imageUrls={galleryImagePublicUrls}
+              />
+            ) : (
+              <GalleryImageTableEmpty />
+            )}
           </div>
 
           {/* Description */}
@@ -444,14 +454,16 @@ const PostEditor: FC<PostEditorProps> = ({
             )}
           />
           {/* Content editor */}
-          <FormTitle title={editorConfig.formContent} />
-          {/* <Editor
-            storageKey={post.id}
-            defaultValue={JSON.parse(content ?? "{}")}
+          <FormTitle
+            title={editorConfig.formContentTitle}
+            description={editorConfig.formContentDescription}
+          />
+          <Editor
+            defaultValue={content ? JSON.parse(content) : defaultEditorContent}
             onDebouncedUpdate={(editor) => {
               setContent(JSON.stringify(editor?.getJSON()));
             }}
-          /> */}
+          />
           <div className="infline-flex flex items-center justify-start space-x-3">
             <Button
               type="submit"
@@ -461,7 +473,8 @@ const PostEditor: FC<PostEditorProps> = ({
               {editorConfig.submit}
             </Button>
             <Button
-              type="submit"
+              type="button"
+              onClick={() => router.back()}
               className="flex !bg-gray-100 px-10 !text-gray-900 hover:!bg-gray-200"
               disabled={isSaving}
             >
@@ -474,7 +487,6 @@ const PostEditor: FC<PostEditorProps> = ({
         <AlertDialogContent className="font-sans">
           <AlertDialogHeader>
             <AlertDialogTitle className="text-center">
-              <SpinnerIcon className="ml-2 h-4 w-4" />
               {postConfig.pleaseWait}
             </AlertDialogTitle>
             <AlertDialogDescription className="mx-auto text-center">

@@ -62,4 +62,29 @@ export const shimmer = (w: number, h: number) => `
   <animate xlink:href="#r" attributeName="x" from="-${w}" to="${w}" dur="1s" repeatCount="indefinite"  />
 </svg>`;
 
+export const toBase64 = (str: string) =>
+  typeof window === "undefined"
+    ? Buffer.from(str).toString("base64")
+    : window.btoa(str);
+
 export const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+export function isValidUrl(url: string) {
+  try {
+    new URL(url);
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
+export function getUrlFromString(str: string) {
+  if (isValidUrl(str)) return str;
+  try {
+    if (str.includes(".") && !str.includes(" ")) {
+      return new URL(`https://${str}`).toString();
+    }
+  } catch (e) {
+    return null;
+  }
+}

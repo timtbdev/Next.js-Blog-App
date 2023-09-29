@@ -36,7 +36,7 @@ const ProfileButton: FC<ProfileButtonProps> = ({ profileImageUrl }) => {
         <DropdownMenuTrigger asChild>
           <Avatar>
             <AvatarImage src={profileImageUrl} />
-            <AvatarFallback>UB</AvatarFallback>
+            <AvatarFallback>UN</AvatarFallback>
           </Avatar>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56 font-sans">

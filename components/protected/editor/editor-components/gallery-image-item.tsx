@@ -15,7 +15,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { editorConfig } from "@/config/editor";
-import { shimmer } from "@/lib/utils";
+import { shimmer, toBase64 } from "@/lib/utils";
 import { Loader2 as SpinnerIcon, TrashIcon, ZoomIn } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -89,8 +89,9 @@ const GalleryImageItem: FC<GalleryImageItemProps> = ({
                   height={500}
                   width={700}
                   priority
-                  placeholder="blur"
-                  blurDataURL={shimmer(400, 600)}
+                  placeholder={`data:image/svg+xml;base64,${toBase64(
+                    shimmer(500, 700),
+                  )}`}
                 />
               </div>
             </DialogContent>

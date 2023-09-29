@@ -9,17 +9,6 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { postConfig } from "@/config/post";
-import { supabase } from "@/utils/supabase-client";
-import { Session } from "@supabase/auth-helpers-nextjs";
-import {
-  Loader2 as SpinnerIcon,
-  Trash as TrashIcon,
-  MoreVertical as ElipsisIcon,
-} from "lucide-react";
-import { useRouter } from "next/navigation";
-import React, { useState, FC } from "react";
-import toast from "react-hot-toast";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -27,6 +16,17 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { postConfig } from "@/config/post";
+import { supabase } from "@/utils/supabase-client";
+import { Session } from "@supabase/auth-helpers-nextjs";
+import {
+  MoreVertical as ElipsisIcon,
+  Loader2 as SpinnerIcon,
+  Trash as TrashIcon,
+} from "lucide-react";
+import { useRouter } from "next/navigation";
+import React, { FC, useState } from "react";
+import toast from "react-hot-toast";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -120,10 +120,7 @@ const PostEditButton: FC<PostEditButtonProps> = ({ id }) => {
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>{postConfig.cancel}</AlertDialogCancel>
-            <AlertDialogAction
-              className="!mt-2 !bg-gray-900 hover:!bg-gray-600"
-              onClick={deleteMyPost}
-            >
+            <AlertDialogAction onClick={deleteMyPost}>
               {isDeleteLoading ? (
                 <SpinnerIcon className="mr-2 h-4 w-4 animate-spin" />
               ) : (
