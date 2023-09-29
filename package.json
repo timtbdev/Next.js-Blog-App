@@ -71,7 +71,7 @@
     "lodash": "^4.17.21",
     "lucide-react": "^0.279.0",
     "moment": "^2.29.4",
-    "next": "13.5.3",
+    "next": "13.5.2",
     "nodemailer": "^6.9.5",
     "nodemailer-smtp-transport": "^2.7.4",
     "postcss": "8.4.30",
