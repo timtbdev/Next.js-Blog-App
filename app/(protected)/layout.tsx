@@ -24,21 +24,10 @@ const ProtectedLayout: React.FC<ProtectedLayoutProps> = async ({
     // Unauthenticated users will be redirected to the `/login` route.
     redirect("/login");
   }
-  const { data, error } = await supabase
-    .from("profiles")
-    .select("*")
-    .match({ id: session.user.id })
-    .single<Profile>();
-
-  if (error) {
-    console.log(error);
-  }
 
   return (
     <>
-      <ProtectedMain avatarUrl={data?.avatar_url || ""}>
-        {children}
-      </ProtectedMain>
+      <ProtectedMain>{children}</ProtectedMain>
     </>
   );
 };

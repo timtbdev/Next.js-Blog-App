@@ -4,23 +4,21 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { dashBoardLogout, dashBoardProfile } from "@/config/dashboard";
-import { Profile } from "@/types/collection";
 import { supabase } from "@/utils/supabase-client";
 import { Session } from "@supabase/supabase-js";
+import { ChevronDownIcon } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { FC, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
-interface ProfileDropDownProps {
-  avatarUrl: string;
-}
-
-const ProfileDropDown: FC<ProfileDropDownProps> = ({ avatarUrl }) => {
+const ProfileDropDown = () => {
   const router = useRouter();
+  const [session, setSession] = useState<Session | null>(null);
 
   const signOut = async () => {
     const { error } = await supabase.auth.signOut();
@@ -31,14 +29,51 @@ const ProfileDropDown: FC<ProfileDropDownProps> = ({ avatarUrl }) => {
     router.refresh();
   };
 
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+    });
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
   return (
     <>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Avatar>
-            <AvatarImage src={avatarUrl} />
-            <AvatarFallback>UN</AvatarFallback>
-          </Avatar>
+          <button
+            type="button"
+            className="group inline-flex items-center rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-orange-600"
+          >
+            <span className="sr-only">Open user menu</span>
+            <Avatar>
+              <AvatarImage
+                src={
+                  session?.user?.user_metadata.picture ||
+                  session?.user?.user_metadata.avatar_url
+                }
+              />
+              <AvatarFallback>UB</AvatarFallback>
+            </Avatar>
+            <span className="hidden lg:flex lg:items-center">
+              <span
+                className="ml-4 text-sm font-semibold leading-6 text-gray-500 group-hover:text-gray-900"
+                aria-hidden="true"
+              >
+                {session?.user?.user_metadata.full_name}
+              </span>
+              <ChevronDownIcon
+                className="ml-2 h-5 w-5 text-gray-500 group-hover:text-gray-900"
+                aria-hidden="true"
+              />
+            </span>
+          </button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56 font-sans">
           <Link
