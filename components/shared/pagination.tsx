@@ -1,5 +1,3 @@
-"use client";
-
 import Pager from "@/components/shared/pager";
 import { pagingConfig } from "@/config/paging";
 import { cn } from "@/lib/utils";
@@ -8,7 +6,6 @@ import {
   ArrowLongRightIcon,
 } from "@heroicons/react/20/solid";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import React from "react";
 
 interface PaginationProps {
@@ -28,7 +25,6 @@ const Pagination: React.FC<PaginationProps> = ({
   baseUrl,
   pageUrl,
 }) => {
-  const router = useRouter();
   const prevLink = page > 2 ? baseUrl + pageUrl : baseUrl;
   const nextLink =
     page < totalPages
@@ -37,11 +33,8 @@ const Pagination: React.FC<PaginationProps> = ({
   return (
     <nav className="mt-8 flex items-center justify-between border-t border-gray-200 px-4 sm:px-0">
       <div className="-mt-px flex w-0 flex-1">
-        <button
-          type="button"
-          onClick={() => {
-            router.push(nextLink);
-          }}
+        <Link
+          href={prevLink}
           className={cn(
             {
               "pointer-events-none opacity-50": page === 1,
@@ -54,7 +47,7 @@ const Pagination: React.FC<PaginationProps> = ({
             aria-hidden="true"
           />
           {pagingConfig.previous}
-        </button>
+        </Link>
       </div>
       {/* Pagination */}
       <div className="hidden md:-mt-px md:flex">
@@ -67,11 +60,8 @@ const Pagination: React.FC<PaginationProps> = ({
       </div>
 
       <div className="-mt-px flex w-0 flex-1 justify-end">
-        <button
-          type="button"
-          onClick={() => {
-            router.push(nextLink);
-          }}
+        <Link
+          href={nextLink}
           className={cn(
             "inline-flex items-center border-t-2 border-transparent pl-1 pt-4 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700",
             { "pointer-events-none opacity-50": page >= totalPages },
@@ -82,7 +72,7 @@ const Pagination: React.FC<PaginationProps> = ({
             className="ml-3 h-5 w-5 text-gray-400"
             aria-hidden="true"
           />
-        </button>
+        </Link>
       </div>
     </nav>
   );
