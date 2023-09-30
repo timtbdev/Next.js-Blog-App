@@ -1,10 +1,12 @@
 import PostItem from "@/components/post/post-item";
+import PostItemSkeleton from "@/components/post/post-skeleten";
 import Pagination from "@/components/shared/pagination";
 import { PostWithCategoryWithProfile } from "@/types/collection";
 import type { Database } from "@/types/supabase";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 import { v4 } from "uuid";
 
 interface HomePageProps {
@@ -46,7 +48,11 @@ export default async function HomePage({ searchParams }: HomePageProps) {
   return (
     <>
       <div className="space-y-6">
-        {data?.map((post) => <PostItem key={v4()} post={post} />)}
+        {data?.map((post) => (
+          <Suspense key={v4()} fallback={<PostItemSkeleton />}>
+            <PostItem post={post} />
+          </Suspense>
+        ))}
       </div>
       {/* Pagination */}
       {totalPages > 1 && (
