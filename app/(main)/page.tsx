@@ -9,6 +9,8 @@ import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { v4 } from "uuid";
 
+export const revalidate = 0;
+
 interface HomePageProps {
   searchParams: { [key: string]: string | string[] | undefined };
 }
