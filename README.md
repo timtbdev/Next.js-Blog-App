@@ -5,16 +5,24 @@
 </p>
 
   <p align="center">
-  Fullstack Blog app built with Next.js 13 & Supabase
+  Next.js + Supabase
   <br>
-    <a href="https://ub.cafe"><strong>Demo</strong></a> | 
-    <strong>Documentation(Coming soon)</strong></a>
+    <p align="center">
+  Multi-tenant blogging app with built-in admin panel
+  <br>
+    <a href="https://ub.cafe"><strong>Demo</strong></a>
   </p>
 
-<img width="1040" alt="Cover" src="https://github.com/timtbdev/sign-dictionary/assets/25026241/537b830a-4ea0-40cb-bb26-7b3b744a4fce">
+<img width="1040" alt="Cover" src="https://github.com/timtbdev/Next.js-Blog-App/assets/25026241/0475d777-ece5-42d2-ab2c-ce415c1189b8">
 
-## 💻 Preview
+## 💻 Frontend
 
+<img width="1040" alt="Cover" src="https://github.com/timtbdev/Next.js-Blog-App/assets/25026241/d263479c-853f-40ed-aed4-58c5cbb8b14c">
+https://github.com/timtbdev/Next.js-Blog-App/assets/25026241/28c88539-ce40-4283-8239-10c0024bf349
+
+## 🧰 Backend
+
+<img width="1040" alt="Cover" src="https://github.com/timtbdev/Next.js-Blog-App/assets/25026241/c5cd3077-b955-43fd-b6ea-2f3b5f9297c9">
 https://github.com/timtbdev/Next.js-Blog-App/assets/25026241/28c88539-ce40-4283-8239-10c0024bf349
 
 ## 💾 Database Schema
