@@ -30,7 +30,7 @@
 - CMS using [Supabase Database](https://supabase.com/docs/guides/database)
 - Metadata files
 - Open Graph Image Generation using [Vercel/Og](https://vercel.com/docs/concepts/functions/edge-functions/og-image-generation)
-- Image Upload using [Supabase-JS-Client](https://supabase.com/docs/reference/javascript/introduction) and [Supabase Storage](https://supabase.com/docs/guides/storage/uploads)
+- Image Upload using [Uppy](https://uppy.io) and [Supabase Storage](https://supabase.com/docs/guides/storage/uploads)
 - Styled using [Tailwind CSS](https://tailwindcss.com/)
 - UI Components using [HeadlessUI](https://headlessui.com), [Radix-UI](https://radix-ui.com), [Shadcn-UI](https://ui.shadcn.com/)
 - WYSIWYG editor using [Novel](https://novel.sh/)
@@ -77,7 +77,7 @@ Want to get up and running quickly? Follow these steps:
 - Set up your [Supabase Database](https://supabase.com/docs/guides/database) and Auth wit with [Social Logins](https://supabase.com/docs/guides/auth/social-login)
 - Set up your [ConverKit](https://ihatetomatoes-nextjs-101.vercel.app/post/convertkit-api-variables)
 - Set up your `.env` file using the recommendations in the `.env.example` file.
-- Run `npm installation --legacy-peer-deps` in the root directory
+- Run `npm installation` in the root directory
   ```sh
   npm installation --legacy-peer-deps
   ```
@@ -89,7 +89,7 @@ Want to get up and running quickly? Follow these steps:
 
 That's it! You should now be able to access the app at http://localhost:3000
 
-Admin dashboard will also be available on http://localhost:300/dashboard
+Admin dashboard will also be available on http://localhost:300/editor/posts
 
 ## 🙇 Author
 

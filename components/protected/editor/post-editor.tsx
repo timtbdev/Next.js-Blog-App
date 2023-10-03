@@ -228,7 +228,7 @@ const PostEditor: FC<PostEditorProps> = ({
 
     if (response) {
       toast.success(editorConfig.successMessage);
-      router.push(`/editor/posts/`);
+      router.push(`/editor/posts?search=refresh`);
     } else {
       toast.error(editorConfig.errorMessage);
     }

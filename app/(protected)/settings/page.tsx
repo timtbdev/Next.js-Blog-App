@@ -47,7 +47,7 @@ const SettingsPage = async () => {
 
   return (
     <div className="max-w-3xl px-10">
-      <SettingsProfile user={data} />;
+      <SettingsProfile user={data} />
     </div>
   );
 };

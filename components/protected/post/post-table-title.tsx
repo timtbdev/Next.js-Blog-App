@@ -1,7 +1,5 @@
 import PostCreateButton from "@/components/protected/post/buttons/post-create-button";
 import { postConfig } from "@/config/post";
-import { Separator } from "@radix-ui/react-dropdown-menu";
-import React from "react";
 
 const PostTableTitle = () => {
   return (
