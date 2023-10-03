@@ -1,4 +1,5 @@
 import PostTableEmpty from "@/components/protected/post/post-emtpy-table";
+import PostRefreshOnce from "@/components/protected/post/post-refresh-once";
 import PostTableTitle from "@/components/protected/post/post-table-title";
 import { columns } from "@/components/protected/post/table/columns";
 import { DataTable } from "@/components/protected/post/table/data-table";
@@ -51,6 +52,7 @@ const PostsPage: FC<PostsPageProps> = async ({ searchParams }) => {
         ) : (
           <PostTableEmpty />
         )}
+        <PostRefreshOnce />
       </div>
     </>
   );
