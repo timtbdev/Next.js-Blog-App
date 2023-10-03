@@ -1,25 +1,39 @@
-import MagnifyingGlassIcon from "@heroicons/react/20/solid/MagnifyingGlassIcon";
+"use client";
+
+import { ArrowLeftIcon } from "lucide-react";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 import React from "react";
 
-const SearchBar = () => {
+const TopBar = () => {
+  const router = useRouter();
+  const currentPath = usePathname();
+  const path = currentPath.split("/");
   return (
-    <form className="relative flex flex-1" action="#" method="GET">
-      <label htmlFor="search-field" className="sr-only">
-        Search
-      </label>
-      <MagnifyingGlassIcon
-        className="pointer-events-none absolute inset-y-0 left-0 h-full w-5 text-gray-400"
-        aria-hidden="true"
-      />
-      <input
-        id="search-field"
-        className="block h-full w-full border-0 py-0 pl-8 pr-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm"
-        placeholder="Search..."
-        type="search"
-        name="search"
-      />
-    </form>
+    <>
+      {path.length > 3 ? (
+        <button
+          type="button"
+          onClick={() => router.back()}
+          className="relative flex flex-1 items-center"
+        >
+          <ArrowLeftIcon
+            className="mr-2 h-5 w-5 text-gray-400"
+            aria-hidden="true"
+          />
+          <span className="text-sm text-gray-500">Go Back</span>
+        </button>
+      ) : (
+        <Link href="/" className="relative flex flex-1 items-center">
+          <ArrowLeftIcon
+            className="mr-2 h-5 w-5 text-gray-400"
+            aria-hidden="true"
+          />
+          <span className="text-sm text-gray-500">Go Back to Homepage</span>
+        </Link>
+      )}
+    </>
   );
 };
 
-export default SearchBar;
+export default TopBar;

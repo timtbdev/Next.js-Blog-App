@@ -7,6 +7,8 @@ import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 
+export const revalidate = 0;
+
 interface PostEditorPageProps {
   params: { postId: string };
 }
@@ -167,14 +169,14 @@ export default async function PostEditorPage({ params }: PostEditorPageProps) {
   }
 
   return (
-    <div className="mx-auto max-w-3xl">
+    <div className="max-w-5xl px-10">
       <div>
         <h3 className="text-lg font-medium">{editorConfig.title}</h3>
         <p className="py-2 text-sm text-muted-foreground">
           {editorConfig.description}
         </p>
       </div>
-      <Separator className="mb-5" />
+      <Separator className="mb-5 max-w-2xl" />
       <PostEditor
         post={post}
         userId={userId || ""}

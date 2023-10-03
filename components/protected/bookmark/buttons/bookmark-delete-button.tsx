@@ -13,6 +13,7 @@ import { bookmarkConfig } from "@/config/bookmark";
 import { supabase } from "@/utils/supabase-client";
 import { Session } from "@supabase/auth-helpers-nextjs";
 import { Loader2 as SpinnerIcon, Trash as TrashIcon } from "lucide-react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
@@ -75,7 +76,7 @@ const BookmarkDeleteButton: React.FC<BookmarkDeleteButtonProps> = ({ id }) => {
         onClick={() => setShowDeleteAlert(true)}
         className="rounded-md border bg-gray-50 px-3 py-2 text-gray-900 hover:bg-gray-100"
       >
-        {bookmarkConfig.delete}
+        <TrashIcon className="h-4 w-4" />
       </button>
       <AlertDialog open={showDeleteAlert} onOpenChange={setShowDeleteAlert}>
         <AlertDialogContent className="text-md font-sans">
@@ -87,10 +88,7 @@ const BookmarkDeleteButton: React.FC<BookmarkDeleteButtonProps> = ({ id }) => {
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>{bookmarkConfig.cancel}</AlertDialogCancel>
-            <AlertDialogAction
-              className="!mt-2 !bg-gray-900 hover:!bg-gray-600"
-              onClick={deleteBookmark}
-            >
+            <AlertDialogAction onClick={deleteBookmark}>
               {isDeleteLoading ? (
                 <SpinnerIcon className="mr-2 h-4 w-4 animate-spin" />
               ) : (

@@ -2,6 +2,7 @@
 
 import { UpdatePost } from "@/actions/post/update-post";
 import FormTitle from "@/components/protected/editor/editor-components/post-title";
+import Editor from "@/components/protected/editor/tip-tap-editor/editor";
 import {
   AlertDialog,
   AlertDialogContent,
@@ -33,7 +34,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Uppy from "@uppy/core";
 import "@uppy/core/dist/style.min.css";
 import "@uppy/dashboard/dist/style.min.css";
-import Editor from "@/components/protected/editor/tip-tap-editor/editor";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { DashboardModal } from "@uppy/react";
 import Tus from "@uppy/tus";
 import { SparklesIcon, Loader2 as SpinnerIcon } from "lucide-react";
@@ -235,235 +242,271 @@ const PostEditor: FC<PostEditorProps> = ({
       <Form {...form}>
         {/* Title */}
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          <FormField
-            control={form.control}
-            name="title"
-            render={({ field }) => (
-              <FormItem className="w-full max-w-md">
-                <FormLabel>{editorConfig.formTitle}</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder={editorConfig.placeHolderTitle}
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          {/* Slug */}
-          <FormField
-            control={form.control}
-            name="slug"
-            render={({ field }) => (
-              <FormItem className="w-full max-w-md">
-                <FormLabel>{editorConfig.slug}</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder={editorConfig.placeholderSlug}
-                    {...field}
-                  />
-                </FormControl>
-                <FormDescription>
-                  <Button
-                    type="button"
-                    variant="outline"
-                    size="sm"
-                    className="mt-2"
-                    onClick={() =>
-                      field.onChange(slugify(form.getValues("title")))
-                    }
-                  >
-                    <SparklesIcon className="mr-2 h-4 w-4" />
-                    {editorConfig.generateSlug}
-                  </Button>
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="categoryId"
-            render={({ field }) => (
-              <FormItem className="space-y-3">
-                <FormLabel>{editorConfig.formCategory}</FormLabel>
-                <FormControl>
-                  <RadioGroup
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                    className="flex flex-col space-y-1"
-                  >
-                    {categories.map((category) => (
-                      <FormItem
-                        key={v4()}
-                        className="flex items-center space-x-3 space-y-0"
+          {/* General information */}
+          <Card className="max-w-2xl">
+            <CardHeader>
+              <CardTitle>{editorConfig.generalTitle}</CardTitle>
+              <CardDescription>
+                {editorConfig.generalDescription}
+              </CardDescription>
+            </CardHeader>
+            <Separator className="mb-8" />
+            <CardContent className="space-y-4">
+              <FormField
+                control={form.control}
+                name="title"
+                render={({ field }) => (
+                  <FormItem className="w-full max-w-md">
+                    <FormLabel>{editorConfig.formTitle}</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder={editorConfig.placeHolderTitle}
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              {/* Slug */}
+              <FormField
+                control={form.control}
+                name="slug"
+                render={({ field }) => (
+                  <FormItem className="w-full max-w-md">
+                    <FormLabel>{editorConfig.slug}</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder={editorConfig.placeholderSlug}
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormDescription>
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        className="mt-2"
+                        onClick={() =>
+                          field.onChange(slugify(form.getValues("title")))
+                        }
                       >
-                        <FormControl>
-                          <RadioGroupItem value={category.id} />
-                        </FormControl>
-                        <FormLabel className="font-normal">
-                          {category.title}
-                        </FormLabel>
-                      </FormItem>
-                    ))}
-                  </RadioGroup>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+                        <SparklesIcon className="mr-2 h-4 w-4" />
+                        {editorConfig.generateSlug}
+                      </Button>
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </CardContent>
+          </Card>
+
+          {/* Category */}
+          <Card className="max-w-2xl">
+            <CardHeader>
+              <CardTitle>{editorConfig.categoryTitle}</CardTitle>
+              <CardDescription>
+                {editorConfig.categoryDescription}
+              </CardDescription>
+            </CardHeader>
+            <Separator className="mb-8" />
+            <CardContent className="space-y-4">
+              <FormField
+                control={form.control}
+                name="categoryId"
+                render={({ field }) => (
+                  <FormItem className="space-y-3">
+                    <FormControl>
+                      <RadioGroup
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                        className="flex flex-col space-y-1"
+                      >
+                        {categories.map(
+                          (category) =>
+                            category.slug !== "/" && (
+                              <FormItem
+                                key={v4()}
+                                className="flex items-center space-x-3 space-y-0"
+                              >
+                                <FormControl>
+                                  <RadioGroupItem value={category.id} />
+                                </FormControl>
+                                <FormLabel className="font-normal">
+                                  {category.title}
+                                </FormLabel>
+                              </FormItem>
+                            ),
+                        )}
+                      </RadioGroup>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </CardContent>
+          </Card>
 
           {/* Cover Image */}
-          <div className="flex flex-col gap-1">
-            <span className="block text-sm font-medium leading-6 text-gray-900">
-              {editorConfig.formCoverImage}
-            </span>
-            <span className="text-sm text-gray-500">
-              {editorConfig.formCoverImageNote}
-            </span>
-            <Separator className="mt-1" />
-          </div>
-
-          {/* Image */}
-          <FormField
-            control={form.control}
-            name="image"
-            render={({ field }) => (
-              <FormItem className="w-full max-w-xl">
-                <FormControl>
-                  <Input
-                    placeholder={editorConfig.placeholderImage}
-                    {...field}
-                    disabled={true}
-                    className="hidden bg-gray-50"
-                  />
-                </FormControl>
-              </FormItem>
-            )}
-          />
-
-          <div className="flex w-full flex-col">
-            <DashboardModal
-              uppy={uppyCover}
-              open={showCoverModal}
-              onRequestClose={() => setShowCoverModal(false)}
-              disablePageScrollWhenModalOpen={false}
-              showSelectedFiles
-              showRemoveButtonAfterComplete
-              note={editorConfig.formImageNote}
-              proudlyDisplayPoweredByUppy={false}
-              showLinkToFileUploadResult
-            />
-            {coverImageFileName === "" && (
-              <div className="col-span-full">
-                <div className="mb-1 flex items-center gap-x-3">
-                  <button
-                    onClick={() => setShowCoverModal(!showCoverModal)}
-                    type="button"
-                    className="inline-flex items-center rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                  >
-                    <PaperClipIcon className="mr-1 h-4 w-4" />
-                    <span className="">
-                      {editorConfig.formCoverImageUploadFile}
-                    </span>
-                  </button>
-                </div>
-              </div>
-            )}
-
-            {coverImageFileName !== "" ? (
-              <CoverImageItem
-                userId={userId}
-                postId={post.id}
-                fileName={coverImageFileName}
-                imageUrl={coverImagePublicUrl}
+          <Card className="max-w-2xl">
+            <CardHeader>
+              <CardTitle>{editorConfig.coverImageTitle}</CardTitle>
+              <CardDescription>
+                {editorConfig.coverImageDescription}
+              </CardDescription>
+            </CardHeader>
+            <Separator className="mb-8" />
+            <CardContent className="space-y-4">
+              {/* Image */}
+              <FormField
+                control={form.control}
+                name="image"
+                render={({ field }) => (
+                  <FormItem className="w-full max-w-xl">
+                    <FormControl>
+                      <Input
+                        placeholder={editorConfig.placeholderImage}
+                        {...field}
+                        disabled={true}
+                        className="hidden bg-gray-50"
+                      />
+                    </FormControl>
+                  </FormItem>
+                )}
               />
-            ) : (
-              <CoverImagePlaceHolder />
-            )}
-          </div>
+
+              <div className="flex w-full flex-col">
+                <DashboardModal
+                  uppy={uppyCover}
+                  open={showCoverModal}
+                  onRequestClose={() => setShowCoverModal(false)}
+                  disablePageScrollWhenModalOpen={false}
+                  showSelectedFiles
+                  showRemoveButtonAfterComplete
+                  note={editorConfig.formImageNote}
+                  proudlyDisplayPoweredByUppy={false}
+                  showLinkToFileUploadResult
+                />
+                {coverImageFileName === "" && (
+                  <div className="col-span-full">
+                    <div className="mb-1 flex items-center gap-x-3">
+                      <button
+                        onClick={() => setShowCoverModal(!showCoverModal)}
+                        type="button"
+                        className="inline-flex items-center rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                      >
+                        <PaperClipIcon className="mr-1 h-4 w-4" />
+                        <span className="">
+                          {editorConfig.formCoverImageUploadFile}
+                        </span>
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                {coverImageFileName !== "" ? (
+                  <CoverImageItem
+                    userId={userId}
+                    postId={post.id}
+                    fileName={coverImageFileName}
+                    imageUrl={coverImagePublicUrl}
+                  />
+                ) : (
+                  <CoverImagePlaceHolder />
+                )}
+              </div>
+            </CardContent>
+          </Card>
 
           {/* Gallery Images */}
+          <Card className="max-w-2xl">
+            <CardHeader>
+              <CardTitle>{editorConfig.galleryImageTitle}</CardTitle>
+              <CardDescription>
+                {editorConfig.galleryImageDescription +
+                  allowedNumberOfImages +
+                  "  images."}
+              </CardDescription>
+            </CardHeader>
+            <Separator className="mb-8" />
+            <CardContent className="space-y-4">
+              <div className="flex w-full flex-col">
+                <DashboardModal
+                  uppy={uppyGallery}
+                  open={showGalleryModal}
+                  onRequestClose={() => setShowGalleryModal(false)}
+                  disablePageScrollWhenModalOpen={false}
+                  showSelectedFiles
+                  showRemoveButtonAfterComplete
+                  note={editorConfig.formImageNote}
+                  proudlyDisplayPoweredByUppy={false}
+                  showLinkToFileUploadResult
+                />
+                <div className="col-span-full">
+                  <div className="mb-3 flex items-center gap-x-3">
+                    <button
+                      onClick={() => setShowGalleryModal(!showGalleryModal)}
+                      type="button"
+                      className="inline-flex items-center rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                    >
+                      <PaperClipIcon className="mr-1 h-4 w-4" />
+                      <span className="">{editorConfig.chooseFile}</span>
+                    </button>
+                  </div>
+                </div>
 
-          <div className="flex flex-col gap-1">
-            <span className="block text-sm font-medium leading-6 text-gray-900">
-              {editorConfig.formGallery}
-            </span>
-            <span className="text-sm text-gray-500">
-              {editorConfig.formGalleryNote +
-                allowedNumberOfImages +
-                "  photos."}
-            </span>
-            <Separator className="mt-1" />
-          </div>
-
-          <div className="flex w-full flex-col">
-            <DashboardModal
-              uppy={uppyGallery}
-              open={showGalleryModal}
-              onRequestClose={() => setShowGalleryModal(false)}
-              disablePageScrollWhenModalOpen={false}
-              showSelectedFiles
-              showRemoveButtonAfterComplete
-              note={editorConfig.formImageNote}
-              proudlyDisplayPoweredByUppy={false}
-              showLinkToFileUploadResult
-            />
-            <div className="col-span-full">
-              <div className="mb-3 flex items-center gap-x-3">
-                <button
-                  onClick={() => setShowGalleryModal(!showGalleryModal)}
-                  type="button"
-                  className="inline-flex items-center rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                >
-                  <PaperClipIcon className="mr-1 h-4 w-4" />
-                  <span className="">{editorConfig.chooseFile}</span>
-                </button>
-              </div>
-            </div>
-
-            {galleryImagePublicUrls.length > 0 ? (
-              <GalleryImageTable
-                userId={userId}
-                postId={post.id}
-                fileNames={galleryImageFileNames}
-                imageUrls={galleryImagePublicUrls}
-              />
-            ) : (
-              <GalleryImageTableEmpty />
-            )}
-          </div>
-
-          {/* Description */}
-          <FormField
-            control={form.control}
-            name="description"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{editorConfig.formDescription}</FormLabel>
-                <FormControl>
-                  <Textarea
-                    placeholder={editorConfig.placeholderDescription}
-                    className="resize-none"
-                    {...field}
+                {galleryImagePublicUrls.length > 0 ? (
+                  <GalleryImageTable
+                    userId={userId}
+                    postId={post.id}
+                    fileNames={galleryImageFileNames}
+                    imageUrls={galleryImagePublicUrls}
                   />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          {/* Content editor */}
-          <FormTitle
-            title={editorConfig.formContentTitle}
-            description={editorConfig.formContentDescription}
-          />
+                ) : (
+                  <GalleryImageTableEmpty />
+                )}
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Short Description */}
+          <Card className="max-w-2xl">
+            <CardHeader>
+              <CardTitle>{editorConfig.shortDescriptionTitle}</CardTitle>
+              <CardDescription>
+                {editorConfig.shortDescriptionDescription}
+              </CardDescription>
+            </CardHeader>
+            <Separator className="mb-8" />
+            <CardContent className="space-y-4">
+              {/* Description */}
+              <FormField
+                control={form.control}
+                name="description"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Textarea
+                        placeholder={editorConfig.placeholderDescription}
+                        className="resize-none"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </CardContent>
+          </Card>
+
           <Editor
             defaultValue={content ? JSON.parse(content) : defaultEditorContent}
             onDebouncedUpdate={(editor) => {
               setContent(JSON.stringify(editor?.getJSON()));
             }}
           />
+
           <div className="infline-flex flex items-center justify-start space-x-3">
             <Button
               type="submit"

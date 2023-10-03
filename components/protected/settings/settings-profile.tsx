@@ -1,6 +1,21 @@
 "use client";
 
+import { UpdateSettings } from "@/actions/settings/update-settings";
+import {
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import {
   Form,
   FormControl,
@@ -10,35 +25,19 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Separator } from "@/components/ui/separator";
 import { profileConfig } from "@/config/profile";
 import { shimmer, toBase64 } from "@/lib/utils";
 import { profileFormSchema } from "@/lib/validation/profile";
 import { Profile } from "@/types/collection";
+import { supabase } from "@/utils/supabase-client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Uppy from "@uppy/core";
 import "@uppy/core/dist/style.min.css";
 import "@uppy/dashboard/dist/style.min.css";
-import { UpdateSettings } from "@/actions/settings/update-settings";
-import {
-  AlertDialog,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
-import { supabase } from "@/utils/supabase-client";
 import { DashboardModal } from "@uppy/react";
 import Tus from "@uppy/tus";
-import { SparklesIcon, Loader2 as SpinnerIcon } from "lucide-react";
+import { Loader2 as SpinnerIcon } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { FC, useState } from "react";

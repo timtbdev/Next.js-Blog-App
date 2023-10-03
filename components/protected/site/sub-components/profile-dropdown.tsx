@@ -1,6 +1,5 @@
 "use client";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -8,9 +7,11 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { dashBoardLogout, dashBoardProfile } from "@/config/dashboard";
+import { shimmer, toBase64 } from "@/lib/utils";
 import { Profile } from "@/types/collection";
 import { supabase } from "@/utils/supabase-client";
 import { Session } from "@supabase/supabase-js";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -61,10 +62,17 @@ const ProfileDropDown = () => {
     <>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Avatar>
-            <AvatarImage src={avatarUrl} />
-            <AvatarFallback>UN</AvatarFallback>
-          </Avatar>
+          <Image
+            src={avatarUrl || "/images/user-placeholder.png"}
+            alt="Avatar"
+            height={40}
+            width={40}
+            className="h-[40px] w-[40px] rounded-full"
+            priority
+            placeholder={`data:image/svg+xml;base64,${toBase64(
+              shimmer(40, 40),
+            )}`}
+          />
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56 font-sans">
           <Link

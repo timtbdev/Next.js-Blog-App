@@ -5,7 +5,7 @@ import DesktopSidebar from "./sidebars/desktop-sidebar";
 import MobileSidebar from "./sidebars/mobile-sidebar";
 import MobileMenuButton from "./sub-components/mobile-menu-button";
 import ProfileDropDown from "./sub-components/profile-dropdown";
-import SearchBar from "./sub-components/searchbar";
+import TopBar from "./sub-components/searchbar";
 
 interface ProtectedMainProps {
   children?: ReactNode;
@@ -28,7 +28,7 @@ const ProtectedMain: FC<ProtectedMainProps> = ({ children }) => {
           <div className="h-6 w-px bg-gray-200 lg:hidden" aria-hidden="true" />
 
           <div className="flex flex-1 gap-x-4 self-stretch lg:gap-x-6">
-            <SearchBar />
+            <TopBar />
             <div className="flex items-center gap-x-4 lg:gap-x-6">
               {/* Separator */}
               <div

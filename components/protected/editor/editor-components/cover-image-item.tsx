@@ -56,22 +56,21 @@ const CoverImageItem: FC<CoverImageItemProps> = ({
   }
   return (
     <div className="col-span-full max-w-2xl">
-      <div className="my-2 flex justify-center rounded-lg border border-gray-900/25 px-6 py-10">
-        <Image
-          src={imageUrl || imageUrl !== "" ? imageUrl : "/images/not-found.jpg"}
-          className="rounded-md ring-1 ring-gray-600"
-          alt="Cover image"
-          height={400}
-          width={600}
-          priority
-          placeholder={`data:image/svg+xml;base64,${toBase64(
-            shimmer(400, 600),
-          )}`}
-        />
-      </div>
+      <Image
+        src={imageUrl || imageUrl !== "" ? imageUrl : "/images/not-found.jpg"}
+        className="mb-5 rounded-lg shadow-sm"
+        alt="Cover image"
+        height={400}
+        width={600}
+        priority
+        placeholder={`data:image/svg+xml;base64,${toBase64(shimmer(400, 600))}`}
+      />
       <AlertDialog>
         <AlertDialogTrigger asChild>
-          <Button variant="outline">{editorConfig.deleteImage}</Button>
+          <Button variant="outline">
+            <TrashIcon className="mr-2 h-4 w-4" />
+            {editorConfig.deleteImage}
+          </Button>
         </AlertDialogTrigger>
         <AlertDialogContent>
           <AlertDialogHeader className="font-sans">

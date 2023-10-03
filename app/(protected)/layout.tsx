@@ -6,7 +6,7 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import React from "react";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 interface ProtectedLayoutProps {
   children: React.ReactNode;

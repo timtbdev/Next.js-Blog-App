@@ -7,6 +7,8 @@ import { v4 } from "uuid";
 
 const DesktopSidebar = () => {
   const currentPath = usePathname();
+  const path = currentPath.split("/");
+  const pathSlug = `/${path.slice(1, 3).join("/")}`;
   return (
     <>
       {/* Static sidebar for desktop */}
@@ -32,7 +34,8 @@ const DesktopSidebar = () => {
                       <Link
                         href={menu.slug || ""}
                         className={cn(
-                          currentPath === menu.slug
+                          currentPath === menu.slug ||
+                            (path.length > 3 && pathSlug === menu.slug)
                             ? "bg-gray-50 text-orange-600"
                             : "text-gray-700 hover:bg-gray-50 hover:text-orange-600",
                           "group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6",

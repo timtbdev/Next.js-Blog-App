@@ -19,7 +19,7 @@ import { ImageResizer } from "./extensions/image-resizer";
 import { defaultEditorProps } from "./props";
 
 export default function Editor({
-  className = "relative min-h-[500px] w-full focus:ring-orange-600 focus:outline-8 max-w-screen-lg border-stone-200 bg-white sm:mb-[calc(20vh)] sm:rounded-lg sm:border sm:shadow-lg",
+  className = "relative w-full focus:ring-orange-600 focus:outline-8 max-w-screen-lg border-stone-200 bg-white sm:mb-[calc(20vh)] sm:rounded-lg sm:border sm:shadow-lg",
   defaultValue = defaultEditorContent,
   onDebouncedUpdate = () => {},
   debounceDuration = 750,
@@ -84,7 +84,6 @@ export default function Editor({
       onUpdate(e.editor);
       debouncedUpdates(e);
     },
-    autofocus: "end",
   });
 
   // hydrate the editor with the defaultValue.

@@ -1,15 +1,15 @@
 "use client";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { dashBoardLogout, dashBoardMenus } from "@/config/dashboard";
+import { shimmer, toBase64 } from "@/lib/utils";
 import { supabase } from "@/utils/supabase-client";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FC } from "react";
@@ -34,10 +34,17 @@ const ProfileButton: FC<ProfileButtonProps> = ({ profileImageUrl }) => {
     <div className="mt-3 flex sm:ml-4 sm:mt-0">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Avatar>
-            <AvatarImage src={profileImageUrl} />
-            <AvatarFallback>UN</AvatarFallback>
-          </Avatar>
+          <Image
+            src={profileImageUrl || "/images/user-placeholder.png"}
+            alt="Avatar"
+            height={40}
+            width={40}
+            className="h-[40px] w-[40px] rounded-full"
+            priority
+            placeholder={`data:image/svg+xml;base64,${toBase64(
+              shimmer(40, 40),
+            )}`}
+          />
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56 font-sans">
           <Link

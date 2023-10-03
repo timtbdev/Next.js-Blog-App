@@ -11,9 +11,9 @@ import {
 import { postConfig } from "@/config/post";
 import { supabase } from "@/utils/supabase-client";
 import { Session } from "@supabase/auth-helpers-nextjs";
-import { Plus as AddIcon, Loader2 as SpinnerIcon } from "lucide-react";
+import { Loader2 as SpinnerIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
-import React, { FC, useState } from "react";
+import React, { useState } from "react";
 import { toast } from "react-hot-toast";
 
 const PostCreateButton = () => {

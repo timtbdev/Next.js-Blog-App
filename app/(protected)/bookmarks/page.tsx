@@ -1,11 +1,10 @@
-import BookmarkTable from "@/components/protected/bookmark/bookmark-table";
-import BookmarkTableHeader from "@/components/protected/bookmark/bookmark-table-header";
+import BookMarkTableTitle from "@/components/protected/bookmark/bookmark-table-title";
+import { columns } from "@/components/protected/bookmark/table/columns";
+import { DataTable } from "@/components/protected/post/table/data-table";
 import TableEmpty from "@/components/protected/table/table-empty";
-import TableWrapper from "@/components/protected/table/table-wrapper";
-import Pagination from "@/components/shared/pagination";
 import { bookmarkConfig } from "@/config/bookmark";
 import { emptyConfig } from "@/config/empty";
-import { BookMarkWithPost } from "@/types/collection";
+import { BookMarkWithPost, Post } from "@/types/collection";
 import type { Database } from "@/types/supabase";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { Metadata } from "next";
@@ -25,6 +24,7 @@ interface BookmarksPageProps {
 const BookmarksPage: React.FC<BookmarksPageProps> = async ({
   searchParams,
 }) => {
+  let posts: Post[] = [];
   const supabase = createServerComponentClient<Database>({ cookies });
   // Fetch total pages
   const { count } = await supabase
@@ -60,26 +60,18 @@ const BookmarksPage: React.FC<BookmarksPageProps> = async ({
   if (!data || error || !data.length) {
     notFound;
   }
+
+  data?.map((bookmark) => {
+    posts.push(bookmark.posts);
+  });
+
   return (
     <>
       <div className="mx-auto max-w-5xl p-4 sm:p-6 lg:p-8">
-        {data?.length && data?.length > 0 ? (
+        {posts?.length && posts?.length > 0 ? (
           <>
-            <TableWrapper>
-              <BookmarkTableHeader titles={bookmarkConfig.tableHeader} />
-              <BookmarkTable bookmarks={data ? data : []} />
-            </TableWrapper>
-            {/* Pagination */}
-            {totalPages > 1 && (
-              <Pagination
-                page={page}
-                perPage={limit}
-                totalItems={count ? count : 0}
-                totalPages={totalPages}
-                baseUrl="/bookmarks"
-                pageUrl="?page="
-              />
-            )}
+            <BookMarkTableTitle />
+            <DataTable data={posts} columns={columns} />
           </>
         ) : (
           <TableEmpty

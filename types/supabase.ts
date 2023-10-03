@@ -162,8 +162,8 @@ export interface Database {
           description: string | null
           id: string
           image: string | null
-          published: boolean | null
           slug: string | null
+          status: string | null
           title: string | null
           updated_at: string | null
         }
@@ -175,8 +175,8 @@ export interface Database {
           description?: string | null
           id?: string
           image?: string | null
-          published?: boolean | null
           slug?: string | null
+          status?: string | null
           title?: string | null
           updated_at?: string | null
         }
@@ -188,8 +188,8 @@ export interface Database {
           description?: string | null
           id?: string
           image?: string | null
-          published?: boolean | null
           slug?: string | null
+          status?: string | null
           title?: string | null
           updated_at?: string | null
         }

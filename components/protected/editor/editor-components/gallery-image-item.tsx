@@ -66,8 +66,9 @@ const GalleryImageItem: FC<GalleryImageItemProps> = ({
             height={44}
             width={44}
             priority
-            placeholder="blur"
-            blurDataURL={shimmer(44, 44)}
+            placeholder={`data:image/svg+xml;base64,${toBase64(
+              shimmer(44, 44),
+            )}`}
           />
         </div>
         <div className="grow items-center justify-start text-sm">

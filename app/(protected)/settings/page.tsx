@@ -6,6 +6,8 @@ import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import React from "react";
 
+export const revalidate = 0;
+
 async function getUserId() {
   const supabase = createServerComponentClient<Database>({ cookies });
   const {
@@ -43,7 +45,11 @@ const SettingsPage = async () => {
     console.log("Cound't find User profile.");
   }
 
-  return <SettingsProfile user={data} />;
+  return (
+    <div className="max-w-3xl px-10">
+      <SettingsProfile user={data} />;
+    </div>
+  );
 };
 
 export default SettingsPage;
