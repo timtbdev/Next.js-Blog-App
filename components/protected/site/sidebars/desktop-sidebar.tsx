@@ -56,18 +56,6 @@ const DesktopSidebar = () => {
                   ))}
                 </ul>
               </li>
-              <li className="mt-auto">
-                <Link
-                  href={dashBoardLogout.slug || ""}
-                  className="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-700 hover:bg-gray-50 hover:text-orange-600"
-                >
-                  <dashBoardLogout.icon
-                    className="h-6 w-6 shrink-0 text-gray-400 group-hover:text-orange-600"
-                    aria-hidden="true"
-                  />
-                  {dashBoardLogout.title}
-                </Link>
-              </li>
             </ul>
           </nav>
         </div>
