@@ -13,6 +13,19 @@ import readingTime from "reading-time";
 
 export const dynamic = "force-dynamic";
 
+async function getPublicImageUrl(postId: string, fileName: string) {
+  const supabase = createServerComponentClient<Database>({ cookies });
+  const bucketName =
+    process.env.NEXT_PUBLIC_SUPABASE_STORAGE_BUCKET_POSTS || "posts";
+  const { data } = supabase.storage
+    .from(bucketName)
+    .getPublicUrl(`${postId}/${fileName}`);
+
+  if (data && data.publicUrl) return data.publicUrl;
+
+  return "/images/not-found.jpg";
+}
+
 async function getComments(postId: string) {
   const supabase = createServerComponentClient<Database>({ cookies });
   const { data: comments, error } = await supabase
@@ -45,7 +58,7 @@ const PostItem: React.FC<PostItemProps> = async ({ post }) => {
             <article className="relative isolate flex max-w-3xl flex-col gap-2 rounded-lg bg-white px-5 py-3 shadow-md shadow-gray-300 ring-1 ring-black/5 sm:gap-8 sm:px-10 sm:py-6 lg:flex-row">
               <div className="relative aspect-[16/9] sm:aspect-[2/1] lg:aspect-square lg:w-64 lg:shrink-0">
                 <Image
-                  src={post.image!}
+                  src={await getPublicImageUrl(post.id, post.image || "")}
                   alt={post.title ?? "Cover"}
                   height={256}
                   width={256}

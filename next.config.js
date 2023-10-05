@@ -4,10 +4,6 @@ const nextConfig = {
     serverActions: true,
   },
   images: {
-    loader: "custom",
-    loaderFile: "./supabase-image-loader.js",
-  },
-  images: {
     remotePatterns: [
       {
         protocol: "https",

@@ -1,9 +1,26 @@
 import { shimmer, toBase64 } from "@/lib/utils";
-import { Archive, ArchiveIcon, CalendarIcon } from "lucide-react";
+import type { Database } from "@/types/supabase";
+import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+import { ArchiveIcon, CalendarIcon } from "lucide-react";
+import { cookies } from "next/headers";
 import Image from "next/image";
-import React, { FC } from "react";
+import { FC } from "react";
+
+async function getPublicImageUrl(postId: string, fileName: string) {
+  const supabase = createServerComponentClient<Database>({ cookies });
+  const bucketName =
+    process.env.NEXT_PUBLIC_SUPABASE_STORAGE_BUCKET_POSTS || "posts";
+  const { data } = supabase.storage
+    .from(bucketName)
+    .getPublicUrl(`${postId}/${fileName}`);
+
+  if (data && data.publicUrl) return data.publicUrl;
+
+  return "/images/not-found.jpg";
+}
 
 interface PostDetailHeadingProps {
+  id: string;
   title: string;
   image: string;
   authorImage: string;
@@ -12,7 +29,8 @@ interface PostDetailHeadingProps {
   category: string;
 }
 
-const PostDetailHeading: FC<PostDetailHeadingProps> = ({
+const PostDetailHeading: FC<PostDetailHeadingProps> = async ({
+  id,
   title,
   image,
   authorName,
@@ -24,7 +42,7 @@ const PostDetailHeading: FC<PostDetailHeadingProps> = ({
     <section className="flex flex-col items-start justify-between">
       <div className="relative w-full">
         <Image
-          src={image}
+          src={await getPublicImageUrl(id, image)}
           alt={title}
           width={512}
           height={288}

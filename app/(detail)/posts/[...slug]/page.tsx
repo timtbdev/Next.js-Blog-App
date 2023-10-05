@@ -164,6 +164,7 @@ export default async function PostPage({ params }: PostPageProps) {
               <div className="relative mx-auto max-w-4xl py-2">
                 {/* Heading */}
                 <PostDetailHeading
+                  id={post.id}
                   title={post.title as string}
                   image={post.image as string}
                   authorName={post.profiles.full_name as string}
