@@ -1,8 +1,10 @@
 "use client";
 
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
@@ -31,7 +33,7 @@ const ProfileButton: FC<ProfileButtonProps> = ({ profileImageUrl }) => {
   };
 
   return (
-    <div className="mt-3 flex sm:ml-4 sm:mt-0">
+    <div className="flex sm:ml-4 sm:mt-0">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Image

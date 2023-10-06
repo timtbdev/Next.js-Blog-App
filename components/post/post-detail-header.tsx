@@ -16,7 +16,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = ({ title }) => {
         className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4"
         aria-label="Global"
       >
-        <div className="flex flex-1 items-center justify-start">
+        <div className="flex flex-none items-center justify-start">
           <BackButton />
         </div>
         <div className="flex w-full max-w-3xl">
@@ -24,7 +24,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = ({ title }) => {
             {title}
           </h1>
         </div>
-        <div className="flex flex-1 items-center justify-end">
+        <div className="flex flex-none items-center justify-end">
           <LoginMenu />
         </div>
       </nav>
