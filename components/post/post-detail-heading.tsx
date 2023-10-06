@@ -1,10 +1,11 @@
-import { shimmer, toBase64 } from "@/lib/utils";
+import { getMinutes, shimmer, toBase64 } from "@/lib/utils";
 import type { Database } from "@/types/supabase";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import { ArchiveIcon, CalendarIcon } from "lucide-react";
+import { ArchiveIcon, CalendarIcon, ClockIcon } from "lucide-react";
 import { cookies } from "next/headers";
 import Image from "next/image";
 import { FC } from "react";
+import { ReadTimeResults } from "reading-time";
 
 async function getPublicImageUrl(postId: string, fileName: string) {
   const supabase = createServerComponentClient<Database>({ cookies });
@@ -27,6 +28,7 @@ interface PostDetailHeadingProps {
   authorName: string;
   date: string;
   category: string;
+  readTime: ReadTimeResults;
 }
 
 const PostDetailHeading: FC<PostDetailHeadingProps> = async ({
@@ -37,6 +39,7 @@ const PostDetailHeading: FC<PostDetailHeadingProps> = async ({
   authorImage,
   date,
   category,
+  readTime,
 }) => {
   return (
     <section className="flex flex-col items-start justify-between">
@@ -58,9 +61,9 @@ const PostDetailHeading: FC<PostDetailHeadingProps> = async ({
           {title}
         </p>
 
-        <div className="mb-7 flex flex-row items-center text-gray-500">
+        <div className="mb-7 flex flex-col justify-start text-gray-500 md:flex-row">
           {/* Author */}
-          <div className="flex flex-row items-center pr-3.5">
+          <div className="mb-5 flex flex-row items-start justify-start pr-3.5 md:mb-0">
             <Image
               src={authorImage}
               height={24}
@@ -77,27 +80,40 @@ const PostDetailHeading: FC<PostDetailHeadingProps> = async ({
               </span>
             </div>
           </div>
-          {/* Date */}
-          <div className="flex space-x-2 border-l border-gray-400 border-opacity-50 pl-3.5 pr-3.5">
-            <p className="mt-0.5">
-              <span className="sr-only">Date</span>
-              <CalendarIcon
-                className="h-4 w-4 text-gray-400"
-                aria-hidden="true"
-              />
-            </p>
-            <span className="text-sm">{date}</span>
-          </div>
-          {/* Category */}
-          <div className="flex space-x-2 border-l border-gray-400 border-opacity-50 pl-3.5">
-            <p className="mt-0.5">
-              <span className="sr-only">Date</span>
-              <ArchiveIcon
-                className="h-4 w-4 text-gray-400"
-                aria-hidden="true"
-              />
-            </p>
-            <span className="text-sm">{category}</span>
+          <div className="flex flex-row items-center">
+            {/* Date */}
+            <div className="flex space-x-2 border-gray-400 border-opacity-50 pl-0 pr-3.5 md:border-l md:pl-3.5">
+              <p className="mt-0.5">
+                <span className="sr-only">Date</span>
+                <CalendarIcon
+                  className="h-4 w-4 text-gray-400"
+                  aria-hidden="true"
+                />
+              </p>
+              <span className="text-sm">{date}</span>
+            </div>
+            {/* Category */}
+            <div className="flex space-x-2 border-l border-gray-400 border-opacity-50 pl-3.5 pr-3.5">
+              <p className="mt-0.5">
+                <span className="sr-only">Category</span>
+                <ArchiveIcon
+                  className="h-4 w-4 text-gray-400"
+                  aria-hidden="true"
+                />
+              </p>
+              <span className="text-sm">{category}</span>
+            </div>
+            {/* Category */}
+            <div className="flex space-x-2 border-l border-gray-400 border-opacity-50 pl-3.5">
+              <p className="mt-0.5">
+                <span className="sr-only">Minutes to read</span>
+                <ClockIcon
+                  className="h-4 w-4 text-gray-400"
+                  aria-hidden="true"
+                />
+              </p>
+              <span className="text-sm">{getMinutes(readTime.minutes)}</span>
+            </div>
           </div>
         </div>
       </div>

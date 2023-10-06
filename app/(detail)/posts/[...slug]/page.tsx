@@ -15,6 +15,7 @@ import { format, parseISO } from "date-fns";
 import { Metadata } from "next";
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
+import readingTime, { ReadTimeResults } from "reading-time";
 
 export const revalidate = 0;
 
@@ -154,6 +155,7 @@ export default async function PostPage({ params }: PostPageProps) {
 
   // Get comments
   const comments = await getComments(post.id as string);
+  const readTime = readingTime(post.content ? post.content : "");
 
   return (
     <>
@@ -169,8 +171,9 @@ export default async function PostPage({ params }: PostPageProps) {
                   image={post.image as string}
                   authorName={post.profiles.full_name as string}
                   authorImage={post.profiles.avatar_url as string}
-                  date={format(parseISO(post.updated_at!), "MM/dd/yyyy")}
+                  date={format(parseISO(post.updated_at!), "MMMM dd, yyyy")}
                   category={post.categories?.title as string}
+                  readTime={readTime as ReadTimeResults}
                 />
                 {/* Top Floatingbar */}
                 <div className="mx-auto">
