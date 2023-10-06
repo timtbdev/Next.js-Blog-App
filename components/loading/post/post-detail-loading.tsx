@@ -13,7 +13,7 @@ const PostDetailLoading = () => {
                     role="status"
                     className="animate-pulse space-y-8 md:flex md:items-center md:space-x-8 md:space-y-0"
                   >
-                    <div className="flex h-[288px] w-[512px] items-center justify-center rounded bg-gray-300 dark:bg-gray-700 sm:w-full">
+                    <div className="w-[392px]md:h-[288px] flex h-[221px] flex-1 items-center justify-center rounded bg-gray-300 dark:bg-gray-700 sm:w-full md:w-[512px]">
                       <svg
                         className="h-10 w-10 text-gray-200 dark:text-gray-600"
                         aria-hidden="true"
