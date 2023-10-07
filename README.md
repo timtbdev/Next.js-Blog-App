@@ -1,11 +1,11 @@
 <p align="center" style="margin-top: 120px">
-  <img width="1040" alt="Cover" src="https://github.com/timtbdev/Next.js-Blog-App/assets/25026241/ad4380ff-53c9-4c83-bdbc-f277b5dbfd86">
+  <img width="1040" alt="Cover" src="https://github.com/timtbdev/Next.js-Blog-App/assets/25026241/f4d08597-8f6e-4a2e-8807-0490eb7859be">
 
-  <h1 align="center">Full-stack Blogging Applicaition</h1>
+  <h1 align="center">Multi-User, Full-stack Blogging Applicaition</h1>
 
 <p align="center">
   The <em>all-in-one</em> starter kit <br/>
-  for building full-stack blogging applications.
+  for building multi-user, full-stack blogging applications.
 </p>
 
 <p align="center">
@@ -18,7 +18,7 @@
 
 ## Introduction
 
-The [Blogging application](https://ub.cafe) is a full-stack Next.js app with Supabase support. Built with [Next.js App Router](https://nextjs.org/docs/app), [Supabase Auth](https://supabase.com/docs/guides/auth) and [Supabase Database](https://supabase.com/docs/guides/database), [Supabase Storage](https://supabase.com/docs/guides/storage).
+The [Blogging application](https://ub.cafe) is a multi-user, full-stack Next.js app with Supabase support. Built with [Next.js App Router](https://nextjs.org/docs/app), [Supabase Auth](https://supabase.com/docs/guides/auth) and [Supabase Database](https://supabase.com/docs/guides/database), [Supabase Storage](https://supabase.com/docs/guides/storage).
 
 ## 💻 Frontend
 
