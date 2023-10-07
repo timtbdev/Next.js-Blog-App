@@ -1,5 +1,24 @@
 <p align="center" style="margin-top: 120px">
-  <img width="1040" alt="Cover" src="https://github.com/timtbdev/Next.js-Blog-App/assets/25026241/0475d777-ece5-42d2-ab2c-ce415c1189b8">
+  <img width="1040" alt="Cover" src="https://github.com/timtbdev/Next.js-Blog-App/assets/25026241/ad4380ff-53c9-4c83-bdbc-f277b5dbfd86">
+
+  <h1 align="center">Full-stack Blogging Applicaition</h1>
+
+<p align="center">
+  The <em>all-in-one</em> starter kit <br/>
+  for building full-stack blogging applications.
+</p>
+
+<p align="center">
+  <a href="#introduction"><strong>Introduction</strong></a> ·
+  <a href="https://ub.cafe"><strong>Demo</strong></a> ·
+  <a href="#"><strong>Guide</strong></a> ·
+  <a href="#contributing"><strong>Contributing</strong></a>
+</p>
+<br/>
+
+## Introduction
+
+The [Blogging application](https://ub.cafe) is a full-stack Next.js app with Supabase support. Built with [Next.js App Router](https://nextjs.org/docs/app), [Supabase Auth](https://supabase.com/docs/guides/auth) and [Supabase Database](https://supabase.com/docs/guides/database), [Supabase Storage](https://supabase.com/docs/guides/storage).
 
 ## 💻 Frontend
 
@@ -98,6 +117,11 @@ Want to get up and running quickly? Follow these steps:
 That's it! You should now be able to access the app at http://localhost:3000
 
 Admin dashboard will also be available on http://localhost:300/editor/posts
+
+## Contributing
+
+- [Start a discussion](https://timtb.dev/contact) with a question, piece of feedback, or idea you want to share with me.
+- [Open an issue](https://github.com/timtbdev/Next.js-Blog-App/issues) if you believe you've encountered a bug with the starter kit.
 
 ## 🙇 Author
 

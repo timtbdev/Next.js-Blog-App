@@ -56,7 +56,7 @@ const PostDetailHeading: FC<PostDetailHeadingProps> = async ({
         />
         <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-gray-900/10" />
       </div>
-      <div>
+      <div className="w-full">
         <p className="my-5 overflow-hidden text-xl font-semibold leading-6 text-gray-900">
           {title}
         </p>
