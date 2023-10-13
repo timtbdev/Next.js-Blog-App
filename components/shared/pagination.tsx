@@ -1,3 +1,5 @@
+"use client ";
+
 import Pager from "@/components/shared/pager";
 import { pagingConfig } from "@/config/paging";
 import { cn } from "@/lib/utils";

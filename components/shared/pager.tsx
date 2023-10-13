@@ -1,5 +1,8 @@
+"use client";
+
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React from "react";
 import { v4 } from "uuid";
 
@@ -16,6 +19,7 @@ const Pager: React.FC<PagerProps> = ({
   baseUrl,
   pageUrl,
 }) => {
+  const router = useRouter;
   let pagination = [],
     index = 1;
 
