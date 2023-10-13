@@ -38,7 +38,10 @@ const Pagination: React.FC<PaginationProps> = ({
       <div className="-mt-px flex w-0 flex-1">
         <button
           type="button"
-          onClick={() => router.push(prevLink)}
+          onClick={() => {
+            router.push(prevLink);
+            router.refresh();
+          }}
           className={cn(
             {
               "pointer-events-none opacity-50": page === 1,
@@ -66,7 +69,10 @@ const Pagination: React.FC<PaginationProps> = ({
       <div className="-mt-px flex w-0 flex-1 justify-end">
         <button
           type="button"
-          onClick={() => router.push(nextLink)}
+          onClick={() => {
+            router.push(nextLink);
+            router.refresh();
+          }}
           className={cn(
             "inline-flex items-center border-t-2 border-transparent pl-1 pt-4 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700",
             { "pointer-events-none opacity-50": page >= totalPages },
