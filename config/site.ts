@@ -13,7 +13,7 @@ export const form = {
 };
 
 export const bannerConfig = {
-  title: "Fullstack Blog",
+  title: "Fullstack Blogging App",
   description: "built with Next.js and Supabase.",
   link: "https://github.com/timtbdev/Next.js-Blog-App",
   button: "Github",
