@@ -62,7 +62,7 @@ https://github.com/timtbdev/Next.js-Blog-App/assets/25026241/29c35c5f-ad67-4f5b-
 - UI Components using [HeadlessUI](https://headlessui.com), [Radix-UI](https://radix-ui.com), [Shadcn-UI](https://ui.shadcn.com/)
 - WYSIWYG editor using [Novel](https://novel.sh/)
 - Loading, Error, NotFound, Empty pages
-- Sending emails using [NodeMailer](https://nodemailer.com) and [React Email](https://https://react.email/), [Gmail](https://gmail.com)
+- Sending emails using [NodeMailer](https://nodemailer.com) and [React Email](https://react.email/), [Gmail](https://gmail.com)
 - Forms using [React-Hook-Forms](https://www.react-hook-form.com/)
 - Toasts using [React-Hot-Toast](https://react-hot-toast.com/)
 - Validations using [Zod](https://zod.dev)
