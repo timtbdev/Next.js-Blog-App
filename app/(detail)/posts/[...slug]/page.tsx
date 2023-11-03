@@ -1,16 +1,18 @@
 import { GetBookmark } from "@/actions/bookmark/get-bookmark";
-import ScrollUpButton from "@/components/buttons/scroll-up-button";
-import PostComment from "@/components/post/post-comment";
-import PostDetailHeading from "@/components/post/post-detail-heading";
-import PostFloatingBar from "@/components/post/post-floating-bar";
-import { metaData } from "@/config/meta";
+import {
+  DetailPostComment,
+  DetailPostFloatingBar,
+  DetailPostHeading,
+} from "@/components/detail/post";
+import { DetailPostScrollUpButton } from "@/components/detail/post/buttons";
+import { seoData } from "@/config/root/seo";
 import { getOgImageUrl, getUrl } from "@/lib/utils";
 import {
   CommentWithProfile,
   PostWithCategoryWithProfile,
 } from "@/types/collection";
 import type { Database } from "@/types/supabase";
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+import { createClient } from "@/utils/supabase/server";
 import { format, parseISO } from "date-fns";
 import { Metadata } from "next";
 import { cookies } from "next/headers";
@@ -39,7 +41,8 @@ async function getBookmark(postId: string, userId: string) {
 
 async function getPost(params: { slug: string[] }) {
   const slug = params?.slug?.join("/");
-  const supabase = createServerComponentClient<Database>({ cookies });
+  const cookieStore = cookies();
+  const supabase = createClient(cookieStore);
 
   const response = await supabase
     .from("posts")
@@ -70,8 +73,8 @@ export async function generateMetadata({
     title: post.title,
     description: post.description,
     authors: {
-      name: metaData.author.name,
-      url: metaData.author.twitterUrl,
+      name: seoData.author.name,
+      url: seoData.author.twitterUrl,
     },
     openGraph: {
       title: post.title as string,
@@ -109,7 +112,8 @@ export async function generateMetadata({
 }
 
 async function getComments(postId: string) {
-  const supabase = createServerComponentClient<Database>({ cookies });
+  const cookieStore = cookies();
+  const supabase = createClient(cookieStore);
   const { data: comments, error } = await supabase
     .from("comments")
     .select("*, profiles(*)")
@@ -124,7 +128,8 @@ async function getComments(postId: string) {
 }
 
 export default async function PostPage({ params }: PostPageProps) {
-  const supabase = createServerComponentClient<Database>({ cookies });
+  const cookieStore = cookies();
+  const supabase = createClient(cookieStore);
   // Get post data
   const post = await getPost(params);
   if (!post) {
@@ -165,7 +170,7 @@ export default async function PostPage({ params }: PostPageProps) {
             <div className="mx-auto max-w-4xl rounded-lg bg-white px-6 py-4 shadow-sm shadow-gray-300 ring-1 ring-black/5 sm:px-14 sm:py-10">
               <div className="relative mx-auto max-w-4xl py-2">
                 {/* Heading */}
-                <PostDetailHeading
+                <DetailPostHeading
                   id={post.id}
                   title={post.title as string}
                   image={post.image as string}
@@ -177,7 +182,7 @@ export default async function PostPage({ params }: PostPageProps) {
                 />
                 {/* Top Floatingbar */}
                 <div className="mx-auto">
-                  <PostFloatingBar
+                  <DetailPostFloatingBar
                     id={post.id as string}
                     title={post.title as string}
                     text={post.description as string}
@@ -198,7 +203,7 @@ export default async function PostPage({ params }: PostPageProps) {
               </div>
               <div className="mx-auto mt-10">
                 {/* Bottom Floatingbar */}
-                <PostFloatingBar
+                <DetailPostFloatingBar
                   id={post.id as string}
                   title={post.title as string}
                   text={post.description as string}
@@ -211,12 +216,12 @@ export default async function PostPage({ params }: PostPageProps) {
               </div>
             </div>
           </div>
-          <PostComment
+          <DetailPostComment
             postId={post.id as string}
             comments={comments as CommentWithProfile[]}
           />
         </div>
-        <ScrollUpButton />
+        <DetailPostScrollUpButton />
       </div>
     </>
   );

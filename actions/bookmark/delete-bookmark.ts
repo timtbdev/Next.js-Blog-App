@@ -2,12 +2,13 @@
 
 import { bookmarkSchema } from "@/lib/validation/bookmark";
 import { Database } from "@/types/supabase";
-import { createServerActionClient } from "@supabase/auth-helpers-nextjs";
+import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
 import * as z from "zod";
 
 export async function DeleteBookmark(context: z.infer<typeof bookmarkSchema>) {
-  const supabase = createServerActionClient<Database>({ cookies });
+  const cookieStore = cookies();
+  const supabase = createClient(cookieStore);
 
   try {
     const bookmark = bookmarkSchema.parse(context);

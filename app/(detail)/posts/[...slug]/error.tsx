@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import SiteError from '@/components/site/site-error';
-import React from 'react';
+import { SharedError } from "@/components/shared";
+import React from "react";
 
 const Error = () => {
-    return <SiteError />;
+  return <SharedError />;
 };
 
 export default Error;

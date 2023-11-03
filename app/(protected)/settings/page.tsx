@@ -1,7 +1,7 @@
 import SettingsProfile from "@/components/protected/settings/settings-profile";
 import { Profile } from "@/types/collection";
 import type { Database } from "@/types/supabase";
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import React from "react";
@@ -9,7 +9,8 @@ import React from "react";
 export const revalidate = 0;
 
 async function getUserId() {
-  const supabase = createServerComponentClient<Database>({ cookies });
+  const cookieStore = cookies();
+  const supabase = createClient(cookieStore);
   const {
     data: { session },
     error,
@@ -25,7 +26,8 @@ async function getUserId() {
 }
 
 const SettingsPage = async () => {
-  const supabase = createServerComponentClient<Database>({ cookies });
+  const cookieStore = cookies();
+  const supabase = createClient(cookieStore);
 
   const userId = await getUserId();
 

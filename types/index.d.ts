@@ -1,7 +1,7 @@
 import { Icon } from "lucide-react";
 import { string } from "zod";
 
-export type MetaAttributes = {
+export type SeoType = {
   title: string;
   subTitle: string;
   absoluteTitle: string;
@@ -12,19 +12,33 @@ export type MetaAttributes = {
   tags: Array<string>;
 };
 
-export type CategoryAttributes = {
-  id: string;
+export type FooterType = {
+  categories: CategoryType[];
+  pages: PageType[];
+  socials: SocialType[];
+  legals: PageType[];
+  copyright: string;
+};
+
+export type PageType = {
   title: string;
   slug: string;
 };
 
-export type DashBoardAttributes = {
+export type CategoryType = {
+  id: string;
+  title: string;
+  slug: string;
+  icon: Icon;
+};
+
+export type DashBoardType = {
   title: string;
   slug?: string;
   icon: Icon;
 };
 
-export type DashBoardPageAttributes = {
+export type DashBoardPageType = {
   title: string;
   slug?: string;
   initial: string;
@@ -74,48 +88,49 @@ export interface User {
   image?: string;
 }
 
-export interface PostKvDataAttributes {
-  views: number;
-  likes: number;
-  comments: number;
-  error: boolean;
-}
-
-interface FooterAttributes {
-  socials: Social[];
-  copyright: string;
-  menus: FooterMenu[];
-}
-
-export type Social = {
+export type SocialType = {
   name: string;
-  href: string;
+  url: string;
   icon: Icon;
 };
 
-export type FooterMenu = {
-  name: string;
-  href: string;
-};
+// Page Policy
 
-export type PolicyAttributes = {
+export type PolicyPageType = {
   title: string;
   description: string;
   paragraphs: ParagraphWithTitle[];
 };
 
-export type TermsAttributes = {
+// Page Terms
+
+export type TermsPageType = {
   title: string;
   description: string;
   paragraphs: ParagraphWithoutTitle[];
 };
 
-export type AboutAttributes = {
+// About Page
+
+export type AboutPageType = {
+  general: AboutGeneralType;
+  features: AboutFeatureType[];
+};
+
+export type AboutGeneralType = {
   title: string;
   subTitle: string;
   description: string;
   paragraphs: ParagraphWithOutTitle[];
 };
+
+export type AboutFeatureType = {
+  name: string;
+  description: string;
+  icon: Icon;
+};
+
+// Shared
 
 export type ParagraphWithTitle = {
   title: string;

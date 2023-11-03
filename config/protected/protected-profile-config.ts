@@ -1,0 +1,28 @@
+const protectedProfileConfig = {
+  primaryTitle: "Personal information",
+  primarySubTitle: "Update your personal information.",
+  secondaryTitle: "User information",
+  secondarySubTitle: "Update your user information",
+  formImageNote: "Only JPG, PNG files are allowed. 5MB max.",
+  successMessageImageUpload: "Your image was uploaded successfully.",
+  errorMessageImageUpload: "Couldn't upload your image.",
+  name: "Fullname",
+  firstName: "Firstname",
+  firstNamePlaceholder: "Your firstname",
+  lastName: "LastName",
+  lastNamePlaceholder: "Your lastname",
+  userName: "Username",
+  userNamePlaceholder: "Your username",
+  email: "Email",
+  emailPlaceholder: "Your email",
+  website: "Website",
+  websitePlaceholder: "https://your-website.com",
+  update: "Update Profile",
+  changeAvatar: "Change Avatar",
+  uploadNote: "JPG, GIF or PNG. 5MB max.",
+  pleaseWait: "Please wait...",
+  successMessage: "Your profile has been updated.",
+  errorMessage: "Error has been occured by updating your profile.",
+};
+
+export default protectedProfileConfig;

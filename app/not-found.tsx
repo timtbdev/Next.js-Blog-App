@@ -1,8 +1,8 @@
-import SiteNotFound from '@/components/site/site-not-found';
-import React from 'react';
+import { SharedNotFound } from "@/components/shared";
+import React from "react";
 
 const NotFound = () => {
-    return <SiteNotFound />;
+  return <SharedNotFound />;
 };
 
 export default NotFound;

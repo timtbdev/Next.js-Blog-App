@@ -1,9 +1,8 @@
-import PostEditor from "@/components/protected/editor/post-editor";
+import Editor from "@/components/protected/editor/editor";
 import { Separator } from "@/components/ui/separator";
-import { editorConfig } from "@/config/editor";
+import { protectedEditorConfig } from "@/config/protected";
 import { Draft } from "@/types/collection";
-import type { Database } from "@/types/supabase";
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 
@@ -14,7 +13,8 @@ interface PostEditorPageProps {
 }
 
 async function getUserId() {
-  const supabase = createServerComponentClient<Database>({ cookies });
+  const cookeStore = cookies();
+  const supabase = createClient(cookeStore);
   const {
     data: { session },
     error,
@@ -30,7 +30,8 @@ async function getUserId() {
 }
 
 async function getPost(postId: string, userId: string) {
-  const supabase = createServerComponentClient<Database>({ cookies });
+  const cookieStore = cookies();
+  const supabase = createClient(cookieStore);
   const { data, error } = await supabase
     .from("drafts")
     .select("*")
@@ -52,7 +53,8 @@ async function getCoverImageFileName(
   userId: string,
   postId: string,
 ) {
-  const supabase = createServerComponentClient<Database>({ cookies });
+  const cookieStore = cookies();
+  const supabase = createClient(cookieStore);
   const { data, error } = await supabase.storage
     .from(bucketName)
     .list(`${userId}/${postId}`, {
@@ -79,7 +81,8 @@ async function getCoverImageUrl(
   postId: string,
   fileName: string,
 ) {
-  const supabase = createServerComponentClient<Database>({ cookies });
+  const cookieStore = cookies();
+  const supabase = createClient(cookieStore);
   const { data } = supabase.storage
     .from(bucketName)
     .getPublicUrl(`${userId}/${postId}/${fileName}`);
@@ -89,7 +92,8 @@ async function getCoverImageUrl(
 
 // Get Gallery images filenames and public urls
 async function getGalleryImageFileNames(bucketName: string, userId, postId) {
-  const supabase = createServerComponentClient<Database>({ cookies });
+  const cookieStore = cookies();
+  const supabase = createClient(cookieStore);
   const { data, error } = await supabase.storage
     .from(bucketName)
     .list(`${userId}/${postId}`, {
@@ -117,7 +121,8 @@ async function getGalleryImageUrls(
   postId: string,
   fileNames: string[],
 ) {
-  const supabase = createServerComponentClient<Database>({ cookies });
+  const cookieStore = cookies();
+  const supabase = createClient(cookieStore);
   let filePublicUrls: string[] = [];
   fileNames.map((fileName) => {
     const { data } = supabase.storage
@@ -171,13 +176,13 @@ export default async function PostEditorPage({ params }: PostEditorPageProps) {
   return (
     <div className="max-w-5xl px-10">
       <div>
-        <h3 className="text-lg font-medium">{editorConfig.title}</h3>
+        <h3 className="text-lg font-medium">{protectedEditorConfig.title}</h3>
         <p className="py-2 text-sm text-muted-foreground">
-          {editorConfig.description}
+          {protectedEditorConfig.description}
         </p>
       </div>
       <Separator className="mb-5 max-w-2xl" />
-      <PostEditor
+      <Editor
         post={post}
         userId={userId || ""}
         coverImageFileName={coverImageFileName || ""}

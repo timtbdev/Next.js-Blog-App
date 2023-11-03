@@ -2,12 +2,13 @@
 
 import { commentSchema } from "@/lib/validation/comment";
 import { Database } from "@/types/supabase";
-import { createServerActionClient } from "@supabase/auth-helpers-nextjs";
+import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
 import * as z from "zod";
 
 export async function PostComment(context: z.infer<typeof commentSchema>) {
-  const supabase = createServerActionClient<Database>({ cookies });
+  const cookieStore = cookies();
+  const supabase = createClient(cookieStore);
   try {
     const comment = commentSchema.parse(context);
     const { data, error } = await supabase

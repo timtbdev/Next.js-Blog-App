@@ -1,4 +1,4 @@
-import { dashBoardLogout, dashBoardMenusLoop } from "@/config/dashboard";
+import { dashBoardMenu } from "@/config/shared/dashboard";
 import { cn, getUrl } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
@@ -29,7 +29,7 @@ const DesktopSidebar = () => {
             <ul role="list" className="flex flex-1 flex-col gap-y-7">
               <li>
                 <ul role="list" className="-mx-2 space-y-1">
-                  {dashBoardMenusLoop.map((menu) => (
+                  {dashBoardMenu.map((menu) => (
                     <li key={v4()}>
                       <Link
                         href={menu.slug || ""}

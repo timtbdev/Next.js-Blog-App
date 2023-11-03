@@ -1,22 +1,17 @@
-"use client";
+import { LoginHeader, LoginSection } from "@/components/login";
+import { createClient } from "@/utils/supabase/server";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
-import LoginHeader from "@/components/login/login-header";
-import LoginSection from "@/components/login/login-section";
-import { supabase } from "@/utils/supabase-client";
-import { redirect, useRouter } from "next/navigation";
-import React, { useEffect } from "react";
+const LoginPage = async () => {
+  const cookieStore = cookies();
+  const supabase = createClient(cookieStore);
 
-const LoginPage = () => {
-  const router = useRouter();
-  useEffect(() => {
-    const user = async () => {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      user && router.replace("/editor/posts");
-    };
-    user();
-  }, []);
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  user && redirect("/editor/posts");
 
   return (
     <>

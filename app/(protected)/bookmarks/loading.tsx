@@ -1,4 +1,4 @@
-import LoadingTable from "@/components/loading/table";
+import LoadingTable from "@/components/protected/loading/table";
 import React from "react";
 
 export default function Loading() {

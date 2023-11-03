@@ -16,9 +16,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { postConfig } from "@/config/post";
-import { supabase } from "@/utils/supabase-client";
-import { Session } from "@supabase/auth-helpers-nextjs";
+import { protectedPostConfig } from "@/config/protected";
+import { createClient } from "@/utils/supabase/client";
+import { Session } from "@supabase/supabase-js";
 import {
   MoreVertical as ElipsisIcon,
   Loader2 as SpinnerIcon,
@@ -36,6 +36,7 @@ interface PostEditButtonProps {
 }
 
 const PostEditButton: FC<PostEditButtonProps> = ({ id }) => {
+  const supabase = createClient();
   const router = useRouter();
   const [showDeleteAlert, setShowDeleteAlert] = useState<boolean>(false);
   const [isDeleteLoading, setIsDeleteLoading] = useState<boolean>(false);
@@ -55,7 +56,7 @@ const PostEditButton: FC<PostEditButtonProps> = ({ id }) => {
     });
 
     return () => subscription.unsubscribe();
-  }, [id, session?.user.id]);
+  }, [id, session?.user.id, supabase.auth]);
 
   // Delete post
   async function deleteMyPost() {
@@ -68,15 +69,15 @@ const PostEditButton: FC<PostEditButtonProps> = ({ id }) => {
       const response = await DeletePost(myPostData);
       if (response) {
         setIsDeleteLoading(false);
-        toast.success(postConfig.successDelete);
+        toast.success(protectedPostConfig.successDelete);
         router.refresh();
       } else {
         setIsDeleteLoading(false);
-        toast.error(postConfig.errorDelete);
+        toast.error(protectedPostConfig.errorDelete);
       }
     } else {
       setIsDeleteLoading(false);
-      toast.error(postConfig.errorDelete);
+      toast.error(protectedPostConfig.errorDelete);
     }
   }
 
@@ -97,7 +98,7 @@ const PostEditButton: FC<PostEditButtonProps> = ({ id }) => {
                 setShowLoadingAlert(false);
               }}
             >
-              {postConfig.edit}
+              {protectedPostConfig.edit}
             </a>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
@@ -105,7 +106,7 @@ const PostEditButton: FC<PostEditButtonProps> = ({ id }) => {
             className="flex cursor-pointer items-center text-destructive focus:text-destructive"
             onSelect={() => setShowDeleteAlert(true)}
           >
-            {postConfig.delete}
+            {protectedPostConfig.delete}
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
@@ -113,20 +114,22 @@ const PostEditButton: FC<PostEditButtonProps> = ({ id }) => {
       <AlertDialog open={showDeleteAlert} onOpenChange={setShowDeleteAlert}>
         <AlertDialogContent className="text-md font-sans">
           <AlertDialogHeader>
-            <AlertDialogTitle>{postConfig.questionDelete}</AlertDialogTitle>
+            <AlertDialogTitle>
+              {protectedPostConfig.questionDelete}
+            </AlertDialogTitle>
             <AlertDialogDescription>
-              {postConfig.warning}
+              {protectedPostConfig.warning}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>{postConfig.cancel}</AlertDialogCancel>
+            <AlertDialogCancel>{protectedPostConfig.cancel}</AlertDialogCancel>
             <AlertDialogAction onClick={deleteMyPost}>
               {isDeleteLoading ? (
                 <SpinnerIcon className="mr-2 h-4 w-4 animate-spin" />
               ) : (
                 <TrashIcon className="mr-2 h-4 w-4" />
               )}
-              <span>{postConfig.confirm}</span>
+              <span>{protectedPostConfig.confirm}</span>
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
@@ -136,7 +139,7 @@ const PostEditButton: FC<PostEditButtonProps> = ({ id }) => {
         <AlertDialogContent className="font-sans">
           <AlertDialogHeader>
             <AlertDialogTitle className="text-center">
-              {postConfig.pleaseWait}
+              {protectedPostConfig.pleaseWait}
             </AlertDialogTitle>
             <AlertDialogDescription className="mx-auto text-center">
               <SpinnerIcon className="h-6 w-6 animate-spin" />

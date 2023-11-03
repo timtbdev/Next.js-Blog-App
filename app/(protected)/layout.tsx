@@ -1,12 +1,8 @@
 import ProtectedMain from "@/components/protected/site/protected-main";
-import { Profile } from "@/types/collection";
-import type { Database } from "@/types/supabase";
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import React from "react";
-
-export const revalidate = 0;
 
 interface ProtectedLayoutProps {
   children: React.ReactNode;
@@ -15,7 +11,9 @@ interface ProtectedLayoutProps {
 const ProtectedLayout: React.FC<ProtectedLayoutProps> = async ({
   children,
 }) => {
-  const supabase = createServerComponentClient<Database>({ cookies });
+  const cookieStore = cookies();
+  const supabase = createClient(cookieStore);
+
   const {
     data: { session },
   } = await supabase.auth.getSession();

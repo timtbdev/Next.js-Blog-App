@@ -2,14 +2,15 @@
 
 import { imageDeleteSchema } from "@/lib/validation/image";
 import { Database } from "@/types/supabase";
-import { createServerActionClient } from "@supabase/auth-helpers-nextjs";
+import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
 import * as z from "zod";
 
 export async function DeleteCoverImage(
   context: z.infer<typeof imageDeleteSchema>,
 ) {
-  const supabase = createServerActionClient<Database>({ cookies });
+  const cookieStore = cookies();
+  const supabase = createClient(cookieStore);
   try {
     const { userId, postId, fileName } = imageDeleteSchema.parse(context);
     const bucketName =

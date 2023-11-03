@@ -2,12 +2,13 @@
 
 import { postUpdateSchema } from "@/lib/validation/post";
 import type { Database } from "@/types/supabase";
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
 import * as z from "zod";
 
 export async function UpdatePost(context: z.infer<typeof postUpdateSchema>) {
-  const supabase = createServerComponentClient<Database>({ cookies });
+  const cookieStore = cookies();
+  const supabase = createClient(cookieStore);
   try {
     const post = postUpdateSchema.parse(context);
 

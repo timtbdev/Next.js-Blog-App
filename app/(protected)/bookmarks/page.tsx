@@ -1,20 +1,22 @@
-import BookMarkTableTitle from "@/components/protected/bookmark/bookmark-table-title";
-import { columns } from "@/components/protected/bookmark/table/columns";
+import {
+  ProtectedBookMarkTableColumns,
+  ProtectedBookMarkTableTitle,
+} from "@/components/protected/bookmark";
 import { DataTable } from "@/components/protected/post/table/data-table";
 import TableEmpty from "@/components/protected/table/table-empty";
-import { bookmarkConfig } from "@/config/bookmark";
-import { emptyConfig } from "@/config/empty";
+import { detailBookMarkConfig } from "@/config/detail";
+import { sharedEmptyConfig } from "@/config/shared";
 import { BookMarkWithPost, Post } from "@/types/collection";
 import type { Database } from "@/types/supabase";
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+import { createClient } from "@/utils/supabase/server";
 import { Metadata } from "next";
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import React from "react";
 
 export const metadata: Metadata = {
-  title: bookmarkConfig.title,
-  description: bookmarkConfig.description,
+  title: detailBookMarkConfig.title,
+  description: detailBookMarkConfig.description,
 };
 
 interface BookmarksPageProps {
@@ -25,7 +27,8 @@ const BookmarksPage: React.FC<BookmarksPageProps> = async ({
   searchParams,
 }) => {
   let posts: Post[] = [];
-  const supabase = createServerComponentClient<Database>({ cookies });
+  const cookieStore = cookies();
+  const supabase = createClient(cookieStore);
   // Fetch total pages
   const { count } = await supabase
     .from("bookmarks")
@@ -70,13 +73,13 @@ const BookmarksPage: React.FC<BookmarksPageProps> = async ({
       <div className="mx-auto max-w-5xl p-4 sm:p-6 lg:p-8">
         {posts?.length && posts?.length > 0 ? (
           <>
-            <BookMarkTableTitle />
-            <DataTable data={posts} columns={columns} />
+            <ProtectedBookMarkTableTitle />
+            <DataTable data={posts} columns={ProtectedBookMarkTableColumns} />
           </>
         ) : (
           <TableEmpty
-            emptyTitle={emptyConfig.title}
-            emptyDescription={emptyConfig.description}
+            emptyTitle={sharedEmptyConfig.title}
+            emptyDescription={sharedEmptyConfig.description}
           />
         )}
       </div>

@@ -3,10 +3,10 @@ import PostRefreshOnce from "@/components/protected/post/post-refresh-once";
 import PostTableTitle from "@/components/protected/post/post-table-title";
 import { columns } from "@/components/protected/post/table/columns";
 import { DataTable } from "@/components/protected/post/table/data-table";
-import { postConfig } from "@/config/post";
+import { protectedPostConfig } from "@/config/protected";
 import { Draft } from "@/types/collection";
 import type { Database } from "@/types/supabase";
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+import { createClient } from "@/utils/supabase/server";
 import { Metadata } from "next";
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
@@ -15,8 +15,8 @@ import { FC } from "react";
 export const revalidate = 0;
 
 export const metadata: Metadata = {
-  title: postConfig.title,
-  description: postConfig.description,
+  title: protectedPostConfig.title,
+  description: protectedPostConfig.description,
 };
 
 interface PostsPageProps {
@@ -24,7 +24,8 @@ interface PostsPageProps {
 }
 
 const PostsPage: FC<PostsPageProps> = async ({ searchParams }) => {
-  const supabase = createServerComponentClient<Database>({ cookies });
+  const cookieStore = cookies();
+  const supabase = createClient(cookieStore);
   // Fetch user data
   const {
     data: { user },

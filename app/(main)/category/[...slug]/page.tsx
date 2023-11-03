@@ -1,12 +1,11 @@
-import PostItem from "@/components/post/post-item";
-import Pagination from "@/components/shared/pagination";
-import { SiteEmpty } from "@/components/site/site-empty";
-import { categories } from "@/config/categories";
-import { metaData } from "@/config/meta";
+import { MainPostItem } from "@/components/main";
+import { SharedEmpty, SharedPagination } from "@/components/shared";
+import { mainCategoryConfig } from "@/config/main";
+import { seoData } from "@/config/root/seo";
 import { getOgImageUrl, getUrl } from "@/lib/utils";
 import { PostWithCategoryWithProfile } from "@/types/collection";
 import type { Database } from "@/types/supabase";
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+import { createClient } from "@/utils/supabase/server";
 import { Metadata } from "next";
 import { cookies } from "next/headers";
 import notFound from "next/navigation";
@@ -24,7 +23,9 @@ export async function generateMetadata({
   params,
 }: CategoryPageProps): Promise<Metadata> {
   const slug = params?.slug?.join("/");
-  const category = categories.find((category) => category.slug === slug);
+  const category = mainCategoryConfig.find(
+    (category) => category.slug === slug,
+  );
 
   if (!category) {
     return {};
@@ -32,22 +33,22 @@ export async function generateMetadata({
 
   return {
     title: category?.title,
-    description: metaData.absoluteTitle,
+    description: seoData.absoluteTitle,
     authors: {
-      name: metaData.author.name,
-      url: metaData.author.twitterUrl,
+      name: seoData.author.name,
+      url: seoData.author.twitterUrl,
     },
     openGraph: {
       title: category?.title,
-      description: metaData.absoluteTitle,
+      description: seoData.absoluteTitle,
       type: "article",
       url: `${getUrl()}${category?.slug}`,
       images: [
         {
           url: getOgImageUrl(
             category?.title,
-            metaData.absoluteTitle,
-            metaData.tags,
+            seoData.absoluteTitle,
+            seoData.tags,
             category?.slug,
           ),
           width: 1200,
@@ -59,12 +60,12 @@ export async function generateMetadata({
     twitter: {
       card: "summary_large_image",
       title: category?.title,
-      description: metaData.absoluteTitle,
+      description: seoData.absoluteTitle,
       images: [
         getOgImageUrl(
           category?.title,
-          metaData.absoluteTitle,
-          metaData.tags,
+          seoData.absoluteTitle,
+          seoData.tags,
           category?.slug,
         ),
       ],
@@ -76,10 +77,13 @@ export default async function CategoryPage({
   params,
   searchParams,
 }: CategoryPageProps) {
-  const supabase = createServerComponentClient<Database>({ cookies });
+  const cookieStore = cookies();
+  const supabase = createClient(cookieStore);
   // Get category by slug
   const slug = params?.slug?.join("/");
-  const category = categories.find((category) => category.slug === slug);
+  const category = mainCategoryConfig.find(
+    (category) => category.slug === slug,
+  );
   // Fetch total pages
   const { count } = await supabase
     .from("posts")
@@ -121,17 +125,15 @@ export default async function CategoryPage({
       {/* Posts */}
       <div className="my-5 space-y-6">
         {data?.length === 0 ? (
-          <SiteEmpty />
+          <SharedEmpty />
         ) : (
-          data?.map((post) => <PostItem key={v4()} post={post} />)
+          data?.map((post) => <MainPostItem key={v4()} post={post} />)
         )}
       </div>
       {/* Pagination */}
       {totalPages > 1 && (
-        <Pagination
+        <SharedPagination
           page={page}
-          perPage={limit}
-          totalItems={count ? count : 0}
           totalPages={totalPages}
           baseUrl={`/category/${slug}`}
           pageUrl="?page="

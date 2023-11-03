@@ -1,6 +1,6 @@
 "use client";
 
-import { dashBoardLogout, dashBoardMenusLoop } from "@/config/dashboard";
+import { dashBoardMenu } from "@/config/shared/dashboard";
 import { cn, getUrl } from "@/lib/utils";
 import { Dialog, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/20/solid";
@@ -95,7 +95,7 @@ const MobileSidebar: FC<MobileSidebarProps> = ({
                     <ul role="list" className="flex flex-1 flex-col gap-y-7">
                       <li>
                         <ul role="list" className="-mx-2 space-y-1">
-                          {dashBoardMenusLoop.map((menu) => (
+                          {dashBoardMenu.map((menu) => (
                             <li key={v4()}>
                               <Link
                                 href={menu.slug || ""}

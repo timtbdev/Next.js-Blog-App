@@ -26,11 +26,11 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
-import { profileConfig } from "@/config/profile";
+import { protectedProfileConfig } from "@/config/protected";
 import { shimmer, toBase64 } from "@/lib/utils";
 import { profileFormSchema } from "@/lib/validation/profile";
 import { Profile } from "@/types/collection";
-import { supabase } from "@/utils/supabase-client";
+import { createClient } from "@/utils/supabase/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Uppy from "@uppy/core";
 import "@uppy/core/dist/style.min.css";
@@ -56,6 +56,7 @@ async function downloadImage(
   userId: string,
   fileName: string,
 ) {
+  const supabase = createClient();
   const { data } = supabase.storage
     .from(bucketName)
     .getPublicUrl(`${userId}/${fileName}`);
@@ -123,9 +124,9 @@ const SettingsProfile: FC<SettingsProfileProps> = ({ user }) => {
         result.successful[0].name,
       );
       setAvatarUrl(avatarUrl);
-      toast.success(profileConfig.successMessageImageUpload);
+      toast.success(protectedProfileConfig.successMessageImageUpload);
     } else {
-      toast.error(profileConfig.errorMessageImageUpload);
+      toast.error(protectedProfileConfig.errorMessageImageUpload);
     }
     setShowModal(false);
   });
@@ -158,10 +159,10 @@ const SettingsProfile: FC<SettingsProfileProps> = ({ user }) => {
     });
 
     if (response) {
-      toast.success(profileConfig.successMessage);
+      toast.success(protectedProfileConfig.successMessage);
       router.push(`/editor/posts/`);
     } else {
-      toast.error(profileConfig.errorMessage);
+      toast.error(protectedProfileConfig.errorMessage);
     }
 
     setIsUpdating(false);
@@ -174,8 +175,10 @@ const SettingsProfile: FC<SettingsProfileProps> = ({ user }) => {
           {/* Personal information */}
           <Card className="max-w-2xl">
             <CardHeader>
-              <CardTitle>{profileConfig.primaryTitle}</CardTitle>
-              <CardDescription>{profileConfig.primarySubTitle}</CardDescription>
+              <CardTitle>{protectedProfileConfig.primaryTitle}</CardTitle>
+              <CardDescription>
+                {protectedProfileConfig.primarySubTitle}
+              </CardDescription>
             </CardHeader>
             <Separator className="mb-8" />
             <CardContent className="space-y-4">
@@ -199,10 +202,10 @@ const SettingsProfile: FC<SettingsProfileProps> = ({ user }) => {
                       onClick={() => setShowModal(true)}
                       className="rounded-md bg-gray-50 px-3 py-2 text-sm font-semibold text-gray-500 shadow-sm ring-1 ring-gray-300 hover:bg-gray-100"
                     >
-                      {profileConfig.changeAvatar}
+                      {protectedProfileConfig.changeAvatar}
                     </button>
                     <p className="mt-2 text-xs leading-5 text-gray-500">
-                      {profileConfig.uploadNote}
+                      {protectedProfileConfig.uploadNote}
                     </p>
                   </div>
                   <DashboardModal
@@ -212,7 +215,7 @@ const SettingsProfile: FC<SettingsProfileProps> = ({ user }) => {
                     disablePageScrollWhenModalOpen={false}
                     showSelectedFiles
                     showRemoveButtonAfterComplete
-                    note={profileConfig.formImageNote}
+                    note={protectedProfileConfig.formImageNote}
                     proudlyDisplayPoweredByUppy={false}
                     showLinkToFileUploadResult
                   />
@@ -223,10 +226,12 @@ const SettingsProfile: FC<SettingsProfileProps> = ({ user }) => {
                 name="firstName"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{profileConfig.firstName}</FormLabel>
+                    <FormLabel>{protectedProfileConfig.firstName}</FormLabel>
                     <FormControl>
                       <Input
-                        placeholder={profileConfig.firstNamePlaceholder}
+                        placeholder={
+                          protectedProfileConfig.firstNamePlaceholder
+                        }
                         {...field}
                         className="max-w-md"
                       />
@@ -240,10 +245,10 @@ const SettingsProfile: FC<SettingsProfileProps> = ({ user }) => {
                 name="lastName"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{profileConfig.lastName}</FormLabel>
+                    <FormLabel>{protectedProfileConfig.lastName}</FormLabel>
                     <FormControl>
                       <Input
-                        placeholder={profileConfig.lastNamePlaceholder}
+                        placeholder={protectedProfileConfig.lastNamePlaceholder}
                         {...field}
                         className="max-w-md"
                       />
@@ -258,9 +263,9 @@ const SettingsProfile: FC<SettingsProfileProps> = ({ user }) => {
           {/* User information */}
           <Card className="max-w-2xl">
             <CardHeader>
-              <CardTitle>{profileConfig.secondaryTitle}</CardTitle>
+              <CardTitle>{protectedProfileConfig.secondaryTitle}</CardTitle>
               <CardDescription>
-                {profileConfig.secondarySubTitle}
+                {protectedProfileConfig.secondarySubTitle}
               </CardDescription>
             </CardHeader>
             <Separator className="mb-8" />
@@ -270,10 +275,10 @@ const SettingsProfile: FC<SettingsProfileProps> = ({ user }) => {
                 name="userName"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{profileConfig.userName}</FormLabel>
+                    <FormLabel>{protectedProfileConfig.userName}</FormLabel>
                     <FormControl>
                       <Input
-                        placeholder={profileConfig.userNamePlaceholder}
+                        placeholder={protectedProfileConfig.userNamePlaceholder}
                         {...field}
                         className="max-w-md"
                       />
@@ -287,10 +292,10 @@ const SettingsProfile: FC<SettingsProfileProps> = ({ user }) => {
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{profileConfig.email}</FormLabel>
+                    <FormLabel>{protectedProfileConfig.email}</FormLabel>
                     <FormControl>
                       <Input
-                        placeholder={profileConfig.emailPlaceholder}
+                        placeholder={protectedProfileConfig.emailPlaceholder}
                         {...field}
                         className="max-w-md"
                       />
@@ -305,10 +310,10 @@ const SettingsProfile: FC<SettingsProfileProps> = ({ user }) => {
                 name="website"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{profileConfig.website}</FormLabel>
+                    <FormLabel>{protectedProfileConfig.website}</FormLabel>
                     <FormControl>
                       <Input
-                        placeholder={profileConfig.websitePlaceholder}
+                        placeholder={protectedProfileConfig.websitePlaceholder}
                         {...field}
                         className="max-w-md"
                       />
@@ -321,7 +326,7 @@ const SettingsProfile: FC<SettingsProfileProps> = ({ user }) => {
           </Card>
 
           <Button type="submit" disabled={isUpdating}>
-            {profileConfig.update}
+            {protectedProfileConfig.update}
           </Button>
         </form>
       </Form>
@@ -329,7 +334,7 @@ const SettingsProfile: FC<SettingsProfileProps> = ({ user }) => {
         <AlertDialogContent className="font-sans">
           <AlertDialogHeader>
             <AlertDialogTitle className="text-center">
-              {profileConfig.pleaseWait}
+              {protectedProfileConfig.pleaseWait}
             </AlertDialogTitle>
             <AlertDialogDescription className="mx-auto text-center">
               <SpinnerIcon className="h-6 w-6 animate-spin" />

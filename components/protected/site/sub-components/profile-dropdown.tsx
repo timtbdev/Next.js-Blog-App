@@ -6,10 +6,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { dashBoardLogout, dashBoardProfile } from "@/config/dashboard";
+import { dashBoardLogout, dashBoardProfile } from "@/config/shared/dashboard";
 import { shimmer, toBase64 } from "@/lib/utils";
 import { Profile } from "@/types/collection";
-import { supabase } from "@/utils/supabase-client";
+import { createClient } from "@/utils/supabase/client";
 import { Session } from "@supabase/supabase-js";
 import Image from "next/image";
 import Link from "next/link";
@@ -17,6 +17,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const ProfileDropDown = () => {
+  const supabase = createClient();
   const router = useRouter();
   const [session, setSession] = useState<Session | null>(null);
   const [avatarUrl, setAvatarUrl] = useState<string>("");
@@ -42,7 +43,7 @@ const ProfileDropDown = () => {
     });
 
     return () => subscription.unsubscribe();
-  }, []);
+  }, [supabase.auth]);
 
   useEffect(() => {
     async function fetchAvatar() {
@@ -56,7 +57,7 @@ const ProfileDropDown = () => {
       }
     }
     fetchAvatar();
-  }, [session]);
+  }, [session, supabase]);
 
   return (
     <>

@@ -1,9 +1,7 @@
-import PostItem from "@/components/post/post-item";
-import PostItemSkeleton from "@/components/post/post-skeleten";
-import Pagination from "@/components/shared/pagination";
+import { MainPostItem, MainPostItemLoading } from "@/components/main";
+import { SharedPagination } from "@/components/shared";
 import { PostWithCategoryWithProfile } from "@/types/collection";
-import type { Database } from "@/types/supabase";
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
@@ -16,7 +14,9 @@ interface HomePageProps {
 }
 
 export default async function HomePage({ searchParams }: HomePageProps) {
-  const supabase = createServerComponentClient<Database>({ cookies });
+  const cookieStore = cookies();
+  const supabase = createClient(cookieStore);
+
   // Fetch total pages
   const { count } = await supabase
     .from("posts")
@@ -51,17 +51,15 @@ export default async function HomePage({ searchParams }: HomePageProps) {
     <>
       <div className="space-y-6">
         {data?.map((post) => (
-          <Suspense key={v4()} fallback={<PostItemSkeleton />}>
-            <PostItem post={post} />
+          <Suspense key={v4()} fallback={<MainPostItemLoading />}>
+            <MainPostItem post={post} />
           </Suspense>
         ))}
       </div>
       {/* Pagination */}
       {totalPages > 1 && (
-        <Pagination
+        <SharedPagination
           page={page}
-          perPage={limit}
-          totalItems={count ? count : 0}
           totalPages={totalPages}
           baseUrl="/"
           pageUrl="?page="

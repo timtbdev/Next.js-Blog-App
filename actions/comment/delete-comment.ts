@@ -2,14 +2,15 @@
 
 import { commentDeleteSchema } from "@/lib/validation/comment";
 import { Database } from "@/types/supabase";
-import { createServerActionClient } from "@supabase/auth-helpers-nextjs";
+import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
 import * as z from "zod";
 
 export async function DeleteComment(
   context: z.infer<typeof commentDeleteSchema>,
 ) {
-  const supabase = createServerActionClient<Database>({ cookies });
+  const cookieStore = cookies();
+  const supabase = createClient(cookieStore);
   try {
     const comment = commentDeleteSchema.parse(context);
 
