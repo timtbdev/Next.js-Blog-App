@@ -7,7 +7,6 @@ import TableEmpty from "@/components/protected/table/table-empty";
 import { detailBookMarkConfig } from "@/config/detail";
 import { sharedEmptyConfig } from "@/config/shared";
 import { BookMarkWithPost, Post } from "@/types/collection";
-import type { Database } from "@/types/supabase";
 import { createClient } from "@/utils/supabase/server";
 import { Metadata } from "next";
 import { cookies } from "next/headers";

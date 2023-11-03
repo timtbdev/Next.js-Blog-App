@@ -1,6 +1,6 @@
 import React from "react";
 
-const LoadingTable = () => {
+const SharedTableLloading = () => {
   return (
     <div
       role="status"
@@ -67,4 +67,4 @@ const LoadingTable = () => {
   );
 };
 
-export default LoadingTable;
+export default SharedTableLloading;
