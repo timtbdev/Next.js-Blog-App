@@ -1,6 +1,7 @@
+"use client";
+
 import { cn } from "@/lib/utils";
-import Link from "next/link";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import React from "react";
 import { v4 } from "uuid";
 
@@ -19,6 +20,7 @@ const SharedPager: React.FC<SharedPagerProps> = ({
   baseUrl,
   pageUrl,
 }) => {
+  const router = useRouter();
   const i = index + 1;
   if (
     i <= 3 || //the first three pages
@@ -27,8 +29,12 @@ const SharedPager: React.FC<SharedPagerProps> = ({
   ) {
     //the currentPage, the page before and after
     return (
-      <Link
-        href={baseUrl + pageUrl + i.toString()}
+      <button
+        type="button"
+        onClick={() => {
+          router.push(baseUrl + pageUrl + i.toString());
+          router.refresh();
+        }}
         key={v4()}
         className={cn(
           "inline-flex items-center border-t-2 border-transparent px-4 pt-4 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700",
@@ -36,7 +42,7 @@ const SharedPager: React.FC<SharedPagerProps> = ({
         )}
       >
         {i}
-      </Link>
+      </button>
     );
   }
 
