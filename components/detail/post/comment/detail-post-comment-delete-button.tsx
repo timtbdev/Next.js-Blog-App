@@ -50,7 +50,7 @@ const DetailPostCommentDeleteButton: FC<DetailPostCommentDeleteButtonProps> = ({
     });
 
     return () => subscription.unsubscribe();
-  }, [id, session?.user.id]);
+  }, [id, session?.user.id, supabase.auth]);
 
   // Delete bookmark
   async function deleteComment() {

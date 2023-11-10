@@ -1,4 +1,4 @@
-import ProtectedMain from "@/components/protected/site/protected-main";
+import { ProtectedMain } from "@/components/protected/main";
 import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";

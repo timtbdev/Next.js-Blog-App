@@ -41,7 +41,7 @@ const LoginMenu = () => {
       }
     }
     fetchAvatar();
-  }, [session]);
+  }, [session, supabase]);
 
   return (
     <>

@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import React from "react";
 
-const TopBar = () => {
+const ProtectedTopBar = () => {
   const router = useRouter();
   const currentPath = usePathname();
   const path = currentPath.split("/");
@@ -36,4 +36,4 @@ const TopBar = () => {
   );
 };
 
-export default TopBar;
+export default ProtectedTopBar;

@@ -1,10 +1,8 @@
-import SettingsProfile from "@/components/protected/settings/settings-profile";
+import ProtectedSettingsProfile from "@/components/protected/settings/protected-settings-profile";
 import { Profile } from "@/types/collection";
-import type { Database } from "@/types/supabase";
 import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
-import React from "react";
 
 export const revalidate = 0;
 
@@ -49,7 +47,7 @@ const SettingsPage = async () => {
 
   return (
     <div className="max-w-3xl px-10">
-      <SettingsProfile user={data} />
+      <ProtectedSettingsProfile user={data} />
     </div>
   );
 };

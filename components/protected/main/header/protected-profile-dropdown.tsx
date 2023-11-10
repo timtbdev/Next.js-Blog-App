@@ -16,7 +16,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-const ProfileDropDown = () => {
+const ProtectedProfileDropDown = () => {
   const supabase = createClient();
   const router = useRouter();
   const [session, setSession] = useState<Session | null>(null);
@@ -103,4 +103,4 @@ const ProfileDropDown = () => {
   );
 };
 
-export default ProfileDropDown;
+export default ProtectedProfileDropDown;

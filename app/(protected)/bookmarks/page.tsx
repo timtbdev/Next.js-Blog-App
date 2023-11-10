@@ -3,7 +3,7 @@ import {
   ProtectedBookMarkTableTitle,
 } from "@/components/protected/bookmark";
 import { DataTable } from "@/components/protected/post/table/data-table";
-import TableEmpty from "@/components/protected/table/table-empty";
+import { SharedTableEmpty } from "@/components/shared";
 import { detailBookMarkConfig } from "@/config/detail";
 import { sharedEmptyConfig } from "@/config/shared";
 import { BookMarkWithPost, Post } from "@/types/collection";
@@ -76,7 +76,7 @@ const BookmarksPage: React.FC<BookmarksPageProps> = async ({
             <DataTable data={posts} columns={ProtectedBookMarkTableColumns} />
           </>
         ) : (
-          <TableEmpty
+          <SharedTableEmpty
             emptyTitle={sharedEmptyConfig.title}
             emptyDescription={sharedEmptyConfig.description}
           />

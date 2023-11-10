@@ -47,7 +47,7 @@ import { z } from "zod";
 
 type ProfileFormValues = z.infer<typeof profileFormSchema>;
 
-interface SettingsProfileProps {
+interface ProtectedSettingsProfileProps {
   user: Profile;
 }
 
@@ -68,7 +68,9 @@ async function downloadImage(
   return null;
 }
 
-const SettingsProfile: FC<SettingsProfileProps> = ({ user }) => {
+const ProtectedSettingsProfile: FC<ProtectedSettingsProfileProps> = ({
+  user,
+}) => {
   const router = useRouter();
 
   // Setup Uppy with Supabase
@@ -346,4 +348,4 @@ const SettingsProfile: FC<SettingsProfileProps> = ({ user }) => {
   );
 };
 
-export default SettingsProfile;
+export default ProtectedSettingsProfile;

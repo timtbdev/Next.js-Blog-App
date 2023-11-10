@@ -70,7 +70,7 @@ const mainFooterConfig: FooterType = {
       slug: "/policy",
     },
   ],
-  copyright: "2023 Fullstack Blogging App. All rights reserved.",
+  copyright: "© 2023 Fullstack Blogging App. All rights reserved.",
 };
 
 export default mainFooterConfig;

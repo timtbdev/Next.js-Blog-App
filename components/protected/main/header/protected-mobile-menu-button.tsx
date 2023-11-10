@@ -2,11 +2,13 @@ import { Bars3Icon } from "@heroicons/react/20/solid";
 import React, { Dispatch, FC, SetStateAction } from "react";
 
 type Dispatcher<S> = Dispatch<SetStateAction<S>>;
-interface MobileMenuButtonProps {
+interface ProtectedMobileMenuButtonProps {
   setSidebarOpen: Dispatcher<boolean>;
 }
 
-const MobileMenuButton: FC<MobileMenuButtonProps> = ({ setSidebarOpen }) => {
+const ProtectedMobileMenuButton: FC<ProtectedMobileMenuButtonProps> = ({
+  setSidebarOpen,
+}) => {
   return (
     <button
       type="button"
@@ -19,4 +21,4 @@ const MobileMenuButton: FC<MobileMenuButtonProps> = ({ setSidebarOpen }) => {
   );
 };
 
-export default MobileMenuButton;
+export default ProtectedMobileMenuButton;

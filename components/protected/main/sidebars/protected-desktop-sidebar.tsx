@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { v4 } from "uuid";
 
-const DesktopSidebar = () => {
+const ProtectedDesktopSideBar = () => {
   const currentPath = usePathname();
   const path = currentPath.split("/");
   const pathSlug = `/${path.slice(1, 3).join("/")}`;
@@ -64,4 +64,4 @@ const DesktopSidebar = () => {
   );
 };
 
-export default DesktopSidebar;
+export default ProtectedDesktopSideBar;

@@ -12,12 +12,12 @@ import { v4 } from "uuid";
 
 type Dispatcher<S> = Dispatch<SetStateAction<S>>;
 
-interface MobileSidebarProps {
+interface ProtectedMobileSideBarProps {
   sidebarOpen: boolean;
   setSidebarOpen: Dispatcher<boolean>;
 }
 
-const MobileSidebar: FC<MobileSidebarProps> = ({
+const ProtectedMobileSideBar: FC<ProtectedMobileSideBarProps> = ({
   sidebarOpen,
   setSidebarOpen,
 }) => {
@@ -133,4 +133,4 @@ const MobileSidebar: FC<MobileSidebarProps> = ({
   );
 };
 
-export default MobileSidebar;
+export default ProtectedMobileSideBar;
