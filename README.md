@@ -9,16 +9,13 @@
 </p>
 
 <p align="center">
-  <a href="#introduction"><strong>Introduction</strong></a> ·
-  <a href="https://ub.cafe"><strong>Demo</strong></a> ·
-  <a href="#"><strong>Guide</strong></a> ·
-  <a href="#contributing"><strong>Contributing</strong></a>
+  <a href="https://ubdotcafe.vercel.app"><strong>Demo</strong></a> ·
 </p>
 <br/>
 
 ## Introduction
 
-The [Blogging application](https://ub.cafe) is a multi-user, full-stack Next.js app with Supabase support. Built with [Next.js App Router](https://nextjs.org/docs/app), [Supabase Auth](https://supabase.com/docs/guides/auth) and [Supabase Database](https://supabase.com/docs/guides/database), [Supabase Storage](https://supabase.com/docs/guides/storage).
+The Blogging application is a multi-user, full-stack Next.js app with Supabase support. Built with Next.js App Router, Supabase Auth and Supabase Database, Supabase Storage.
 
 ## 💻 Frontend
 
